@@ -1,10 +1,10 @@
-var Theodoric = {};
+var GAImmersered = {};
 
-Theodoric.Boot = function (game) {
+GAImmersered.Boot = function (game) {
 
 };
 
-Theodoric.Boot.prototype = {
+GAImmersered.Boot.prototype = {
 
     init: function () {
 

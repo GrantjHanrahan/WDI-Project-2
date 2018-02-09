@@ -1,6 +1,6 @@
-Theodoric.MainMenu = function (game) {};
+GAImmersered.MainMenu = function (game) {};
 
-Theodoric.MainMenu.prototype = {
+GAImmersered.MainMenu.prototype = {
 
     init: function(score) {
 
