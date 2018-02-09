@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  slot_1: MyText
+  slot_2: MyText
+  slot_3: MyText
+
+two:
+  slot_1: MyText
+  slot_2: MyText
+  slot_3: MyText
