@@ -11,7 +11,7 @@ GAImmersered.MainMenu.prototype = {
     this.splash.anchor.setTo(0.5);
     text = "Welcome, {NAME}" ;
     style = {
-      font: "15px Arial",
+      font: "10px Press Start 2P",
       fill: "#fff",
       align: "center"
     };
@@ -19,7 +19,7 @@ GAImmersered.MainMenu.prototype = {
     this.score.anchor.set(0.5);
     text = "Version 1.0";
     style = {
-      font: "15px Arial",
+      font: "7px Press Start 2P",
       fill: "#fff",
       align: "center"
     };
