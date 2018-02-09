@@ -1,3 +1,3 @@
-Theodoric.Game = function (game) {
+GAImmersered.Game = function (game) {
 
 };
