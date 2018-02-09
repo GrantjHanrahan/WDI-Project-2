@@ -1,4 +1,3 @@
 Theodoric.Game = function (game) {
 
-
 };
