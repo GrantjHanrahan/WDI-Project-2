@@ -5,14 +5,14 @@ GAImmersered.MainMenu.prototype = {
     this.music = this.add.audio('openingMusic');
     this.music.loop = true;
     this.music.play();
-    this.background = this.game.add.tileSprite(0, 0, this.game.width, this.game.height, 'tiles', 1);
+    this.background = this.game.add.tileSprite(0, 0, this.game.width, this.game.height, 'tiles', 8);
     this.background.autoScroll(-10, 0);
-    this.splash = this.add.image(this.game.width / 2, this.game.height / 2, 'logo');
+    this.splash = this.add.image(this.game.width / 2, this.game.height / 2.4, 'logo');
     this.splash.anchor.setTo(0.5);
     text = "Welcome, {NAME}" ;
     style = {
       font: "10px Press Start 2P",
-      fill: "#fff",
+      fill: "#ffffff",
       align: "center"
     };
     this.score = this.game.add.text(this.game.width / 2, this.game.height - 50, text, style);
@@ -20,7 +20,7 @@ GAImmersered.MainMenu.prototype = {
     text = "Version 1.0";
     style = {
       font: "7px Press Start 2P",
-      fill: "#fff",
+      fill: "#ffffff",
       align: "center"
     };
     this.instructions = this.game.add.text(this.game.width / 2, this.game.height - 25, text, style);
