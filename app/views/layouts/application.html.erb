@@ -3,27 +3,22 @@
   <head>
     <title>8 Bit Game</title>
     <%= csrf_meta_tags %>
-    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= stylesheet_link_tag 'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   </head>
   <body>
-<<<<<<< HEAD
-    <div class="container mt-5">
-      <%= yield %>
-    </div>
-=======
     <nav>
       <% if @current_user.present? %>
-         <%= link_to ' Home ', "/games" %>   |
-         <%= link_to ' Logout', login_path, method: :delete %>
+        <%= link_to ' Home ', "/games" %>
+        |
+        <%= link_to ' Logout', login_path, method: :delete %>
       <% else %>
         <%= link_to ' Login ', login_path %>
       <% end %>
     </nav>
-
-
-    <%= yield %>
->>>>>>> 4e299c3de414758635ac5517e06bb2c6f456e3fe
+    <div class="container mt-5">
+      <%= yield %>
+    </div>
   </body>
 </html>
