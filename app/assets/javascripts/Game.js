@@ -9,6 +9,7 @@ GAImmersered.Game.prototype = {
     this.background.scale.setTo(2); //Background Scale
     this.player = this.generatePlayer(); //Generate Player
     this.game.camera.follow(this.player); //Camera Following Players
+    this.generateObstacles(); //Generate Obstacles
     this.controls = {
       up: this.game.input.keyboard.addKey(Phaser.Keyboard.W),
       left: this.game.input.keyboard.addKey(Phaser.Keyboard.A),
@@ -21,6 +22,7 @@ GAImmersered.Game.prototype = {
   //Update Game Handler
   update: function() {
     this.playerHandler();
+    this.collisionHandler();
   },
 
   //Game Function
@@ -107,4 +109,28 @@ GAImmersered.Game.prototype = {
       this.player.body.velocity.y = 0;
     }
   },
+
+  //**SAM PLEASE SEE BELOW**
+
+  //Stops Player from walking through objects
+  collisionHandler: function() {
+    this.game.physics.arcade.collide(this.obstacles, this.player, null, null, this);
+  },
+
+  //Generate Obstacles Group
+  generateObstacles: function() {
+    this.obstacles = this.game.add.group();
+    this.obstacles.enableBody = true;
+    this.generateObstacle();
+  },
+
+  //Generate Specific Obstacles
+  generateObstacle: function() {
+    obstacle = this.obstacles.create(200, 200, 'tiles');
+    obstacle.animations.add('tree', [38], 0, true);
+    obstacle.animations.play('tree');
+    obstacle.scale.setTo(2);
+    obstacle.body.moves = false;
+    return obstacle;
+  }
 };

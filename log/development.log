@@ -1140,3 +1140,17 @@ Processing by UsersController#home as HTML
 Completed 200 OK in 70ms (Views: 67.5ms | ActiveRecord: 0.0ms)
 
 
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mUser Load (6.2ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[35m (1.6ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (2.3ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."user_name" = $1 LIMIT $2[0m  [["user_name", "grant"], ["LIMIT", 1]]
+  [1m[35mSQL (7.9ms)[0m  [1m[32mINSERT INTO "users" ("user_name", "password_digest", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["user_name", "grant"], ["password_digest", "$2a$10$fhMmoN2ceI5ILt65MgwwTuWyoGOuPVpFco2moGF2yE.IvDhiT1oyq"], ["created_at", "2018-02-10 04:06:35.783538"], ["updated_at", "2018-02-10 04:06:35.783538"]]
+  [1m[35m (2.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (2.1ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."user_name" = $1 LIMIT $2[0m  [["user_name", "steven"], ["LIMIT", 1]]
+  [1m[35mSQL (1.9ms)[0m  [1m[32mINSERT INTO "users" ("user_name", "password_digest", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["user_name", "steven"], ["password_digest", "$2a$10$ZVLuDWgWMqSyhUmDIu0IsutBVx5ZTHOkIdAjUEHplrNghdDlF6zXe"], ["created_at", "2018-02-10 04:06:35.865012"], ["updated_at", "2018-02-10 04:06:35.865012"]]
+  [1m[35m (1.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.4ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."user_name" = $1 LIMIT $2[0m  [["user_name", "sam"], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "users" ("user_name", "password_digest", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["user_name", "sam"], ["password_digest", "$2a$10$TrTZ7DkBEMuxrRGSAX/s2OIhUnpIaV/1IcFx5.o9DMbxrReCC3Ouu"], ["created_at", "2018-02-10 04:06:35.937490"], ["updated_at", "2018-02-10 04:06:35.937490"]]
+  [1m[35m (1.1ms)[0m  [1m[35mCOMMIT[0m

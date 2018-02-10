@@ -15,7 +15,6 @@
 //= require_tree .
 // If the object exists already, we�ll use it, otherwise we�ll use a new object
 
-
 var GAImmersered = GAImmersered || {};
 
 GAImmersered.game = new Phaser.Game(512, 384, Phaser.AUTO, '', null, false, false);
