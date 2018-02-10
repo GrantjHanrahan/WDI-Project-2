@@ -1,17 +1,15 @@
-<h1>Login</h1>
-
-<%= flash[:error] %>
-
-<div class="user">
-  <%= form_tag login_path do %>
-
-    <%= label_tag :user_name %>
-    <%= text_field_tag :user_name, nil %>
-
-    <%= label_tag :password %>
-    <%= password_field_tag :password, nil %>
-
-    <%= submit_tag 'Login' %>
-
-  <% end %>
+<div class="row">
+  <div class="col-lg-12 text-center">
+    <h1>Login</h1>
+    <%= flash[:error] %>
+    <div class="user mt-5">
+      <%= form_tag login_path do %>
+      <%= label_tag :user_name %>
+      <%= text_field_tag :user_name, nil %>
+      <%= label_tag :password %>
+      <%= password_field_tag :password, nil %>
+      <%= submit_tag 'Login' %>
+    <% end %>
+  </div>
+</div>
 </div>
