@@ -12,10 +12,6 @@
 //
 //= require rails-ujs
 //= require phaser
-//= require Boot
-//= require Preloader
-//= require MainMenu
-//= require Game
 //= require_tree .
 // If the object exists already, we�ll use it, otherwise we�ll use a new object
 

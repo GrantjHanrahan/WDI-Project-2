@@ -11,9 +11,22 @@ GAImmersered.Preloader.prototype = {
 		this.preloadBar.anchor.setTo(0.5);
 		this.load.setPreloadSprite(this.preloadBar);
 		this.load.image('playButton', '/assets/play.png');
+		this.load.image('flame', '/assets/flame.png');
+		this.load.image('sword', '/assets/sword.png');
+		this.load.image('levelParticle', '/assets/level-particle.png');
+		this.load.image('spellParticle', '/assets/spell-particle.png');
+
 		this.load.spritesheet('tiles', '/assets/tiles.png', 16, 16);
+		this.load.spritesheet('things', '/assets/things.png', 16, 16);
+		this.load.spritesheet('characters', '/assets/characters.png', 16, 16);
+		this.load.spritesheet('dead', '/assets/dead.png', 16, 16);
+		this.load.spritesheet('potions', '/assets/potions.png', 16, 16);
+		this.load.spritesheet('dragons', '/assets/dragons.png', 32, 32);
+		this.load.spritesheet('fireball', '/assets/fireball.png', 16, 16);
+		this.load.spritesheet('spell', '/assets/spell.png', 12, 12);
+
 		this.load.audio('openingMusic', '/opening.ogg');
-		this.load.audio('overworldMusic', '/overworld.ogg');
+	
 	},
 	create: function () {
 		this.preloadBar.cropEnabled = false;
