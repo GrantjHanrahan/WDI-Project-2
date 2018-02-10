@@ -3,6 +3,9 @@ Rails.application.routes.draw do
   root to: 'users#home'
 
   get '/games' => 'games#index'
+  get '/users/new' => 'users#new'
+  post '/users' => 'users#create'
+  # resources :users
 
   get '/login' => 'session#new'
   post '/login' => 'session#create'
