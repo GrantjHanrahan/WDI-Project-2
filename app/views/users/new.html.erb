@@ -1,27 +1,28 @@
-<h1>Register</h1>
+<div class="row">
+  <div class="col-lg-12 text-center">
+    <h1>Register</h1>
 
-<span class="errors">
-  <% if flash[:errors].present? %>
-    <strong>Please correct the following errors with your registration:</strong>
-    <ol>
-    <% flash[:errors].each do |e| %>
-      <li><%= e %></li>
+    <span class="errors">
+      <% if flash[:errors].present? %>
+        <strong>Please correct the following errors with your registration:</strong>
+        <ol>
+          <% flash[:errors].each do |e| %>
+            <li><%= e %></li>
+          <% end %>
+        </ol>
+      <% end %>
+    </span>
+
+    <div class="user">
+      <%= form_for User.new do |f| %>
+      <%= f.label 'Username : ' %>
+      <%= f.text_field :user_name %>
+      <br>
+      <%= f.label 'Password : ' %>
+      <%= f.password_field :password %>
+      <br>
+      <%= f.submit 'Submit' %>
     <% end %>
-    </ol>
-  <% end %>
-</span>
-
-<div class="user">
-<%= form_for User.new do |f| %>
-
-  <%= f.label 'Username : ' %>
-  <%= f.text_field :user_name %>
-  <br>
-  <%= f.label 'Password : ' %>
-  <%= f.password_field :password %>
-  <br>
-
-  <%= f.submit 'Submit' %>
-
-<% end %>
+  </div>
+</div>
 </div>
