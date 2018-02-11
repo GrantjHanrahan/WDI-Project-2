@@ -9,6 +9,9 @@ GAImmersered.Game.prototype = {
     this.background.scale.setTo(2); //Background Scale
     this.player = this.generatePlayer(); //Generate Player
     this.game.camera.follow(this.player); //Camera Following Players
+    this.generateObstacles();// Generate Obstacle/ item
+    this.enemy = this.generateEnemy(); //Generate Enemy/ other  character
+
     this.controls = {
       up: this.game.input.keyboard.addKey(Phaser.Keyboard.W),
       left: this.game.input.keyboard.addKey(Phaser.Keyboard.A),
@@ -21,6 +24,7 @@ GAImmersered.Game.prototype = {
   //Update Game Handler
   update: function() {
     this.playerHandler();
+    this.collisionHandler();
   },
 
   //Game Function
@@ -107,4 +111,58 @@ GAImmersered.Game.prototype = {
       this.player.body.velocity.y = 0;
     }
   },
+    collisionHandler: function() {
+      this.game.physics.arcade.collide(this.obstacles, this.player, null, null, this);
+
+      this.game.physics.arcade.collide(this.player, this.enemy, this.spriteCollision, null, this);// Call spriteCollision when the player collides with the other character
+    },
+
+    spriteCollision: function(player, enemy) {
+      //  The two sprites are colliding
+      console.log('collision');
+      this.generateButton();// show button when player walks into skeleton
+    },
+
+    //Generate Obstacles Group
+    generateObstacles: function() {
+      this.obstacles = this.game.add.group();
+      this.obstacles.enableBody = true;
+      this.generateObstacle();
+    },
+
+    //Generate Specific Obstacles
+    generateObstacle: function() {
+      obstacle = this.obstacles.create(200, 200, 'tiles');
+      obstacle.animations.add('tree', [38], 0, true);
+      obstacle.animations.play('tree');
+      obstacle.scale.setTo(2);
+      obstacle.body.moves = false;
+      return obstacle;
+    },
+
+    generateEnemies: function () {
+      this.enemies = this.game.add.group();
+      // Enable physics in them
+      this.enemies.enableBody = true;
+      this.generateEnemy();
+    },
+
+    generateEnemy: function() {
+      enemy = this.game.add.sprite(15, 30, 'characters');
+      this.game.physics.arcade.enable(enemy);
+      enemy.body.immovable = true;
+      enemy.frame = 10;
+      enemy.scale.setTo(2);
+      return enemy;
+    },
+
+    generateButton: function() {
+      this.button = this.game.add.button(this.game.world.centerX, 30, 'spaceButton');
+      // button.actionOnClick();
+    },
+
+    actionOnClick: function() {
+      console.log('yolo');
+    }
+
 };

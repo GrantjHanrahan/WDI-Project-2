@@ -1,12 +1,16 @@
+// var name = ('<%= @current_user %>');
+// console.log(name);
 GAImmersered.MainMenu = function(game) {};
 
 GAImmersered.MainMenu.prototype = {
+
   create: function() {
     this.background = this.game.add.tileSprite(0, 0, this.game.width, this.game.height, 'tiles', 8);
     this.background.autoScroll(-10, 0);
     this.splash = this.add.image(this.game.width / 2, this.game.height / 2.4, 'logo');
     this.splash.anchor.setTo(0.5);
-    text = "Welcome, {NAME}" ;
+    text = "welcome";
+    // console.log(@current_user);
     style = {
       font: "10px Press Start 2P",
       fill: "#ffffff",
@@ -27,7 +31,7 @@ GAImmersered.MainMenu.prototype = {
   },
 
   update: function() {},
-  
+
   startGame: function(pointer) {
     this.state.start('Game');
   },

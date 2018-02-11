@@ -15,6 +15,7 @@ GAImmersered.Preloader.prototype = {
 		this.load.image('sword', '/assets/sword.png');
 		this.load.image('levelParticle', '/assets/level-particle.png');
 		this.load.image('spellParticle', '/assets/spell-particle.png');
+		this.load.image('spaceButton', 'assets/spacebarButton.png');
 
 		this.load.spritesheet('tiles', '/assets/tiles.png', 16, 16);
 		this.load.spritesheet('things', '/assets/things.png', 16, 16);
@@ -26,7 +27,7 @@ GAImmersered.Preloader.prototype = {
 		this.load.spritesheet('spell', '/assets/spell.png', 12, 12);
 
 		this.load.audio('openingMusic', '/opening.ogg');
-	
+
 	},
 	create: function () {
 		this.preloadBar.cropEnabled = false;
