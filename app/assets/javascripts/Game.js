@@ -1,12 +1,57 @@
 GAImmersered.Game = function(game) {};
 
 GAImmersered.Game.prototype = {
+
+  preload: function(){
+    console.log('PRELOAD HERE');
+    this.game.load.image('mapTiles', '/assets/all_tiles.png');
+    // this.game.load.tilemap('PokemonTestRoom', '/assets/PokemonTestRoom.json', null, Phaser.Tilemap.TILED_JSON);
+    this.game.load.tilemap('PokemonTestRoom', '/assets/finalTest.json', null, Phaser.Tilemap.TILED_JSON);
+    this.game.world.setBounds(0, 0, 600, 600);
+    console.log('PRELOAD DONE');
+  },
+
   //Create Game Handler
   create: function() {
-    var worldSize = 550; //Edit Map Size
-    this.game.world.setBounds(0, 0, worldSize, worldSize);
-    this.background = this.game.add.tileSprite(0, 0, this.game.world.width / 2, this.game.world.height / 2, 'tiles', 65); //Background Selector
-    this.background.scale.setTo(2); //Background Scale
+    // var worldSize = 550; //Edit Map Size
+    // this.game.world.setBounds(0, 0, worldSize, worldSize);
+    // this.background = this.game.add.tileSprite(0, 0, this.game.world.width / 2, this.game.world.height / 2, 'tiles', 65); //Background Selector
+    // this.background.scale.setTo(2); //Background Scale
+    // console.log('got here');
+
+    // other objects, etc
+       this.level1 = this.game.add.tilemap('PokemonTestRoom'); // step 1
+       this.level1.addTilesetImage('Pokemon Interior', 'mapTiles'); // step 2
+
+       // step 3
+       this.bgLayer = this.level1.createLayer('Background');
+       this.bgFurniture = this.level1.createLayer('Furniture');
+       this.bgFurniture.enableBody = true;
+
+       this.wallsLayer = this.level1.createLayer('Walls');
+
+       // var map = game.make.tilemap('map');
+
+        // Loop over each object layer
+        for (var ol in this.level1.objects) {
+        	// Loop over each object in the object layer
+        	for (var o in this.level1.objects[ol]) {
+        		var object = this.level1.objects[ol][o];
+
+        		console.log('obj:', object);
+            // Make a Phaser game object from the objects in this Tiled JSON list
+            if( object.type === 'enemy' ){
+              // Make an enemy object
+            }
+
+
+          }
+        }
+
+
+       // step 4 will be described soon
+
+
     this.player = this.generatePlayer(); //Generate Player
     this.game.camera.follow(this.player); //Camera Following Players
     this.generateObstacles();// Generate Obstacle/ item
@@ -113,6 +158,7 @@ GAImmersered.Game.prototype = {
   },
     collisionHandler: function() {
       this.game.physics.arcade.collide(this.obstacles, this.player, null, null, this);
+      this.game.physics.arcade.collide(this.bgFurniture, this.player, null, null, this);
 
       this.game.physics.arcade.collide(this.player, this.enemy, this.spriteCollision, null, this);// Call spriteCollision when the player collides with the other character
     },
@@ -133,10 +179,10 @@ GAImmersered.Game.prototype = {
     //Generate Specific Obstacles
     generateObstacle: function() {
       obstacle = this.obstacles.create(200, 200, 'tiles');
-      obstacle.animations.add('tree', [38], 0, true);
-      obstacle.animations.play('tree');
-      obstacle.scale.setTo(2);
-      obstacle.body.moves = false;
+      // obstacle.animations.add('tree', [38], 0, true);
+      // obstacle.animations.play('tree');
+      // obstacle.scale.setTo(2);
+      // obstacle.body.moves = false;
       return obstacle;
     },
 
