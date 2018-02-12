@@ -19,6 +19,10 @@ GAImmersered.Game.prototype = {
     // this.background.scale.setTo(2); //Background Scale
     // console.log('got here');
 
+
+       this.enemies = this.game.add.group();
+       this.enemies.enableBody = true;
+
     // other objects, etc
        this.level1 = this.game.add.tilemap('PokemonTestRoom'); // step 1
        this.level1.addTilesetImage('Pokemon Interior', 'mapTiles'); // step 2
@@ -39,9 +43,12 @@ GAImmersered.Game.prototype = {
         		var object = this.level1.objects[ol][o];
 
         		console.log('obj:', object);
+
+
             // Make a Phaser game object from the objects in this Tiled JSON list
             if( object.type === 'enemy' ){
               // Make an enemy object
+              this.generateEnemyFromTiledObject(object)
             }
 
 
@@ -54,8 +61,10 @@ GAImmersered.Game.prototype = {
 
     this.player = this.generatePlayer(); //Generate Player
     this.game.camera.follow(this.player); //Camera Following Players
-    this.generateObstacles();// Generate Obstacle/ item
+    // this.generateObstacles();// Generate Obstacle/ item
     this.enemy = this.generateEnemy(); //Generate Enemy/ other  character
+
+    // this.enemies.add( this.game.add.sprite(); );
 
     this.controls = {
       up: this.game.input.keyboard.addKey(Phaser.Keyboard.W),
@@ -159,7 +168,7 @@ GAImmersered.Game.prototype = {
     collisionHandler: function() {
       this.game.physics.arcade.collide(this.obstacles, this.player, null, null, this);
       this.game.physics.arcade.collide(this.collectables, this.player, this.collectableCollision, null, this);
-      this.game.physics.arcade.collide(this.player, this.enemy, this.spriteCollision, null, this);// Call spriteCollision when the player collides with the other character
+      this.game.physics.arcade.collide(this.player, this.enemies, null, null, this);// Call spriteCollision when the player collides with the other character
     },
 
     collect: function(collectable) {
@@ -219,21 +228,48 @@ GAImmersered.Game.prototype = {
       return obstacle;
     },
 
-    generateEnemies: function () {
-      this.enemies = this.game.add.group();
-      // Enable physics in them
-      this.enemies.enableBody = true;
-      this.generateEnemy();
-    },
+    // generateEnemies: function () {
+    //   this.enemies = this.game.add.group();
+    //   // Enable physics in them
+    //   this.enemies.enableBody = true;
+    //   this.generateEnemy();
+    // },
 
     generateEnemy: function() {
-      enemy = this.game.add.sprite(15, 30, 'characters');
+      enemy = this.game.add.sprite(15, 60, 'characters');
       this.game.physics.arcade.enable(enemy);
       enemy.body.immovable = true;
       enemy.frame = 10;
       enemy.scale.setTo(2);
       return enemy;
     },
+
+    generateEnemyFromTiledObject: function(obj) {
+      // enemy = this.game.add.sprite(obj.x, obj.y, 'characters');
+      // this.game.physics.arcade.enable(enemy);
+      // enemy.body.immovable = true;
+      // enemy.frame = 10;
+      // enemy.scale.setTo(2);
+      // return enemy;
+      // debugger;
+      let enemy = this.enemies.create(obj.x, obj.y, 'tiles');
+      enemy.game.add.sprite();
+      enemy.animations.add('skel', [14], 0, true);
+      enemy.animations.play('skel');
+      enemy.scale.setTo(2);
+      enemy.frame = 10;
+      enemy.body.moves = false;
+
+      return enemy;
+
+      // obstacle = this.obstacles.create(0, 440, 'tiles');
+      // obstacle.animations.add('tree', [14], 0, true);
+      // obstacle.animations.play('tree');
+      // obstacle.scale.setTo(10, 1);
+      // obstacle.body.moves = false;
+
+    },
+
 
     generateButton: function() {
       this.button = this.game.add.button(this.game.world.centerX, 30, 'spaceButton');
