@@ -138,7 +138,7 @@ GAImmersered.Game.prototype = {
     },
 
     collect: function(collectable) {
-
+        console.log(collectable);
         if (!collectable.collected) {
             collectable.collected = true;
             var gain;
@@ -158,7 +158,7 @@ GAImmersered.Game.prototype = {
     collectableCollision: function(player, collectable){
       collectable.events.onInputDown.add(this.collectListener, this);
       return this.collectable;
-      console.log('collision:' + this.collectable)
+      // console.log('collision:' + this.collectable)
     },
 
     //Generate Obstacles Group
@@ -258,7 +258,7 @@ GAImmersered.Game.prototype = {
     collectListener: function(collectable){
       collectable.animations.add('open', [18, 30, 42], 10, false);
       collectable.animations.play('open',[6], 0, true);
-      return this.collectable;
-      this.collect(); //not adding yet
+      console.log('arrrr');
+      // this.collect(); not adding yet
     }
 };
