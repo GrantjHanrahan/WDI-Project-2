@@ -4,8 +4,7 @@ var counter = 0;
 GAImmersered.Game.prototype = {
   //Create Game Handler
   create: function() {
-    var worldSize = 550; //Edit Map Size
-    this.game.world.setBounds(0, 0, worldSize, worldSize);
+    this.game.world.setBounds(0, 0, 800, 600);
     this.background = this.game.add.tileSprite(0, 0, this.game.world.width / 2, this.game.world.height / 2, 'tiles', 65); //Background Selector
     this.background.scale.setTo(2); //Background Scale
     this.player = this.generatePlayer(); //Generate Player
@@ -58,7 +57,7 @@ GAImmersered.Game.prototype = {
   },
 
   generatePlayer: function() {
-    var player = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'characters');
+    var player = this.game.add.sprite(0, 600, 'characters');
     player.animations.add('down', [
       3, 4, 5
     ], 10, true);
@@ -76,7 +75,7 @@ GAImmersered.Game.prototype = {
     this.game.physics.arcade.enable(player);
     player.body.collideWorldBounds = true
     player.alive = true;
-    player.name = 'Grant';
+    player.name = `#{User.user_name}`;
     player.speed = 125;
     player.invincibilityFrames = 500;
     player.invincibilityTime = 0;
@@ -133,7 +132,7 @@ GAImmersered.Game.prototype = {
   },
     collisionHandler: function() {
       this.game.physics.arcade.collide(this.obstacles, this.player, null, null, this);
-      this.game.physics.arcade.overlap(this.collectables, this.player, this.collect, null, this);
+      this.game.physics.arcade.collide(this.collectables, this.player, this.collect, null, this);
       this.game.physics.arcade.collide(this.player, this.enemy, this.spriteCollision, null, this);// Call spriteCollision when the player collides with the other character
     },
 
@@ -162,16 +161,25 @@ GAImmersered.Game.prototype = {
     generateObstacles: function() {
       this.obstacles = this.game.add.group();
       this.obstacles.enableBody = true;
-      this.generateObstacle();
+      this.generateClassRoom1();
+      this.generateClassRoom2();
       this.generateShrub();
     },
 
     //Generate Specific Obstacles
-    generateObstacle: function() {
-      obstacle = this.obstacles.create(32, 32, 'tiles');
-      obstacle.animations.add('tree', [38], 0, true);
+    generateClassRoom1: function() {
+      obstacle = this.obstacles.create(0, 440, 'tiles');
+      obstacle.animations.add('tree', [14], 0, true);
       obstacle.animations.play('tree');
-      obstacle.scale.setTo(2);
+      obstacle.scale.setTo(10, 1);
+      obstacle.body.moves = false;
+      return obstacle;
+    },
+    generateClassRoom2: function() {
+      obstacle = this.obstacles.create(145, 440, 'tiles');
+      obstacle.animations.add('tree', [14], 0, true);
+      obstacle.animations.play('tree');
+      obstacle.scale.setTo(1, -10);
       obstacle.body.moves = false;
       return obstacle;
     },
@@ -185,21 +193,32 @@ GAImmersered.Game.prototype = {
     },
 
     generateCollectables: function () {
-        this.collectables = this.game.add.group();
-        this.collectables.enableBody = true;
-        this.collectables.physicsBodyType = Phaser.Physics.ARCADE;
-        this.generateChest();
+      this.collectables = this.game.add.group();
+      this.collectables.enableBody = true;
+      this.collectables.physicsBodyType = Phaser.Physics.ARCADE;
+      this.generateChest();
+      this.generateChest2();
     },
 
     generateChest: function (location) {
-
-        var collectable = this.collectables.create(200, 200, 'things');
+      var collectable = this.collectables.create(200, 200, 'things');
+      collectable.scale.setTo(2);
+      collectable.animations.add('idle', [6], 0, true);
+      collectable.animations.add('open', [18, 30, 42], 10, false);
+      collectable.animations.play('idle');
+      collectable.body.moves = false;
+      collectable.name = 'chest'
+      collectable.value = 'YOU SUCK';
+      return collectable;
+    },
+    generateChest2: function (location) {
+        var collectable = this.collectables.create(150, 150, 'things');
         collectable.scale.setTo(2);
         collectable.animations.add('idle', [6], 0, true);
         collectable.animations.add('open', [18, 30, 42], 10, false);
         collectable.animations.play('idle');
         collectable.name = 'chest'
-        collectable.value = Math.floor(Math.random() * 150);
+        collectable.value = 500;
 
         return collectable;
     },
@@ -221,7 +240,6 @@ GAImmersered.Game.prototype = {
       return enemy;
     },
     generateEnemy: function() {
-
       enemy = this.game.add.sprite(200, 64, 'characters');
       this.game.physics.arcade.enable(enemy);
       enemy.inputEnabled = true;
