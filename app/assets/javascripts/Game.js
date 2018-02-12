@@ -1,4 +1,4 @@
-GAImmersered.Game = function(game) {};
+  GAImmersered.Game = function(game) {};
 
 GAImmersered.Game.prototype = {
 

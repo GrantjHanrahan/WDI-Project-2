@@ -97,7 +97,7 @@
         },
         {
          "columns":8,
-         "firstgid":1,
+         "firstgid":1 ,
          "image":"all_tiles.png",
          "imageheight":31942,
          "imagewidth":256,

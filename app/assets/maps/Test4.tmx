@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.2" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="32" tileheight="32" infinite="0" nextobjectid="16">
+<map version="1.0" tiledversion="1.1.2" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="32" tileheight="32" infinite="0" nextobjectid="15">
  <tileset firstgid="1" source="Pokemon Interior.tsx"/>
  <tileset firstgid="7985" name="Pokemon Interior" tilewidth="32" tileheight="32" tilecount="7984" columns="8">
   <image source="all_tiles.png" width="256" height="31942"/>
@@ -43,8 +43,8 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,313,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,321,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,72,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,80,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,204,205,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -59,7 +59,6 @@
    </properties>
   </object>
   <object id="6" name="End Point" type="enemy" x="508.559" y="27.1484" width="100" height="100"/>
-  <object id="14" name="Steven" x="411.577" y="302.575" width="37.5869" height="73.2945"/>
-  <object id="15" name="Grant" x="256.456" y="417.529" width="28.7951" height="60.2898"/>
+    <object id="14" name="Steven" x="411.577" y="302.575" width="37.5869" height="73.2945"/>
  </objectgroup>
 </map>
