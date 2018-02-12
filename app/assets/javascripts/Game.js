@@ -1,30 +1,68 @@
-GAImmersered.Game = function(game) {};
-var counter = 0;
+  GAImmersered.Game = function(game) {};
 
 GAImmersered.Game.prototype = {
+
+  preload: function(){
+    console.log('PRELOAD HERE');
+    this.game.load.image('mapTiles', '/assets/all_tiles.png');
+    // this.game.load.tilemap('PokemonTestRoom', '/assets/PokemonTestRoom.json', null, Phaser.Tilemap.TILED_JSON);
+    this.game.load.tilemap('PokemonTestRoom', '/assets/finalTest.json', null, Phaser.Tilemap.TILED_JSON);
+    this.game.world.setBounds(0, 0, 600, 600);
+    console.log('PRELOAD DONE');
+  },
+
   //Create Game Handler
   create: function() {
-    var worldSize = 550; //Edit Map Size
-    this.game.world.setBounds(0, 0, worldSize, worldSize);
-    this.background = this.game.add.tileSprite(0, 0, this.game.world.width / 2, this.game.world.height / 2, 'tiles', 65); //Background Selector
-    this.background.scale.setTo(2); //Background Scale
+    // var worldSize = 550; //Edit Map Size
+    // this.game.world.setBounds(0, 0, worldSize, worldSize);
+    // this.background = this.game.add.tileSprite(0, 0, this.game.world.width / 2, this.game.world.height / 2, 'tiles', 65); //Background Selector
+    // this.background.scale.setTo(2); //Background Scale
+    // console.log('got here');
+
+    // other objects, etc
+       this.level1 = this.game.add.tilemap('PokemonTestRoom'); // step 1
+       this.level1.addTilesetImage('Pokemon Interior', 'mapTiles'); // step 2
+
+       // step 3
+       this.bgLayer = this.level1.createLayer('Background');
+       this.bgFurniture = this.level1.createLayer('Furniture');
+       this.bgFurniture.enableBody = true;
+
+       this.wallsLayer = this.level1.createLayer('Walls');
+
+       // var map = game.make.tilemap('map');
+
+        // Loop over each object layer
+        for (var ol in this.level1.objects) {
+        	// Loop over each object in the object layer
+        	for (var o in this.level1.objects[ol]) {
+        		var object = this.level1.objects[ol][o];
+
+        		console.log('obj:', object);
+            // Make a Phaser game object from the objects in this Tiled JSON list
+            if( object.type === 'enemy' ){
+              // Make an enemy object
+            }
+
+
+          }
+        }
+
+
+       // step 4 will be described soon
+
+
     this.player = this.generatePlayer(); //Generate Player
     this.game.camera.follow(this.player); //Camera Following Players
     this.generateObstacles();// Generate Obstacle/ item
-    this.generateCollectables();// Generate Obstacle/ item
     this.enemy = this.generateEnemy(); //Generate Enemy/ other  character
-
-    this.notification = '';
-    this.gold = 0;
-    this.showLabels();
 
     this.controls = {
       up: this.game.input.keyboard.addKey(Phaser.Keyboard.W),
       left: this.game.input.keyboard.addKey(Phaser.Keyboard.A),
       down: this.game.input.keyboard.addKey(Phaser.Keyboard.S),
       right: this.game.input.keyboard.addKey(Phaser.Keyboard.D),
-      spell: this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR),
-      escape: this.game.input.keyboard.addKey(Phaser.Keyboard.ESC)
+      spell: this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR)
     }; // Set Controller
   },
 
@@ -32,20 +70,7 @@ GAImmersered.Game.prototype = {
   update: function() {
     this.playerHandler();
     this.collisionHandler();
-    this.notificationLabel.text = this.notification;
-
-    if (this.game.input.keyboard.isDown(Phaser.Keyboard.ESC)){
-      console.log('esc');
-    }
   },
-
-  showLabels: function() {
-
-      var text = '0';
-      style = { font: '10px Arial', fill: '#fff', align: 'center' };
-      this.notificationLabel = this.game.add.text(25, 25, text, style);
-      this.notificationLabel.fixedToCamera = true;
-    },
 
   //Game Function
   playerHandler: function() {
@@ -166,16 +191,23 @@ GAImmersered.Game.prototype = {
       this.obstacles = this.game.add.group();
       this.obstacles.enableBody = true;
       this.generateObstacle();
-      this.generateShrub();
     },
 
     //Generate Specific Obstacles
     generateObstacle: function() {
-      obstacle = this.obstacles.create(32, 32, 'tiles');
-      obstacle.animations.add('tree', [38], 0, true);
+      obstacle = this.obstacles.create(0, 440, 'tiles');
+      obstacle.animations.add('tree', [14], 0, true);
       obstacle.animations.play('tree');
-      obstacle.scale.setTo(2);
+      obstacle.scale.setTo(10, 1);
       obstacle.body.moves = false;
+      return obstacle;
+    },
+    generateClassRoom2: function() {
+      // obstacle = this.obstacles.create(145, 440, 'tiles');
+      // obstacle.animations.add('tree', [14], 0, true);
+      // obstacle.animations.play('tree');
+      // obstacle.scale.setTo(1, -10);
+      // obstacle.body.moves = false;
       return obstacle;
     },
     generateShrub: function() {
@@ -187,27 +219,6 @@ GAImmersered.Game.prototype = {
       return obstacle;
     },
 
-    generateCollectables: function () {
-        this.collectables = this.game.add.group();
-        this.collectables.enableBody = true;
-        this.collectables.physicsBodyType = Phaser.Physics.ARCADE;
-        this.generateChest();
-    },
-
-    generateChest: function (location) {
-
-        var collectable = this.collectables.create(200, 200, 'things');
-        collectable.scale.setTo(2);
-        collectable.animations.add('idle', [6], 0, true);
-        collectable.animations.play('idle');
-        collectable.name = 'chest'
-        collectable.value = Math.floor(Math.random() * 150);
-        collectable.body.moves = false;
-        this.game.physics.arcade.enable(collectable);
-        collectable.inputEnabled = true;
-        return collectable;
-    },
-
     generateEnemies: function () {
       this.enemies = this.game.add.group();
       // Enable physics in them
@@ -216,43 +227,17 @@ GAImmersered.Game.prototype = {
     },
 
     generateEnemy: function() {
-      enemy = this.game.add.sprite(100, 100, 'characters');
+      enemy = this.game.add.sprite(15, 30, 'characters');
       this.game.physics.arcade.enable(enemy);
-      enemy.inputEnabled = true;
-      enemy.body.immovable = true;
-      enemy.frame = 10;
-      enemy.scale.setTo(2);
-      return enemy;
-    },
-    generateEnemy: function() {
-
-      enemy = this.game.add.sprite(200, 64, 'characters');
-      this.game.physics.arcade.enable(enemy);
-      enemy.inputEnabled = true;
       enemy.body.immovable = true;
       enemy.frame = 10;
       enemy.scale.setTo(2);
       return enemy;
     },
 
-    listener: function(){
-      console.log('skeletorrrr');
-      var text = true;
-      counter++
-      console.log(counter);
-      if(counter % 2 != 0 && counter < 2 ){
-        this.enemy.text = this.game.add.text(50, 30, 'Find yo scripts!', { font: '15px Arial', fill: '#ffffff', backgroundColor: 'rgba(0,0,0,0.5)', padding: '10%' });
-      }
-      else if(counter % 2 != 0 && counter > 2){
-        this.enemy.text = this.game.add.text(50, 30, "Hint: It's on a green field..",{ font: '15px Arial', fill: '#ffffff', backgroundColor: 'rgba(0,0,0,0.5)', padding: '10%' });
-      }
-      // else if(counter % 2 == 0 && counter == 4){
-      //   this.enemy.text.destroy();
-      //   this.player.text = this.game.add.text(50, 70, "The fuck..",{ font: '15px Arial', fill: '#ffffff', backgroundColor: 'rgba(0,0,0,0.5)', padding: '10%' });
-      // }
-      else if (counter % 2 == 0){
-        this.enemy.text.destroy();
-      }
+    generateButton: function() {
+      this.button = this.game.add.button(this.game.world.centerX, 30, 'spaceButton');
+      // button.actionOnClick();
     },
 
     collectListener: function(collectable){
@@ -261,4 +246,5 @@ GAImmersered.Game.prototype = {
       console.log('arrrr');
       // this.collect(); not adding yet
     }
+
 };
