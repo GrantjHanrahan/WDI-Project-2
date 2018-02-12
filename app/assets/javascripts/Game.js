@@ -17,7 +17,8 @@ GAImmersered.Game.prototype = {
       left: this.game.input.keyboard.addKey(Phaser.Keyboard.A),
       down: this.game.input.keyboard.addKey(Phaser.Keyboard.S),
       right: this.game.input.keyboard.addKey(Phaser.Keyboard.D),
-      spell: this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR)
+      spell: this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR),
+      escape: this.game.input.keyboard.addKey(Phaser.Keyboard.ESC)
     }; // Set Controller
   },
 
@@ -25,6 +26,11 @@ GAImmersered.Game.prototype = {
   update: function() {
     this.playerHandler();
     this.collisionHandler();
+
+    if (this.game.input.keyboard.isDown(Phaser.Keyboard.ESC)){
+      console.log('esc');
+
+    }
   },
 
   //Game Function
@@ -120,7 +126,9 @@ GAImmersered.Game.prototype = {
     spriteCollision: function(player, enemy) {
       //  The two sprites are colliding
       console.log('collision');
-      this.generateButton();// show button when player walks into skeleton
+      // this.generateButton(); show button when player walks into skeleton
+      enemy.events.onInputDown.add(this.listener, this); //only show text after player has collied with enemy
+
     },
 
     //Generate Obstacles Group
@@ -160,19 +168,29 @@ GAImmersered.Game.prototype = {
     generateEnemy: function() {
       enemy = this.game.add.sprite(15, 30, 'characters');
       this.game.physics.arcade.enable(enemy);
+      enemy.inputEnabled = true;
       enemy.body.immovable = true;
       enemy.frame = 10;
       enemy.scale.setTo(2);
       return enemy;
     },
 
-    generateButton: function() {
-      this.button = this.game.add.button(this.game.world.centerX, 30, 'spaceButton');
-      // button.actionOnClick();
-    },
+    // generateButton: function() {
+    //   button = this.game.add.button(this.game.world.centerX, 30, 'spaceButton', this.actionOnClick);
+    // },
+    //
+    // actionOnClick: function(clicked) {
+    //   console.log('yolo');
+    //
+    // },
 
-    actionOnClick: function() {
-      console.log('yolo');
+    listener: function(){
+      console.log('skeletorrrr');
+      var text = true;
+      if(text){
+        this.enemy.text = this.game.add.text(50, 40, 'Yoloooo', { font: '15px Arial', fill: '#ffffff', backgroundColor: 'rgba(0,0,0,0.5)', padding: '10%' });
+        text = false;
+      };
     }
 
 };
