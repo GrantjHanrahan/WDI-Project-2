@@ -1,4 +1,5 @@
 GAImmersered.Game = function(game) {};
+var counter = 0;
 
 GAImmersered.Game.prototype = {
 
@@ -55,14 +56,20 @@ GAImmersered.Game.prototype = {
     this.player = this.generatePlayer(); //Generate Player
     this.game.camera.follow(this.player); //Camera Following Players
     this.generateObstacles();// Generate Obstacle/ item
+    this.generateCollectables();// Generate Obstacle/ item
     this.enemy = this.generateEnemy(); //Generate Enemy/ other  character
+
+    this.notification = '';
+    this.gold = 0;
+    this.showLabels();
 
     this.controls = {
       up: this.game.input.keyboard.addKey(Phaser.Keyboard.W),
       left: this.game.input.keyboard.addKey(Phaser.Keyboard.A),
       down: this.game.input.keyboard.addKey(Phaser.Keyboard.S),
       right: this.game.input.keyboard.addKey(Phaser.Keyboard.D),
-      spell: this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR)
+      spell: this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR),
+      escape: this.game.input.keyboard.addKey(Phaser.Keyboard.ESC)
     }; // Set Controller
   },
 
@@ -70,7 +77,20 @@ GAImmersered.Game.prototype = {
   update: function() {
     this.playerHandler();
     this.collisionHandler();
+    this.notificationLabel.text = this.notification;
+
+    if (this.game.input.keyboard.isDown(Phaser.Keyboard.ESC)){
+      console.log('esc');
+    }
   },
+
+  showLabels: function() {
+
+      var text = '0';
+      style = { font: '10px Arial', fill: '#fff', align: 'center' };
+      this.notificationLabel = this.game.add.text(25, 25, text, style);
+      this.notificationLabel.fixedToCamera = true;
+    },
 
   //Game Function
   playerHandler: function() {
@@ -83,7 +103,7 @@ GAImmersered.Game.prototype = {
   },
 
   generatePlayer: function() {
-    var player = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'characters');
+    var player = this.game.add.sprite(0, 600, 'characters');
     player.animations.add('down', [
       3, 4, 5
     ], 10, true);
@@ -101,7 +121,7 @@ GAImmersered.Game.prototype = {
     this.game.physics.arcade.enable(player);
     player.body.collideWorldBounds = true
     player.alive = true;
-    player.name = 'Grant';
+    player.name = `#{User.user_name}`;
     player.speed = 125;
     player.invincibilityFrames = 500;
     player.invincibilityTime = 0;
@@ -158,36 +178,62 @@ GAImmersered.Game.prototype = {
   },
     collisionHandler: function() {
       this.game.physics.arcade.collide(this.obstacles, this.player, null, null, this);
-      this.game.physics.arcade.collide(this.bgFurniture, this.player, null, null, this);
-
+      this.game.physics.arcade.collide(this.collectables, this.player, this.collectableCollision, null, this);
       this.game.physics.arcade.collide(this.player, this.enemy, this.spriteCollision, null, this);// Call spriteCollision when the player collides with the other character
     },
 
+    collect: function(collectable) {
+
+        if (!collectable.collected) {
+            collectable.collected = true;
+            var gain;
+            if (collectable.name === 'chest') {
+                collectable.animations.play('open');
+                this.gold += collectable.value;
+                this.notification = 'You open a chest and find ' + collectable.value + ' gold!';
+            }
+        }
+    },
+
     spriteCollision: function(player, enemy) {
-      //  The two sprites are colliding
-      console.log('collision');
-      this.generateButton();// show button when player walks into skeleton
+      // this.generateButton(); show button when player walks into skeleton
+      enemy.events.onInputDown.add(this.listener, this); //only show text after player has collied with enemy
+    },
+
+    collectableCollision: function(player, collectable){
+      collectable.events.onInputDown.add(this.collectListener, this);
+      return this.collectable;
+      console.log('collision:' + this.collectable)
     },
 
     //Generate Obstacles Group
     generateObstacles: function() {
       this.obstacles = this.game.add.group();
       this.obstacles.enableBody = true;
-      this.generateObstacle();
+      this.generateClassRoom1();
+      this.generateClassRoom2();
       this.generateShrub();
     },
 
     //Generate Specific Obstacles
-    generateObstacle: function() {
-      obstacle = this.obstacles.create(200, 200, 'tiles');
-      // obstacle.animations.add('tree', [38], 0, true);
+    generateClassRoom1: function() {
+      // obstacle = this.obstacles.create(0, 440, 'tiles');
+      // obstacle.animations.add('tree', [14], 0, true);
       // obstacle.animations.play('tree');
-      // obstacle.scale.setTo(2);
+      // obstacle.scale.setTo(10, 1);
+      // obstacle.body.moves = false;
+      return obstacle;
+    },
+    generateClassRoom2: function() {
+      // obstacle = this.obstacles.create(145, 440, 'tiles');
+      // obstacle.animations.add('tree', [14], 0, true);
+      // obstacle.animations.play('tree');
+      // obstacle.scale.setTo(1, -10);
       // obstacle.body.moves = false;
       return obstacle;
     },
     generateShrub: function() {
-      obstacle = this.obstacles.create(200, 200, 'tiles');
+      obstacle = this.obstacles.create(64, 32, 'tiles');
       obstacle.animations.add('shrub', [20], 0, true);
       obstacle.animations.play('shrub');
       obstacle.scale.setTo(2);
@@ -195,6 +241,37 @@ GAImmersered.Game.prototype = {
       return obstacle;
     },
 
+    generateCollectables: function () {
+      this.collectables = this.game.add.group();
+      this.collectables.enableBody = true;
+      this.collectables.physicsBodyType = Phaser.Physics.ARCADE;
+      this.generateChest();
+      this.generateChest2();
+    },
+
+    generateChest: function (location) {
+      var collectable = this.collectables.create(200, 200, 'things');
+      collectable.scale.setTo(2);
+      collectable.animations.add('idle', [6], 0, true);
+      collectable.animations.add('open', [18, 30, 42], 10, false);
+      collectable.animations.play('idle');
+      collectable.body.moves = false;
+      collectable.name = 'chest'
+      collectable.value = 'YOU SUCK';
+      return collectable;
+    },
+    generateChest2: function (location) {
+        var collectable = this.collectables.create(150, 150, 'things');
+        collectable.scale.setTo(2);
+        collectable.animations.add('idle', [6], 0, true);
+        collectable.animations.play('idle');
+        collectable.name = 'chest'
+        collectable.value = Math.floor(Math.random() * 150);
+        collectable.body.moves = false;
+        this.game.physics.arcade.enable(collectable);
+        collectable.inputEnabled = true;
+        return collectable;
+    },
 
     generateEnemies: function () {
       this.enemies = this.game.add.group();
@@ -204,21 +281,48 @@ GAImmersered.Game.prototype = {
     },
 
     generateEnemy: function() {
-      enemy = this.game.add.sprite(15, 30, 'characters');
+      enemy = this.game.add.sprite(100, 100, 'characters');
       this.game.physics.arcade.enable(enemy);
+      enemy.inputEnabled = true;
+      enemy.body.immovable = true;
+      enemy.frame = 10;
+      enemy.scale.setTo(2);
+      return enemy;
+    },
+    generateEnemy: function() {
+      enemy = this.game.add.sprite(200, 64, 'characters');
+      this.game.physics.arcade.enable(enemy);
+      enemy.inputEnabled = true;
       enemy.body.immovable = true;
       enemy.frame = 10;
       enemy.scale.setTo(2);
       return enemy;
     },
 
-    generateButton: function() {
-      this.button = this.game.add.button(this.game.world.centerX, 30, 'spaceButton');
-      // button.actionOnClick();
+    listener: function(){
+      console.log('skeletorrrr');
+      var text = true;
+      counter++
+      console.log(counter);
+      if(counter % 2 != 0 && counter < 2 ){
+        this.enemy.text = this.game.add.text(50, 30, 'Find yo scripts!', { font: '15px Arial', fill: '#ffffff', backgroundColor: 'rgba(0,0,0,0.5)', padding: '10%' });
+      }
+      else if(counter % 2 != 0 && counter > 2){
+        this.enemy.text = this.game.add.text(50, 30, "Hint: It's on a green field..",{ font: '15px Arial', fill: '#ffffff', backgroundColor: 'rgba(0,0,0,0.5)', padding: '10%' });
+      }
+      // else if(counter % 2 == 0 && counter == 4){
+      //   this.enemy.text.destroy();
+      //   this.player.text = this.game.add.text(50, 70, "The fuck..",{ font: '15px Arial', fill: '#ffffff', backgroundColor: 'rgba(0,0,0,0.5)', padding: '10%' });
+      // }
+      else if (counter % 2 == 0){
+        this.enemy.text.destroy();
+      }
     },
 
-    actionOnClick: function() {
-      console.log('yolo');
+    collectListener: function(collectable){
+      collectable.animations.add('open', [18, 30, 42], 10, false);
+      collectable.animations.play('open',[6], 0, true);
+      return this.collectable;
+      this.collect(); //not adding yet
     }
-
 };
