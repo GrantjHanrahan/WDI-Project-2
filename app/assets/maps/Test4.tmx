@@ -52,13 +52,13 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup name="Object Layer 1">
+ <objectgroup name="Object Layer 1" locked="1">
   <object id="5" name="Starting Point" x="94.7674" y="543.224" width="64" height="64">
    <properties>
     <property name="generateCharacter" value="Filler"/>
    </properties>
   </object>
   <object id="6" name="End Point" type="enemy" x="508.559" y="27.1484" width="100" height="100"/>
-    <object id="14" name="Steven" x="411.577" y="302.575" width="37.5869" height="73.2945"/>
+  <object id="14" name="Steven" type="enemy" x="411.577" y="302.575" width="37.5869" height="73.2945"/>
  </objectgroup>
 </map>
