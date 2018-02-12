@@ -133,11 +133,11 @@ GAImmersered.Game.prototype = {
   },
     collisionHandler: function() {
       this.game.physics.arcade.collide(this.obstacles, this.player, null, null, this);
-      this.game.physics.arcade.overlap(this.collectables, this.player, this.collect, null, this);
+      this.game.physics.arcade.collide(this.collectables, this.player, this.collectableCollision, null, this);
       this.game.physics.arcade.collide(this.player, this.enemy, this.spriteCollision, null, this);// Call spriteCollision when the player collides with the other character
     },
 
-    collect: function(player, collectable) {
+    collect: function(collectable) {
 
         if (!collectable.collected) {
             collectable.collected = true;
@@ -151,11 +151,14 @@ GAImmersered.Game.prototype = {
     },
 
     spriteCollision: function(player, enemy) {
-      //  The two sprites are colliding
-      console.log('collision');
       // this.generateButton(); show button when player walks into skeleton
       enemy.events.onInputDown.add(this.listener, this); //only show text after player has collied with enemy
+    },
 
+    collectableCollision: function(player, collectable){
+      collectable.events.onInputDown.add(this.collectListener, this);
+      return this.collectable;
+      console.log('collision:' + this.collectable)
     },
 
     //Generate Obstacles Group
@@ -196,11 +199,12 @@ GAImmersered.Game.prototype = {
         var collectable = this.collectables.create(200, 200, 'things');
         collectable.scale.setTo(2);
         collectable.animations.add('idle', [6], 0, true);
-        collectable.animations.add('open', [18, 30, 42], 10, false);
         collectable.animations.play('idle');
         collectable.name = 'chest'
         collectable.value = Math.floor(Math.random() * 150);
-
+        collectable.body.moves = false;
+        this.game.physics.arcade.enable(collectable);
+        collectable.inputEnabled = true;
         return collectable;
     },
 
@@ -251,5 +255,10 @@ GAImmersered.Game.prototype = {
       }
     },
 
-
+    collectListener: function(collectable){
+      collectable.animations.add('open', [18, 30, 42], 10, false);
+      collectable.animations.play('open',[6], 0, true);
+      return this.collectable;
+      this.collect(); //not adding yet
+    }
 };
