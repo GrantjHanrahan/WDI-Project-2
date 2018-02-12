@@ -141,7 +141,7 @@ GAImmersered.Game.prototype = {
 
     //Generate Specific Obstacles
     generateObstacle: function() {
-      obstacle = this.obstacles.create(100, 100, 'tiles');
+      obstacle = this.obstacles.create(32, 32, 'tiles');
       obstacle.animations.add('tree', [38], 0, true);
       obstacle.animations.play('tree');
       obstacle.scale.setTo(2);
@@ -149,7 +149,7 @@ GAImmersered.Game.prototype = {
       return obstacle;
     },
     generateShrub: function() {
-      obstacle = this.obstacles.create(200, 200, 'tiles');
+      obstacle = this.obstacles.create(64, 32, 'tiles');
       obstacle.animations.add('shrub', [20], 0, true);
       obstacle.animations.play('shrub');
       obstacle.scale.setTo(2);
@@ -166,7 +166,17 @@ GAImmersered.Game.prototype = {
     },
 
     generateEnemy: function() {
-      enemy = this.game.add.sprite(15, 30, 'characters');
+      enemy = this.game.add.sprite(100, 100, 'characters');
+      this.game.physics.arcade.enable(enemy);
+      enemy.inputEnabled = true;
+      enemy.body.immovable = true;
+      enemy.frame = 10;
+      enemy.scale.setTo(2);
+      return enemy;
+    },
+    generateEnemy: function() {
+
+      enemy = this.game.add.sprite(200, 30, 'characters');
       this.game.physics.arcade.enable(enemy);
       enemy.inputEnabled = true;
       enemy.body.immovable = true;
@@ -175,20 +185,12 @@ GAImmersered.Game.prototype = {
       return enemy;
     },
 
-    // generateButton: function() {
-    //   button = this.game.add.button(this.game.world.centerX, 30, 'spaceButton', this.actionOnClick);
-    // },
-    //
-    // actionOnClick: function(clicked) {
-    //   console.log('yolo');
-    //
-    // },
 
     listener: function(){
       console.log('skeletorrrr');
       var text = true;
       if(text){
-        this.enemy.text = this.game.add.text(50, 40, 'Yoloooo', { font: '15px Arial', fill: '#ffffff', backgroundColor: 'rgba(0,0,0,0.5)', padding: '10%' });
+        this.enemy.text = this.game.add.text(200, 30, 'Yoloooo', { font: '15px Arial', fill: '#ffffff', backgroundColor: 'rgba(0,0,0,0.5)', padding: '10%' });
         text = false;
       };
     }
