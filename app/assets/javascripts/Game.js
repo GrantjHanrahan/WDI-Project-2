@@ -158,8 +158,7 @@ GAImmersered.Game.prototype = {
   },
     collisionHandler: function() {
       this.game.physics.arcade.collide(this.obstacles, this.player, null, null, this);
-      this.game.physics.arcade.collide(this.bgFurniture, this.player, null, null, this);
-
+      this.game.physics.arcade.collide(this.collectables, this.player, this.collectableCollision, null, this);
       this.game.physics.arcade.collide(this.player, this.enemy, this.spriteCollision, null, this);// Call spriteCollision when the player collides with the other character
     },
 
@@ -177,12 +176,28 @@ GAImmersered.Game.prototype = {
     },
 
     //Generate Specific Obstacles
-    generateObstacle: function() {
-      obstacle = this.obstacles.create(200, 200, 'tiles');
-      // obstacle.animations.add('tree', [38], 0, true);
+    generateClassRoom1: function() {
+      // obstacle = this.obstacles.create(0, 440, 'tiles');
+      // obstacle.animations.add('tree', [14], 0, true);
       // obstacle.animations.play('tree');
-      // obstacle.scale.setTo(2);
+      // obstacle.scale.setTo(10, 1);
       // obstacle.body.moves = false;
+      return obstacle;
+    },
+    generateClassRoom2: function() {
+      // obstacle = this.obstacles.create(145, 440, 'tiles');
+      // obstacle.animations.add('tree', [14], 0, true);
+      // obstacle.animations.play('tree');
+      // obstacle.scale.setTo(1, -10);
+      // obstacle.body.moves = false;
+      return obstacle;
+    },
+    generateShrub: function() {
+      obstacle = this.obstacles.create(64, 32, 'tiles');
+      obstacle.animations.add('shrub', [20], 0, true);
+      obstacle.animations.play('shrub');
+      obstacle.scale.setTo(2);
+      obstacle.body.moves = false;
       return obstacle;
     },
 
