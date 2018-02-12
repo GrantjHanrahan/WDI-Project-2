@@ -11,7 +11,12 @@ GAImmersered.Game.prototype = {
     this.player = this.generatePlayer(); //Generate Player
     this.game.camera.follow(this.player); //Camera Following Players
     this.generateObstacles();// Generate Obstacle/ item
+    this.generateCollectables();// Generate Obstacle/ item
     this.enemy = this.generateEnemy(); //Generate Enemy/ other  character
+
+    this.notification = '';
+    this.gold = 0;
+    this.showLabels();
 
     this.controls = {
       up: this.game.input.keyboard.addKey(Phaser.Keyboard.W),
@@ -27,11 +32,20 @@ GAImmersered.Game.prototype = {
   update: function() {
     this.playerHandler();
     this.collisionHandler();
+    this.notificationLabel.text = this.notification;
 
     if (this.game.input.keyboard.isDown(Phaser.Keyboard.ESC)){
       console.log('esc');
     }
   },
+
+  showLabels: function() {
+
+      var text = '0';
+      style = { font: '10px Arial', fill: '#fff', align: 'center' };
+      this.notificationLabel = this.game.add.text(25, 25, text, style);
+      this.notificationLabel.fixedToCamera = true;
+    },
 
   //Game Function
   playerHandler: function() {
@@ -119,8 +133,21 @@ GAImmersered.Game.prototype = {
   },
     collisionHandler: function() {
       this.game.physics.arcade.collide(this.obstacles, this.player, null, null, this);
-
+      this.game.physics.arcade.overlap(this.collectables, this.player, this.collect, null, this);
       this.game.physics.arcade.collide(this.player, this.enemy, this.spriteCollision, null, this);// Call spriteCollision when the player collides with the other character
+    },
+
+    collect: function(player, collectable) {
+
+        if (!collectable.collected) {
+            collectable.collected = true;
+            var gain;
+            if (collectable.name === 'chest') {
+                collectable.animations.play('open');
+                this.gold += collectable.value;
+                this.notification = 'You open a chest and find ' + collectable.value + ' gold!';
+            }
+        }
     },
 
     spriteCollision: function(player, enemy) {
@@ -157,6 +184,25 @@ GAImmersered.Game.prototype = {
       return obstacle;
     },
 
+    generateCollectables: function () {
+        this.collectables = this.game.add.group();
+        this.collectables.enableBody = true;
+        this.collectables.physicsBodyType = Phaser.Physics.ARCADE;
+        this.generateChest();
+    },
+
+    generateChest: function (location) {
+
+        var collectable = this.collectables.create(200, 200, 'things');
+        collectable.scale.setTo(2);
+        collectable.animations.add('idle', [6], 0, true);
+        collectable.animations.add('open', [18, 30, 42], 10, false);
+        collectable.animations.play('idle');
+        collectable.name = 'chest'
+        collectable.value = Math.floor(Math.random() * 150);
+
+        return collectable;
+    },
 
     generateEnemies: function () {
       this.enemies = this.game.add.group();
@@ -176,7 +222,7 @@ GAImmersered.Game.prototype = {
     },
     generateEnemy: function() {
 
-      enemy = this.game.add.sprite(200, 30, 'characters');
+      enemy = this.game.add.sprite(200, 64, 'characters');
       this.game.physics.arcade.enable(enemy);
       enemy.inputEnabled = true;
       enemy.body.immovable = true;
@@ -203,6 +249,7 @@ GAImmersered.Game.prototype = {
       else if (counter % 2 == 0){
         this.enemy.text.destroy();
       }
-    }
+    },
+
 
 };
