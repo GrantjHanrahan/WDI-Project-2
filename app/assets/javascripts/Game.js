@@ -174,6 +174,7 @@ GAImmersered.Game.prototype = {
       this.obstacles = this.game.add.group();
       this.obstacles.enableBody = true;
       this.generateObstacle();
+      this.generateShrub();
     },
 
     //Generate Specific Obstacles
@@ -185,6 +186,15 @@ GAImmersered.Game.prototype = {
       // obstacle.body.moves = false;
       return obstacle;
     },
+    generateShrub: function() {
+      obstacle = this.obstacles.create(200, 200, 'tiles');
+      obstacle.animations.add('shrub', [20], 0, true);
+      obstacle.animations.play('shrub');
+      obstacle.scale.setTo(2);
+      obstacle.body.moves = false;
+      return obstacle;
+    },
+
 
     generateEnemies: function () {
       this.enemies = this.game.add.group();
