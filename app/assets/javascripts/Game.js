@@ -176,12 +176,12 @@ GAImmersered.Game.prototype = {
     },
 
     //Generate Specific Obstacles
-    generateClassRoom1: function() {
-      // obstacle = this.obstacles.create(0, 440, 'tiles');
-      // obstacle.animations.add('tree', [14], 0, true);
-      // obstacle.animations.play('tree');
-      // obstacle.scale.setTo(10, 1);
-      // obstacle.body.moves = false;
+    generateObstacle: function() {
+      obstacle = this.obstacles.create(0, 440, 'tiles');
+      obstacle.animations.add('tree', [14], 0, true);
+      obstacle.animations.play('tree');
+      obstacle.scale.setTo(10, 1);
+      obstacle.body.moves = false;
       return obstacle;
     },
     generateClassRoom2: function() {
