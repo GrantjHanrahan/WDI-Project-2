@@ -1,4 +1,5 @@
 GAImmersered.Game = function(game) {};
+var counter = 0;
 
 GAImmersered.Game.prototype = {
   //Create Game Handler
@@ -29,7 +30,6 @@ GAImmersered.Game.prototype = {
 
     if (this.game.input.keyboard.isDown(Phaser.Keyboard.ESC)){
       console.log('esc');
-
     }
   },
 
@@ -175,22 +175,24 @@ GAImmersered.Game.prototype = {
       return enemy;
     },
 
-    // generateButton: function() {
-    //   button = this.game.add.button(this.game.world.centerX, 30, 'spaceButton', this.actionOnClick);
-    // },
-    //
-    // actionOnClick: function(clicked) {
-    //   console.log('yolo');
-    //
-    // },
-
     listener: function(){
       console.log('skeletorrrr');
       var text = true;
-      if(text){
-        this.enemy.text = this.game.add.text(50, 40, 'Yoloooo', { font: '15px Arial', fill: '#ffffff', backgroundColor: 'rgba(0,0,0,0.5)', padding: '10%' });
-        text = false;
-      };
+      counter++
+      console.log(counter);
+      if(counter % 2 != 0 && counter < 2 ){
+        this.enemy.text = this.game.add.text(50, 30, 'Find yo scripts!', { font: '15px Arial', fill: '#ffffff', backgroundColor: 'rgba(0,0,0,0.5)', padding: '10%' });
+      }
+      else if(counter % 2 != 0 && counter > 2){
+        this.enemy.text = this.game.add.text(50, 30, "Hint: It's on a green field..",{ font: '15px Arial', fill: '#ffffff', backgroundColor: 'rgba(0,0,0,0.5)', padding: '10%' });
+      }
+      // else if(counter % 2 == 0 && counter == 4){
+      //   this.enemy.text.destroy();
+      //   this.player.text = this.game.add.text(50, 70, "The fuck..",{ font: '15px Arial', fill: '#ffffff', backgroundColor: 'rgba(0,0,0,0.5)', padding: '10%' });
+      // }
+      else if (counter % 2 == 0){
+        this.enemy.text.destroy();
+      }
     }
 
 };
