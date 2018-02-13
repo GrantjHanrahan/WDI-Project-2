@@ -50,7 +50,6 @@ GAImmersered.Game.prototype = {
     this.gold = 0; // Generate Gold
     this.showLabels();
 
-
     this.game.camera.follow(this.player); // Camera Following Players
     this.controls = {
       up: this.game.input.keyboard.addKey(Phaser.Keyboard.W),
@@ -169,14 +168,17 @@ GAImmersered.Game.prototype = {
   },
 
   npc1Collision: function(player, npc1) {
-    if(this.controls.enter.isDown){
-      // console.log('enterrrr');
-      npc1.text = this.game.add.text(50, 60, 'Fark yeah',{font: '15px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
-    }
+    // if(this.controls.enter.isDown){
+      text = this.game.add.text(50, 60, 'The scripts are located...',{font: '15px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
+      text.outOfCameraBoundsKill = true;
+      text.autoCull = true;
+    // }
   },
 
   npc2Collision: function(player, npc2){
-    npc2.text = this.game.add.text(480, 570, 'Yoyo ',{font: '15px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
+      text = this.game.add.text(480, 570, 'Scriptsss.... ',{font: '15px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
+      text.outOfCameraBoundsKill = true;
+      text.autoCull = true;
   },
 
   // amirCollision: function(player, amir){
@@ -200,6 +202,7 @@ GAImmersered.Game.prototype = {
   generateNpc1: function() {
     npc1 = this.game.add.sprite(15, 60, 'characters');
     this.game.physics.arcade.enable(npc1);
+    npc1.game.inputEnabled = true;
     npc1.body.immovable = true;
     npc1.frame = 10;
     npc1.scale.setTo(2);
@@ -209,6 +212,7 @@ GAImmersered.Game.prototype = {
   generateNpc2: function() {
     npc2 = this.game.add.sprite(450, 570, 'characters');
     this.game.physics.arcade.enable(npc2);
+    npc2.game.inputEnabled = true;
     npc2.body.immovable = true;
     npc2.frame = 10;
     npc2.scale.setTo(2);
