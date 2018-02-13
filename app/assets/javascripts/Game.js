@@ -1,3 +1,6 @@
+
+// this.generateCharacter1();
+
 GAImmersered.Game = function(game) {};
 
 GAImmersered.Game.prototype = {
@@ -13,6 +16,8 @@ GAImmersered.Game.prototype = {
   create: function() {
     this.object = this.game.add.group();
     this.object.enableBody = true;
+
+    console.log('PHASER create()');
 
     // Step 1 - Add Tilemap to Game
     this.level1 = this.game.add.tilemap('mapRoom');
@@ -37,8 +42,19 @@ GAImmersered.Game.prototype = {
       }
     };
 
+    var playerSprites = {
+      character1: 'generateCharacter1',
+      character2: 'generateCharacter2',
+      character3: 'generateCharacter3',
+      character4: 'generateCharacter4',
+    };
+    var playerFunc = playerSprites[ selectedPlayer ];
+    this.player = this[playerFunc]();  // this.generateCharacter1();
+
     // Step 4 - Generate Remaining Game
-    this.player = this.generatePlayer(); // Generate Player
+    // this.player = this.generatePlayer(); // Generate Player
+    // this.player = this.generateCharacter2();
+
     this.npc1 = this.generateNpc1(); // Generate NPC
     this.npc2 = this.generateNpc2(); // Generate NPC
     // this.amir = this.generateAmir();
@@ -65,9 +81,6 @@ GAImmersered.Game.prototype = {
     this.notificationLabel.text = this.notification;
   },
 
-
-
-
   // ** PLAYER GENERATOR AND HANDLER **
 
   playerHandler: function() {
@@ -79,20 +92,31 @@ GAImmersered.Game.prototype = {
     }
   },
 
-  generatePlayer: function() {
+  generateCharacter1: function() {
+
     var player = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'characters');
-    player.animations.add('down', [
-      3, 4, 5
-    ], 10, true);
-    player.animations.add('left', [
-      15, 16, 17
-    ], 10, true);
-    player.animations.add('right', [
-      27, 28, 29
-    ], 10, true);
-    player.animations.add('up', [
-      39, 40, 41
-    ], 10, true);
+    player.animations.add('down', [ 3, 4, 5 ], 10, true);
+    player.animations.add('left', [ 15, 16, 17 ], 10, true);
+    player.animations.add('right', [ 27, 28, 29 ], 10, true);
+    player.animations.add('up', [ 39, 40, 41 ], 10, true);
+    player.animations.play('down');
+    player.scale.setTo(2);
+    this.game.physics.arcade.enable(player);
+    player.body.collideWorldBounds = true
+    player.alive = true;
+    player.name = 'Grant';
+    player.speed = 125;
+    player.invincibilityFrames = 500;
+    player.invincibilityTime = 0;
+    return player;
+  },
+  generateCharacter2: function() {
+
+    var player = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'characters');
+    player.animations.add('down', [ 6, 7, 8 ], 10, true);
+    player.animations.add('left', [ 18, 19, 20 ], 10, true);
+    player.animations.add('right', [ 30, 31, 32 ], 10, true);
+    player.animations.add('up', [ 42, 43, 44 ], 10, true);
     player.animations.play('down');
     player.scale.setTo(2);
     this.game.physics.arcade.enable(player);
@@ -195,9 +219,6 @@ GAImmersered.Game.prototype = {
   //   amir.text = this.game.add.text(230, 200, 'Hey, want some scripts?',{font: '15px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
   // },
 
-
-
-
   // ** GENERATE CHARACTERS **
 
   generateNpc1: function() {
@@ -228,9 +249,6 @@ GAImmersered.Game.prototype = {
   //   amir.scale.setTo(2);
   //   return amir;
   // },
-
-
-
 
   // ** GENERATE CHEST/COLLECT CHEST **
 
