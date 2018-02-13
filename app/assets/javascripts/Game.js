@@ -176,12 +176,16 @@ GAImmersered.Game.prototype = {
   generateWallFromTiledObject: function(obj) {
     let wall = this.wall.create(obj.x, obj.y, 'tiles');
     this.game.physics.arcade.enable(wall);
-    console.log(obj.x/16, obj.y);
+    console.log(obj.height, obj.width);
     // wall.game.add.sprite();
     // wall.animations.add('skel', [14], 0, true);
     // wall.animations.play('skel');
     // wall.frame = 10; //Sprite Image
-    wall.scale.setTo(2);
+    // wall.x = obj.height;
+    // wall.y = obj.width;
+    wall.scale.setTo(obj.width/16,obj.height/16);
+    // wall.x = obj.height;
+    // wall.y = obj.width;
     wall.body.moves = false;
     return wall;
   },
