@@ -12,5 +12,6 @@
 //
 //= require rails-ujs
 //= require phaser
+//= require jquery
 //= require_tree .
 // If the object exists already, we�ll use it, otherwise we�ll use a new object

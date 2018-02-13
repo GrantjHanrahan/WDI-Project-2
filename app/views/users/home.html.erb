@@ -1,5 +1,36 @@
+<script>
+var GAImmersered = GAImmersered || {};
+GAImmersered.game = new Phaser.Game(512, 384, Phaser.AUTO, '', null, false, false);
+GAImmersered.game.state.add('Boot', GAImmersered.Boot);
+GAImmersered.game.state.add('Preloader', GAImmersered.Preloader);
+GAImmersered.game.state.add('MainMenu', GAImmersered.MainMenu);
+GAImmersered.game.state.add('Game', GAImmersered.Game);
+GAImmersered.game.state.start('Boot');
+var playerName = '<%= @current_user %>';
+</script>
+<script type="text/javascript" src="/assets/Boot.js"></script>
+<script type="text/javascript" src="/assets/Preloader.js"></script>
+<script type="text/javascript" src="/assets/MainMenu.js"></script>
+<script type="text/javascript" src="/assets/Game.js"></script>
+
+
+
 <div class="row">
   <div class="col-lg-12 text-center">
     <h1>Home Page</h1>
+
+    <div class="col-md-3">
+      <h3>Choose your character</h3><br />
+      <select name ="characters[][character]">
+        <option value ="" disabled selected>Characters</option>
+        <option value="character1">Character1</option>
+        <option value="character2">Character2</option>
+        <option value="character3">Character3</option>
+        <option value="character4">Character4</option>
+      </select>
+    </div>
+
+
+
   </div>
 </div>
