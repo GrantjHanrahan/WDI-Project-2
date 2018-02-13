@@ -46,7 +46,6 @@ GAImmersered.Game.prototype = {
     // this.amir = this.generateAmir();
 
     this.generateCollectables();
-    this.generateChest(); // Generate Chess
     this.notification = ''; // Generate Notification
     this.gold = 0; // Generate Gold
     this.showLabels();
@@ -70,9 +69,8 @@ GAImmersered.Game.prototype = {
   },
 
   showLabels: function() {
-
     var text = '0';
-    style = { font: '10px Arial', fill: '#fff', align: 'center' };
+    style = { font: '15px Arial', fill: '#fff', align: 'center', backgroundColor: '#000000' };
     this.notificationLabel = this.game.add.text(25, 25, text, style);
     this.notificationLabel.fixedToCamera = true;
   },
@@ -163,9 +161,7 @@ GAImmersered.Game.prototype = {
 
   collisionHandler: function() {
     this.game.physics.arcade.collide(this.obstacles, this.player, null, null, this);
-    // this.game.physics.arcade.overlap(this.collectables, this.player, this.collect, null, this);
     this.game.physics.arcade.collide(this.player, this.wall, null, null, this);
-
     this.game.physics.arcade.overlap(this.collectables, this.player, this.collect, null, this);
     this.game.physics.arcade.collide(this.player, this.npc1, this.npc1Collision, null, this);
     this.game.physics.arcade.collide(this.player, this.npc2, this.npc2Collision, null, this);
@@ -177,7 +173,6 @@ GAImmersered.Game.prototype = {
       // console.log('enterrrr');
       npc1.text = this.game.add.text(50, 60, 'Fark yeah',{font: '15px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
     }
-
   },
 
   npc2Collision: function(player, npc2){
@@ -218,7 +213,7 @@ GAImmersered.Game.prototype = {
     npc2.frame = 10;
     npc2.scale.setTo(2);
     return npc2;
-  }
+  },
 
   // generateAmir: function() {
   //   amir = this.game.add.sprite(200, 200, 'characters');
@@ -229,33 +224,45 @@ GAImmersered.Game.prototype = {
   //   return amir;
   // },
 
-
   collect: function(player, collectable) {
-        if (!collectable.collected) {
-            collectable.collected = true;
-            var gain;
-            if (collectable.name === 'chest') {
-                collectable.animations.play('open');
-                this.gold += collectable.value;
-                this.notification = 'You open a chest and find ' + collectable.value + ' gold!';
-            }
-        }
-    },
+    if (!collectable.collected) {
+      collectable.collected = true;
+      let gain;
+      if (collectable.name === 'chest') {
+          collectable.animations.play('open');
+          this.gold += collectable.value;
+          this.notification = collectable.value;
+      }
+    }
+  },
 
-    generateCollectables: function () {
-      this.collectables = this.game.add.group();
-      this.collectables.enableBody = true;
-      this.collectables.physicsBodyType = Phaser.Physics.ARCADE;
-      this.generateChest();
-    },
-    generateChest: function () {
-      var collectable = this.collectables.create(200, 300, 'things');
-        collectable.scale.setTo(2);
-        collectable.animations.add('idle', [6], 0, true);
-        collectable.animations.add('open', [18, 30, 42], 10, false);
-        collectable.animations.play('idle');
-        collectable.name = 'chest'
-        collectable.value = 500;
-        return collectable;
-    },
+  generateCollectables: function () {
+    this.collectables = this.game.add.group();
+    this.collectables.enableBody = true;
+    this.collectables.physicsBodyType = Phaser.Physics.ARCADE;
+    this.generateChest1();
+    this.generateChest2();
+  },
+
+  generateChest1: function () {
+    const collectable = this.collectables.create(200, 200, 'things');
+    collectable.scale.setTo(2);
+    collectable.animations.add('idle', [6], 0, true);
+    collectable.animations.add('open', [18, 30, 42], 10, false);
+    collectable.animations.play('idle');
+    collectable.name = 'chest'
+    collectable.value = 'Oh no! Amir has sabotaged your code!!! VIRUS!!';
+    return collectable;
+  },
+
+  generateChest2: function () {
+    const collectable = this.collectables.create(130, 220, 'things');
+    collectable.scale.setTo(2);
+    collectable.animations.add('idle', [6], 0, true);
+    collectable.animations.add('open', [18, 30, 42], 10, false);
+    collectable.animations.play('idle');
+    collectable.name = 'chest'
+    collectable.value = 'SOME GREAT CODE!';
+    return collectable;
+  },
 };
