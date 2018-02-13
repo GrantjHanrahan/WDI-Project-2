@@ -9,7 +9,7 @@ GAImmersered.MainMenu.prototype = {
     this.background.autoScroll(-10, 0);
     this.splash = this.add.image(this.game.width / 2, this.game.height / 2.4, 'logo');
     this.splash.anchor.setTo(0.5);
-    text = "welcome";
+    text = 'Welcome ' + playerName;
     // console.log(@current_user);
     style = {
       font: "10px Press Start 2P",
