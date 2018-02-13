@@ -163,7 +163,7 @@ GAImmersered.Game.prototype = {
   },
 
   npc2Collision: function(player, npc2){
-    npc2.text = this.game.add.text(330, 410, 'Yoyo ',{font: '15px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
+    npc2.text = this.game.add.text(480, 570, 'Yoyo ',{font: '15px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
   },
 
   // amirCollision: function(player, amir){
