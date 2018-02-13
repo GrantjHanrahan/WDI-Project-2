@@ -41,7 +41,9 @@ GAImmersered.Game.prototype = {
 
     // Step 4 - Generate Remaining Game
     this.player = this.generatePlayer(); // Generate Player
-    this.enemy = this.generateEnemy(); // Generate Enemy
+    this.npc1 = this.generateNpc1(); // Generate NPC
+    this.npc2 = this.generateNpc2(); // Generate NPC
+
     this.game.camera.follow(this.player); // Camera Following Players
     this.controls = {
       up: this.game.input.keyboard.addKey(Phaser.Keyboard.W),
@@ -145,11 +147,25 @@ GAImmersered.Game.prototype = {
     this.game.physics.arcade.collide(this.obstacles, this.player, null, null, this);
     this.game.physics.arcade.collide(this.collectables, this.player, this.collectableCollision, null, this);
     this.game.physics.arcade.collide(this.player, this.wall, null, null, this);
+    this.game.physics.arcade.collide(this.player, this.npc1, this.spriteCollision, null, this);
+    this.game.physics.arcade.collide(this.player, this.npc2, this.spriteCollision, null, this);
   },
 
-  spriteCollision: function(player, enemy) {
-    // this.generateButton(); show button when player walks into skeleton
-    enemy.events.onInputDown.add(this.listener, this); //only show text after player has collied with enemy
+  spriteCollision: function(player, npc1) {
+    // npc.events.onInputDown.add(this.npcListener, this);
+    // console.log('npc collision');
+    //only show text after player has collied with the npc
+    // if (npc == this.npc1){
+    // npc = [this.npc1, this.npc2];
+    if(npc1){
+      this.text = this.game.add.text(50, 60, 'Fark yeah',{font: '15px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
+    }
+    // else if (npc2){
+    //   this.text = this.game.add.text(70, 90, 'Yoyo ',{font: '15px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
+    // } else{
+    //   console.log('pop');
+    // }
+    return text;
   },
 
   collectableCollision: function(player, collectable){
@@ -170,12 +186,29 @@ GAImmersered.Game.prototype = {
     return wall;
   },
 
-  generateEnemy: function() {
-    enemy = this.game.add.sprite(15, 60, 'characters');
-    this.game.physics.arcade.enable(enemy);
-    enemy.body.immovable = true;
-    enemy.frame = 10;
-    enemy.scale.setTo(2);
-    return enemy;
+  generateNpc1: function() {
+    npc1 = this.game.add.sprite(15, 60, 'characters');
+    this.game.physics.arcade.enable(npc1);
+    npc1.body.immovable = true;
+    npc1.frame = 10;
+    npc1.scale.setTo(2);
+    return npc1;
   },
+
+  generateNpc2: function() {
+    npc2 = this.game.add.sprite(40, 90, 'characters');
+    this.game.physics.arcade.enable(npc2);
+    npc2.body.immovable = true;
+    npc2.frame = 10;
+    npc2.scale.setTo(2);
+    return npc2;
+  },
+
+
+  npcListener: function(text){
+    // console.log('hit');
+    // this.text.destroy()
+  }
+
+
 };
