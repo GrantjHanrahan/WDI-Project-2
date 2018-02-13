@@ -11,8 +11,8 @@ GAImmersered.Game.prototype = {
   },
 
   create: function() {
-    this.wall = this.game.add.group();
-    this.wall.enableBody = true;
+    this.object = this.game.add.group();
+    this.object.enableBody = true;
 
     // Step 1 - Add Tilemap to Game
     this.level1 = this.game.add.tilemap('mapRoom');
@@ -24,7 +24,6 @@ GAImmersered.Game.prototype = {
     this.bgLayer = this.level1.createLayer('Background');
     this.bgFurniture = this.level1.createLayer('Furniture');
     this.bgFurniture.enableBody = true; // Enable Physics to Game
-    // this.wallsLayer = this.level1.createLayer('Walls');
 
     // Loop Over Objects Generated
     for (var ol in this.level1.objects) {
@@ -32,9 +31,8 @@ GAImmersered.Game.prototype = {
     		var object = this.level1.objects[ol][o];
     		console.log('obj:', object);
         // Make a Phaser game object from the objects in this Tiled JSON list
-        if( object.type === 'wall' ){
-          // Make an Table Object
-          this.generateWallFromTiledObject(object)
+        if( object.type === 'object' ){
+          this.objectCollision(object)
         }
       }
     };
@@ -49,7 +47,6 @@ GAImmersered.Game.prototype = {
     this.notification = ''; // Generate Notification
     this.gold = 0; // Generate Gold
     this.showLabels();
-
 
     this.game.camera.follow(this.player); // Camera Following Players
     this.controls = {
@@ -68,12 +65,10 @@ GAImmersered.Game.prototype = {
     this.notificationLabel.text = this.notification;
   },
 
-  showLabels: function() {
-    var text = '0';
-    style = { font: '15px Arial', fill: '#fff', align: 'center', backgroundColor: '#000000' };
-    this.notificationLabel = this.game.add.text(25, 25, text, style);
-    this.notificationLabel.fixedToCamera = true;
-  },
+
+
+
+  // ** PLAYER GENERATOR AND HANDLER **
 
   playerHandler: function() {
     if (this.player.alive) {
@@ -159,13 +154,26 @@ GAImmersered.Game.prototype = {
     }
   },
 
+
+
+
+  // ** COLLISION FUNCTION **
+
   collisionHandler: function() {
     this.game.physics.arcade.collide(this.obstacles, this.player, null, null, this);
-    this.game.physics.arcade.collide(this.player, this.wall, null, null, this);
+    this.game.physics.arcade.collide(this.player, this.object, null, null, this);
     this.game.physics.arcade.overlap(this.collectables, this.player, this.collect, null, this);
     this.game.physics.arcade.collide(this.player, this.npc1, this.npc1Collision, null, this);
     this.game.physics.arcade.collide(this.player, this.npc2, this.npc2Collision, null, this);
     // this.game.physics.arcade.collide(this.player, this.amir, this.amirCollision, null, this);
+  },
+
+  objectCollision: function(obj) {
+    let object = this.object.create(obj.x, obj.y, 'tiles');
+    this.game.physics.arcade.enable(object);
+    object.scale.setTo(obj.width/16,obj.height/16);
+    object.body.moves = false;
+    return object;
   },
 
   npc1Collision: function(player, npc1) {
@@ -184,18 +192,10 @@ GAImmersered.Game.prototype = {
   //   amir.text = this.game.add.text(230, 200, 'Hey, want some scripts?',{font: '15px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
   // },
 
-  collectableCollision: function(player, collectable){
-    collectable.events.onInputDown.add(this.collectListener, this);
-    return this.collectable;
-  },
 
-  generateWallFromTiledObject: function(obj) {
-    let wall = this.wall.create(obj.x, obj.y, 'tiles');
-    this.game.physics.arcade.enable(wall);
-    wall.scale.setTo(obj.width/16,obj.height/16);
-    wall.body.moves = false;
-    return wall;
-  },
+
+
+  // ** GENERATE CHARACTERS **
 
   generateNpc1: function() {
     npc1 = this.game.add.sprite(15, 60, 'characters');
@@ -224,14 +224,25 @@ GAImmersered.Game.prototype = {
   //   return amir;
   // },
 
+
+
+
+  // ** GENERATE CHEST/COLLECT CHEST **
+
+  showLabels: function() {
+    var text = '0';
+    style = { font: '15px Arial', fill: '#fff', align: 'center', backgroundColor: '#000000' };
+    this.notificationLabel = this.game.add.text(25, 25, text, style);
+    this.notificationLabel.fixedToCamera = true;
+  },
+
   collect: function(player, collectable) {
     if (!collectable.collected) {
       collectable.collected = true;
-      let gain;
       if (collectable.name === 'chest') {
           collectable.animations.play('open');
-          this.gold += collectable.value;
           this.notification = collectable.value;
+          collectable.lifespan = 5000;
       }
     }
   },
@@ -245,7 +256,7 @@ GAImmersered.Game.prototype = {
   },
 
   generateChest1: function () {
-    const collectable = this.collectables.create(200, 200, 'things');
+    const collectable = this.collectables.create(150, 500, 'things');
     collectable.scale.setTo(2);
     collectable.animations.add('idle', [6], 0, true);
     collectable.animations.add('open', [18, 30, 42], 10, false);
@@ -256,7 +267,7 @@ GAImmersered.Game.prototype = {
   },
 
   generateChest2: function () {
-    const collectable = this.collectables.create(130, 220, 'things');
+    const collectable = this.collectables.create(100, 500, 'things');
     collectable.scale.setTo(2);
     collectable.animations.add('idle', [6], 0, true);
     collectable.animations.add('open', [18, 30, 42], 10, false);
