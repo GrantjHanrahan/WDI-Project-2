@@ -43,6 +43,7 @@ GAImmersered.Game.prototype = {
     this.player = this.generatePlayer(); // Generate Player
     this.npc1 = this.generateNpc1(); // Generate NPC
     this.npc2 = this.generateNpc2(); // Generate NPC
+    // this.amir = this.generateAmir();
 
     this.game.camera.follow(this.player); // Camera Following Players
     this.controls = {
@@ -50,7 +51,8 @@ GAImmersered.Game.prototype = {
       left: this.game.input.keyboard.addKey(Phaser.Keyboard.A),
       down: this.game.input.keyboard.addKey(Phaser.Keyboard.S),
       right: this.game.input.keyboard.addKey(Phaser.Keyboard.D),
-      spell: this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR)
+      spell: this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR),
+      enter: this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER)
     }; // Set Controller
   },
 
@@ -147,26 +149,29 @@ GAImmersered.Game.prototype = {
     this.game.physics.arcade.collide(this.obstacles, this.player, null, null, this);
     this.game.physics.arcade.collide(this.collectables, this.player, this.collectableCollision, null, this);
     this.game.physics.arcade.collide(this.player, this.wall, null, null, this);
-    this.game.physics.arcade.collide(this.player, this.npc1, this.spriteCollision, null, this);
-    this.game.physics.arcade.collide(this.player, this.npc2, this.spriteCollision, null, this);
+    this.game.physics.arcade.collide(this.player, this.npc1, this.npc1Collision, null, this);
+    this.game.physics.arcade.collide(this.player, this.npc2, this.npc2Collision, null, this);
+    // this.game.physics.arcade.collide(this.player, this.amir, this.amirCollision, null, this);
   },
 
-  spriteCollision: function(player, npc1) {
-    // npc.events.onInputDown.add(this.npcListener, this);
-    // console.log('npc collision');
-    //only show text after player has collied with the npc
-    // if (npc == this.npc1){
-    // npc = [this.npc1, this.npc2];
-    if(npc1){
-      this.text = this.game.add.text(50, 60, 'Fark yeah',{font: '15px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
+  npc1Collision: function(player, npc1) {
+    npc1.text = this.game.add.text(50, 60, 'Fark yeah',{font: '15px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
+
+    if(this.controls.enter.isDown){
+      console.log('enterrrr');
+      npc1.text.destroy();
     }
-    // else if (npc2){
-    //   this.text = this.game.add.text(70, 90, 'Yoyo ',{font: '15px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
-    // } else{
-    //   console.log('pop');
-    // }
-    return text;
+
   },
+
+  npc2Collision: function(player, npc2){
+    npc2.text = this.game.add.text(330, 410, 'Yoyo ',{font: '15px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
+  },
+
+  // amirCollision: function(player, amir){
+  //   console.log('happening');
+  //   amir.text = this.game.add.text(230, 200, 'Hey, want some scripts?',{font: '15px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
+  // },
 
   collectableCollision: function(player, collectable){
     collectable.events.onInputDown.add(this.collectListener, this);
@@ -196,19 +201,22 @@ GAImmersered.Game.prototype = {
   },
 
   generateNpc2: function() {
-    npc2 = this.game.add.sprite(40, 90, 'characters');
+    npc2 = this.game.add.sprite(450, 570, 'characters');
     this.game.physics.arcade.enable(npc2);
     npc2.body.immovable = true;
     npc2.frame = 10;
     npc2.scale.setTo(2);
     return npc2;
-  },
-
-
-  npcListener: function(text){
-    // console.log('hit');
-    // this.text.destroy()
   }
+
+  // generateAmir: function() {
+  //   amir = this.game.add.sprite(200, 200, 'characters');
+  //   this.game.physics.arcade.enable(amir);
+  //   amir.body.immovable = true;
+  //   amir.frame = 110;
+  //   amir.scale.setTo(2);
+  //   return amir;
+  // },
 
 
 };
