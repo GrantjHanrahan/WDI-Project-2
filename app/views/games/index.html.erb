@@ -6,9 +6,12 @@ GAImmersered.game.state.add('Preloader', GAImmersered.Preloader);
 GAImmersered.game.state.add('MainMenu', GAImmersered.MainMenu);
 GAImmersered.game.state.add('Game', GAImmersered.Game);
 GAImmersered.game.state.start('Boot');
-var playerName = '<%= @current_user %>';
+var playerName = '<%= @user %>';
 </script>
 <script type="text/javascript" src="/assets/Boot.js"></script>
 <script type="text/javascript" src="/assets/Preloader.js"></script>
 <script type="text/javascript" src="/assets/MainMenu.js"></script>
 <script type="text/javascript" src="/assets/Game.js"></script>
+
+
+<p>Hi <%= @user %></p>
