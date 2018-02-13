@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.2" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="32" tileheight="32" infinite="0" nextobjectid="54">
+<map version="1.0" tiledversion="1.1.2" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="32" tileheight="32" infinite="0" nextobjectid="79">
  <tileset firstgid="1" source="Pokemon Interior.tsx"/>
  <tileset firstgid="7985" name="Pokemon Interior" tilewidth="32" tileheight="32" tilecount="7984" columns="8">
   <image source="all_tiles.png" width="256" height="31942"/>
@@ -30,16 +30,16 @@
  </layer>
  <layer name="Furniture" width="20" height="20">
   <data encoding="csv">
-125,126,0,0,0,0,0,0,0,0,0,0,27,0,0,0,0,0,0,0,
-133,134,0,0,0,0,0,306,0,0,0,0,27,0,0,0,0,0,0,0,
-141,142,0,259,260,260,261,314,0,217,218,219,27,0,0,0,0,0,0,0,
-0,0,0,267,268,268,269,322,0,225,226,227,27,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,233,234,235,27,0,0,0,0,0,0,0,
-0,0,0,307,308,308,309,0,0,0,0,0,27,0,0,0,0,0,0,0,
-0,0,0,315,316,316,317,0,0,15,0,0,27,0,0,0,0,0,0,0,
-0,0,145,323,324,324,325,0,0,0,0,0,27,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,27,0,0,0,0,0,0,0,
-18,18,18,18,18,4,4,18,18,18,18,18,18,0,0,0,0,0,0,0,
+18,18,18,18,18,18,18,18,18,18,18,18,19,18,18,18,18,18,18,19,
+133,134,0,0,0,0,0,306,0,0,0,0,27,686,687,688,0,681,682,27,
+141,142,0,259,260,260,261,314,0,0,0,0,27,694,695,696,0,689,690,27,
+0,0,0,267,268,268,269,124,0,2684354793,2684354785,2684354777,27,0,0,0,0,0,0,27,
+150,0,0,0,0,0,0,132,0,2684354794,2684354786,2684354778,27,0,0,285,286,287,124,27,
+158,0,0,307,308,308,309,140,0,2684354794,2684354786,2684354778,27,0,150,293,294,295,132,27,
+0,0,0,315,316,316,317,0,0,2684354795,2684354787,2684354779,27,0,158,301,302,303,140,27,
+0,0,145,323,324,324,325,0,0,0,0,0,27,0,0,0,0,0,72,27,
+0,0,0,0,0,0,0,0,0,0,0,0,27,0,0,0,0,0,80,27,
+18,18,18,18,18,4,4,18,18,18,18,18,18,18,18,0,0,18,18,18,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -54,12 +54,24 @@
  </layer>
  <objectgroup name="Object Layer 1">
   <object id="16" name="Couch" type="object" x="96" y="80" width="128" height="48"/>
-  <object id="17" name="Plant" type="object" x="224" y="56" width="32" height="72"/>
+  <object id="17" name="Plant" type="object" x="224" y="56" width="32" height="40"/>
   <object id="36" name="Wall 3" type="object" x="0" y="288" width="160" height="16"/>
   <object id="37" name="Wall 2" type="object" x="224" y="288" width="192" height="16"/>
   <object id="38" name="Wall 1" type="object" x="400" y="0" width="16" height="288"/>
-  <object id="41" name="Bed" type="object" x="312" y="88" width="48" height="56"/>
+  <object id="41" name="Bed" type="object" x="296" y="112" width="72" height="96"/>
   <object id="45" name="Fridge" type="object" x="0" y="24" width="64" height="56"/>
-  <object id="53" name="Chair" type="object" x="288" y="192" width="32" height="32"/>
+  <object id="54" name="Bedroom 2" type="object" x="224" y="120" width="32" height="72"/>
+  <object id="55" name="Bedroom 2" type="object" x="0" y="128" width="32" height="48"/>
+  <object id="56" name="Bedroom 2" type="object" x="0" y="0" width="416" height="16"/>
+  <object id="59" name="Bedroom 2" type="object" x="416" y="0" width="224" height="16"/>
+  <object id="62" name="Bedroom 2" type="object" x="624" y="16" width="16" height="272"/>
+  <object id="63" name="Bedroom 2" type="object" x="544" y="288" width="96" height="16"/>
+  <object id="67" name="Bedroom 2" type="object" x="576" y="256" width="32" height="32"/>
+  <object id="68" name="Bedroom 2" type="object" x="576" y="144" width="32" height="80"/>
+  <object id="69" name="Bedroom 2" type="object" x="448" y="160" width="32" height="48"/>
+  <object id="70" name="Bedroom 2" type="object" x="544" y="32" width="64" height="48"/>
+  <object id="72" name="Bedroom 2" type="object" x="544" y="80" width="32" height="16"/>
+  <object id="73" name="Bedroom 2" type="object" x="440" y="32" width="48" height="64"/>
+  <object id="78" name="Bedroom 2" type="object" x="416" y="288" width="64" height="16"/>
  </objectgroup>
 </map>

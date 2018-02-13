@@ -6,7 +6,7 @@ GAImmersered.Game.prototype = {
     console.log('PRELOAD HERE');
     this.game.load.image('mapTiles', '/assets/all_tiles.png');
     this.game.load.tilemap('mapRoom', '/assets/finalTest.json', null, Phaser.Tilemap.TILED_JSON);
-    this.game.world.setBounds(0, 0, 600, 600);
+    this.game.world.setBounds(0, 0, 650, 600);
     console.log('PRELOAD DONE');
   },
 
