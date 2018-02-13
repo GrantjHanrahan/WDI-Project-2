@@ -44,6 +44,13 @@ GAImmersered.Game.prototype = {
     this.npc1 = this.generateNpc1(); // Generate NPC
     this.npc2 = this.generateNpc2(); // Generate NPC
 
+    this.generateCollectables();
+    this.generateChest(); // Generate Chess
+    this.notification = ''; // Generate Notification
+    this.gold = 0; // Generate Gold
+    this.showLabels();
+
+
     this.game.camera.follow(this.player); // Camera Following Players
     this.controls = {
       up: this.game.input.keyboard.addKey(Phaser.Keyboard.W),
@@ -57,6 +64,15 @@ GAImmersered.Game.prototype = {
   update: function() {
     this.playerHandler();
     this.collisionHandler();
+    this.notificationLabel.text = this.notification;
+  },
+
+  showLabels: function() {
+
+    var text = '0';
+    style = { font: '10px Arial', fill: '#fff', align: 'center' };
+    this.notificationLabel = this.game.add.text(25, 25, text, style);
+    this.notificationLabel.fixedToCamera = true;
   },
 
   playerHandler: function() {
@@ -145,10 +161,11 @@ GAImmersered.Game.prototype = {
 
   collisionHandler: function() {
     this.game.physics.arcade.collide(this.obstacles, this.player, null, null, this);
-    this.game.physics.arcade.collide(this.collectables, this.player, this.collectableCollision, null, this);
+    // this.game.physics.arcade.overlap(this.collectables, this.player, this.collect, null, this);
     this.game.physics.arcade.collide(this.player, this.wall, null, null, this);
     this.game.physics.arcade.collide(this.player, this.npc1, this.spriteCollision, null, this);
     this.game.physics.arcade.collide(this.player, this.npc2, this.spriteCollision, null, this);
+    this.game.physics.arcade.overlap(this.collectables, this.player, this.collect, null, this);
   },
 
   spriteCollision: function(player, npc1) {
@@ -199,11 +216,37 @@ GAImmersered.Game.prototype = {
     return npc2;
   },
 
-
   npcListener: function(text){
     // console.log('hit');
     // this.text.destroy()
-  }
+  },
 
+  collect: function(player, collectable) {
+        if (!collectable.collected) {
+            collectable.collected = true;
+            var gain;
+            if (collectable.name === 'chest') {
+                collectable.animations.play('open');
+                this.gold += collectable.value;
+                this.notification = 'You open a chest and find ' + collectable.value + ' gold!';
+            }
+        }
+    },
 
+    generateCollectables: function () {
+      this.collectables = this.game.add.group();
+      this.collectables.enableBody = true;
+      this.collectables.physicsBodyType = Phaser.Physics.ARCADE;
+      this.generateChest();
+    },
+    generateChest: function () {
+      var collectable = this.collectables.create(200, 300, 'things');
+        collectable.scale.setTo(2);
+        collectable.animations.add('idle', [6], 0, true);
+        collectable.animations.add('open', [18, 30, 42], 10, false);
+        collectable.animations.play('idle');
+        collectable.name = 'chest'
+        collectable.value = 500;
+        return collectable;
+    },
 };
