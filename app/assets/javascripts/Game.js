@@ -155,11 +155,9 @@ GAImmersered.Game.prototype = {
   },
 
   npc1Collision: function(player, npc1) {
-    npc1.text = this.game.add.text(50, 60, 'Fark yeah',{font: '15px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
-
     if(this.controls.enter.isDown){
-      console.log('enterrrr');
-      npc1.text.destroy();
+      // console.log('enterrrr');
+      npc1.text = this.game.add.text(50, 60, 'Fark yeah',{font: '15px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
     }
 
   },
