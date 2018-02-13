@@ -24,7 +24,7 @@ GAImmersered.Game.prototype = {
     this.bgLayer = this.level1.createLayer('Background');
     this.bgFurniture = this.level1.createLayer('Furniture');
     this.bgFurniture.enableBody = true; // Enable Physics to Game
-    this.wallsLayer = this.level1.createLayer('Walls');
+    // this.wallsLayer = this.level1.createLayer('Walls');
 
     // Loop Over Objects Generated
     for (var ol in this.level1.objects) {
@@ -32,8 +32,8 @@ GAImmersered.Game.prototype = {
     		var object = this.level1.objects[ol][o];
     		console.log('obj:', object);
         // Make a Phaser game object from the objects in this Tiled JSON list
-        if( object.type === 'enemy' ){
-          // Make an Enemy Object
+        if( object.type === 'wall' ){
+          // Make an Table Object
           this.generateWallFromTiledObject(object)
         }
       }
@@ -159,11 +159,13 @@ GAImmersered.Game.prototype = {
 
   generateWallFromTiledObject: function(obj) {
     let wall = this.wall.create(obj.x, obj.y, 'tiles');
+    this.game.physics.arcade.enable(wall);
+    console.log(obj.x/16, obj.y);
     // wall.game.add.sprite();
     // wall.animations.add('skel', [14], 0, true);
     // wall.animations.play('skel');
     // wall.frame = 10; //Sprite Image
-    // wall.scale.setTo(2);
+    wall.scale.setTo(2);
     wall.body.moves = false;
     return wall;
   },
