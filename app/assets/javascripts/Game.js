@@ -34,7 +34,7 @@ GAImmersered.Game.prototype = {
     for (var ol in this.level1.objects) {
     	for (var o in this.level1.objects[ol]) {
     		var object = this.level1.objects[ol][o];
-    		console.log('obj:', object);
+    		// console.log('obj:', object);
         // Make a Phaser game object from the objects in this Tiled JSON list
         if( object.type === 'object' ){
           this.objectCollision(object)
@@ -57,7 +57,7 @@ GAImmersered.Game.prototype = {
 
     this.npc1 = this.generateNpc1(); // Generate NPC
     this.npc2 = this.generateNpc2(); // Generate NPC
-    // this.amir = this.generateAmir();
+    this.milo = this.generateMilo(); //Generate Milo
 
     this.generateCollectables();
     this.notification = ''; // Generate Notification
@@ -225,11 +225,12 @@ GAImmersered.Game.prototype = {
     this.game.physics.arcade.overlap(this.collectables, this.player, this.collect, null, this);
     this.game.physics.arcade.collide(this.player, this.npc1, this.npc1Collision, null, this);
     this.game.physics.arcade.collide(this.player, this.npc2, this.npc2Collision, null, this);
-    // this.game.physics.arcade.collide(this.player, this.amir, this.amirCollision, null, this);
+    this.game.physics.arcade.collide(this.player, this.milo, this.miloCollision, null, this);
   },
 
   objectCollision: function(obj) {
     let object = this.object.create(obj.x, obj.y, 'tiles');
+    console.log(object)
     this.game.physics.arcade.enable(object);
     object.scale.setTo(obj.width/16,obj.height/16);
     object.body.moves = false;
@@ -250,10 +251,11 @@ GAImmersered.Game.prototype = {
       text.autoCull = true;
   },
 
-  // amirCollision: function(player, amir){
-  //   console.log('happening');
-  //   amir.text = this.game.add.text(230, 200, 'Hey, want some scripts?',{font: '15px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
-  // },
+  miloCollision: function(player, milo){
+    text = this.game.add.text(230, 200, '.....?',{font: '15px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
+    text.outOfCameraBoundsKill = true;
+    text.autoCull = true;
+  },
 
   // ** GENERATE CHARACTERS **
 
@@ -270,21 +272,22 @@ GAImmersered.Game.prototype = {
   generateNpc2: function() {
     npc2 = this.game.add.sprite(450, 570, 'characters');
     this.game.physics.arcade.enable(npc2);
-    npc2.game.inputEnabled = true;
+    // npc2.game.inputEnabled = true;
     npc2.body.immovable = true;
     npc2.frame = 55;
     npc2.scale.setTo(2);
     return npc2;
   },
 
-  // generateAmir: function() {
-  //   amir = this.game.add.sprite(200, 200, 'characters');
-  //   this.game.physics.arcade.enable(amir);
-  //   amir.body.immovable = true;
-  //   amir.frame = 110;
-  //   amir.scale.setTo(2);
-  //   return amir;
-  // },
+  generateMilo: function() {
+    milo = this.game.add.sprite(300, 500, 'milo');
+    this.game.physics.arcade.enable(milo);
+    milo.game.inputEnabled = true;
+    milo.body.immovable = true;
+    milo.frame = 8;
+    milo.scale.setTo(1);
+    return milo;
+  },
 
   // ** GENERATE CHEST/COLLECT CHEST **
 
