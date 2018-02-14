@@ -17,7 +17,7 @@
 </select>
 
 <div id="gameContainer"></div>
-
+<button id="save">Save</button>
 
 <script>
 var selectedPlayer;
@@ -29,6 +29,12 @@ GAImmersered.game.state.add('Preloader', GAImmersered.Preloader);
 GAImmersered.game.state.add('MainMenu', GAImmersered.MainMenu);
 GAImmersered.game.state.add('Game', GAImmersered.Game);
 // debugger;
+
+$('#save').on('click', function(){
+
+  GAImmersered.game.state.states.Game.saveGame();
+
+})
 
 $('#playerSelected').on('change', function(){
   selectedPlayer = $('#playerSelected').val();

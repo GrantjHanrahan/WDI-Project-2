@@ -5,6 +5,28 @@ GAImmersered.Game = function(game) {};
 
 GAImmersered.Game.prototype = {
 
+  saveGame: function () {
+    console.log('IN saveGame');
+
+    let saveObject = {};
+
+    saveObject.player = {
+      position: this.player.position
+    };
+
+    let json = JSON.stringify(saveObject);
+
+    $.ajax(saveGame, {
+      slot_1: json
+    })
+    .done();
+
+    // saveObject.player = this.player.map(function(player) {
+    //   return JSON.parse(player.serialize());
+    // });
+    debugger;
+  },
+
   preload: function(){
     console.log('PRELOAD HERE');
     this.game.load.image('mapTiles', 'assets/all_tiles.png');
@@ -50,7 +72,7 @@ GAImmersered.Game.prototype = {
     };
     var playerFunc = playerSprites[ selectedPlayer ];
     this.player = this[playerFunc]();  // this.generateCharacter1();
-
+    console.log('THIS', this);
     // Step 4 - Generate Remaining Game
     // this.player = this.generatePlayer(); // Generate Player
     // this.player = this.generateCharacter2();
@@ -60,9 +82,11 @@ GAImmersered.Game.prototype = {
     // this.amir = this.generateAmir();
 
     this.generateCollectables();
+    this.generateEnemies(1);
     this.notification = ''; // Generate Notification
     this.gold = 0; // Generate Gold
     this.showLabels();
+    enemy.scale.setTo(2);
 
     this.game.camera.follow(this.player); // Camera Following Players
     this.controls = {
@@ -78,6 +102,7 @@ GAImmersered.Game.prototype = {
   update: function() {
     this.playerHandler();
     this.collisionHandler();
+    this.enemyHandler();
     this.notificationLabel.text = this.notification;
   },
 
@@ -90,6 +115,11 @@ GAImmersered.Game.prototype = {
         this.player.health = this.player.vitality;
       }
     }
+
+    if (!this.player.alive) {
+            this.deathHandler(this.player);
+            this.game.time.events.add(1000, this.gameOver, this);
+        }
   },
 
   generateCharacter1: function() {
@@ -214,9 +244,6 @@ GAImmersered.Game.prototype = {
     }
   },
 
-
-
-
   // ** COLLISION FUNCTION **
 
   collisionHandler: function() {
@@ -335,4 +362,107 @@ GAImmersered.Game.prototype = {
     collectable.value = 'SOME GREAT CODE!';
     return collectable;
   },
+
+  // ** GENERATE MOVING CHARACTER **
+
+  enemyHandler: function() {
+        this.enemies.forEachAlive(function(enemy) {
+            if (enemy.visible && enemy.inCamera) {
+                this.game.physics.arcade.moveToObject(enemy, this.player, enemy.speed)
+                this.enemyMovementHandler(enemy);
+            }
+        }, this);
+
+        this.enemies.forEachDead(function(enemy) {
+            if (this.rng(0, 5)) {
+                this.generateGold(enemy);
+            } else if (this.rng(0, 2)) {
+                this.generatePotion(enemy);
+                this.notification = 'The ' + enemy.name + ' dropped a potion!';
+            }
+            this.xp += enemy.reward;
+            this.generateEnemy(this.enemies);
+            this.deathHandler(enemy);
+        }, this);
+    },
+
+    deathHandler: function (target) {
+
+        var corpse = this.corpses.create(target.x, target.y, 'dead')
+        corpse.scale.setTo(2);
+        corpse.animations.add('idle', [target.corpseSprite], 0, true);
+        corpse.animations.play('idle');
+        corpse.lifespan = 3000;
+        target.destroy();
+    },
+
+    generateEnemies: function (amount) {
+
+        this.enemies = this.game.add.group();
+
+        // Enable physics in them
+        this.enemies.enableBody = true;
+        this.enemies.physicsBodyType = Phaser.Physics.ARCADE;
+
+        for (var i = 0; i < amount; i++) {
+            this.generateEnemy();
+        }
+    },
+
+    generateEnemy: function () {
+
+
+        enemy = this.enemies.create(this.game.world.randomX, this.game.world.randomY, 'characters');
+
+        do {
+            enemy.reset(this.game.world.randomX, this.game.world.randomY);
+        } while (Phaser.Math.distance(this.player.x, this.player.y, enemy.x, enemy.y) <= 400)
+
+        var rnd = Math.random();
+        if (rnd >= 0 && rnd < .3) enemy = this.generateSkeleton(enemy);
+        else if (rnd >= .3 && rnd < .4) enemy = this.generateSpider(enemy);
+
+
+        return enemy;
+    },
+
+    generateSkeleton: function (enemy) {
+
+        enemy.animations.add('down', [9, 10, 11], 10, true);
+        enemy.animations.add('left', [21, 22, 23], 10, true);
+        enemy.animations.add('right', [33, 34, 35], 10, true);
+        enemy.animations.add('up', [45, 46, 47], 10, true);
+
+
+    },
+
+    generateSpider: function (enemy) {
+
+        enemy.animations.add('down', [57, 58, 59], 10, true);
+        enemy.animations.add('left', [69, 70, 71], 10, true);
+        enemy.animations.add('right', [81, 82, 83], 10, true);
+        enemy.animations.add('up', [93, 94, 95], 10, true);
+
+    },
+
+    enemyMovementHandler: function (enemy) {
+
+        // Left
+        if (enemy.body.velocity.x < 0 && enemy.body.velocity.x <= -Math.abs(enemy.body.velocity.y)) {
+             enemy.animations.play('left');
+
+        // Right
+        } else if (enemy.body.velocity.x > 0 && enemy.body.velocity.x >= Math.abs(enemy.body.velocity.y)) {
+             enemy.animations.play('right');
+
+        // Up
+        } else if (enemy.body.velocity.y < 0 && enemy.body.velocity.y <= -Math.abs(enemy.body.velocity.x)) {
+            enemy.animations.play('up');
+
+        // Down
+        } else {
+            enemy.animations.play('down');
+        }
+    },
+
 };
