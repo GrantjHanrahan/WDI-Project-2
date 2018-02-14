@@ -129,6 +129,41 @@ GAImmersered.Game.prototype = {
     return player;
   },
 
+  generateCharacter3: function() {
+    var player = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'characters');
+    player.animations.add('down', [ 6, 7, 8 ], 10, true);
+    player.animations.add('left', [ 18, 19, 20 ], 10, true);
+    player.animations.add('right', [ 30, 31, 32 ], 10, true);
+    player.animations.add('up', [ 42, 43, 44 ], 10, true);
+    player.animations.play('down');
+    player.scale.setTo(2);
+    this.game.physics.arcade.enable(player);
+    player.body.collideWorldBounds = true
+    player.alive = true;
+    player.name = 'Grant';
+    player.speed = 125;
+    player.invincibilityFrames = 500;
+    player.invincibilityTime = 0;
+    return player;
+  },
+  generateCharacter4: function() {
+    var player = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'characters');
+    player.animations.add('down', [ 9, 10, 11 ], 10, true);
+    player.animations.add('left', [ 21, 22, 23 ], 10, true);
+    player.animations.add('right', [ 33, 34, 35 ], 10, true);
+    player.animations.add('up', [ 45, 46, 47 ], 10, true);
+    player.animations.play('down');
+    player.scale.setTo(2);
+    this.game.physics.arcade.enable(player);
+    player.body.collideWorldBounds = true
+    player.alive = true;
+    player.name = 'Grant';
+    player.speed = 125;
+    player.invincibilityFrames = 500;
+    player.invincibilityTime = 0;
+    return player;
+  },
+
   playerMovementHandler: function() {
       // Up-Left
     if (this.controls.up.isDown && this.controls.left.isDown) {
