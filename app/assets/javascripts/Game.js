@@ -4,10 +4,14 @@ GAImmersered.Game.prototype = {
 
   preload: function(){
     console.log('PRELOAD HERE');
-    this.game.load.image('mapTiles', '/assets/all_tiles.png');
+    this.game.load.image('mapTiles1', '/assets/Interior_1.png');
+    this.game.load.image('mapTiles2', '/assets/Interior_3.png');
+    this.game.load.image('mapTiles3', '/assets/BlueCarpetTileset.png');
+
+
     // this.game.load.tilemap('PokemonTestRoom', '/assets/PokemonTestRoom.json', null, Phaser.Tilemap.TILED_JSON);
-    this.game.load.tilemap('PokemonTestRoom', '/assets/finalTest.json', null, Phaser.Tilemap.TILED_JSON);
-    this.game.world.setBounds(0, 0, 600, 600);
+    this.game.load.tilemap('Gav2.2', '/assets/Gav2.2.json', null, Phaser.Tilemap.TILED_JSON);
+    this.game.world.setBounds(0, 0, 1600, 1200);
     console.log('PRELOAD DONE');
   },
 
@@ -24,15 +28,27 @@ GAImmersered.Game.prototype = {
        this.enemies.enableBody = true;
 
     // other objects, etc
-       this.level1 = this.game.add.tilemap('PokemonTestRoom'); // step 1
-       this.level1.addTilesetImage('Pokemon Interior', 'mapTiles'); // step 2
+       this.level1 = this.game.add.tilemap('Gav2.2'); // step 1
+       this.level1.addTilesetImage('Pokemon Interior',  'mapTiles1');
+       this.level1.addTilesetImage('Interior_3',        'mapTiles2');
+       this.level1.addTilesetImage('BlueCarpetTileset', 'mapTiles3');
+
+       // this.level1.addTilesetImage('Pokemon Interior', 'mapTiles'); // step 2
+       // this.level1.addTilesetImage('blueCarpetInterior', 'mapTiles'); // step 2
+       // this.level1.addTilesetImage('Interior_3', 'mapTiles'); // step 2
+       // this.level1.addTilesetImage('Interior4', 'mapTiles'); // step 2
+       // this.level1.addTilesetImage('Health_Potion', 'mapTiles'); // step 2
+
+
 
        // step 3
-       this.bgLayer = this.level1.createLayer('Background');
-       this.bgFurniture = this.level1.createLayer('Furniture');
-       this.bgFurniture.enableBody = true;
-
+       this.bgLayer = this.level1.createLayer('Floor');
+       this.bgFurniture = this.level1.createLayer('Lower Background Furniture');
+       // this.bgFurniture.enableBody = true;
+       this.bgFurniture = this.level1.createLayer('Lower Foreground Furniture');
        this.wallsLayer = this.level1.createLayer('Walls');
+       this.bgFurniture = this.level1.createLayer('Upper Furniture');
+
 
        // var map = game.make.tilemap('map');
 
