@@ -7,8 +7,8 @@ GAImmersered.Game.prototype = {
 
   preload: function(){
     console.log('PRELOAD HERE');
-    this.game.load.image('mapTiles', '/assets/all_tiles.png');
-    this.game.load.tilemap('mapRoom', '/assets/finalTest.json', null, Phaser.Tilemap.TILED_JSON);
+    this.game.load.image('mapTiles', 'assets/all_tiles.png');
+    this.game.load.tilemap('mapRoom', 'assets/finalTest.json', null, Phaser.Tilemap.TILED_JSON);
     this.game.world.setBounds(0, 0, 650, 600);
     console.log('PRELOAD DONE');
   },
@@ -93,23 +93,7 @@ GAImmersered.Game.prototype = {
   },
 
   generateCharacter1: function() {
-    var player = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'characters');
-    player.animations.add('down', [ 0, 1, 2 ], 10, true);
-    player.animations.add('left', [ 12, 13, 14 ], 10, true);
-    player.animations.add('right', [ 24, 25, 26 ], 10, true);
-    player.animations.add('up', [ 36, 37, 38 ], 10, true);
-    player.animations.play('down');
-    player.scale.setTo(2);
-    this.game.physics.arcade.enable(player);
-    player.body.collideWorldBounds = true
-    player.alive = true;
-    player.name = 'Grant';
-    player.speed = 125;
-    player.invincibilityFrames = 500;
-    player.invincibilityTime = 0;
-    return player;
-  },
-  generateCharacter2: function() {
+
     var player = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'characters');
     player.animations.add('down', [ 3, 4, 5 ], 10, true);
     player.animations.add('left', [ 15, 16, 17 ], 10, true);
@@ -126,29 +110,13 @@ GAImmersered.Game.prototype = {
     player.invincibilityTime = 0;
     return player;
   },
-  generateCharacter3: function() {
+  generateCharacter2: function() {
+
     var player = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'characters');
     player.animations.add('down', [ 6, 7, 8 ], 10, true);
     player.animations.add('left', [ 18, 19, 20 ], 10, true);
     player.animations.add('right', [ 30, 31, 32 ], 10, true);
     player.animations.add('up', [ 42, 43, 44 ], 10, true);
-    player.animations.play('down');
-    player.scale.setTo(2);
-    this.game.physics.arcade.enable(player);
-    player.body.collideWorldBounds = true
-    player.alive = true;
-    player.name = 'Grant';
-    player.speed = 125;
-    player.invincibilityFrames = 500;
-    player.invincibilityTime = 0;
-    return player;
-  },
-  generateCharacter4: function() {
-    var player = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'characters');
-    player.animations.add('down', [ 9, 10, 11 ], 10, true);
-    player.animations.add('left', [ 21, 22, 23 ], 10, true);
-    player.animations.add('right', [ 33, 34, 35 ], 10, true);
-    player.animations.add('up', [ 45, 46, 47 ], 10, true);
     player.animations.play('down');
     player.scale.setTo(2);
     this.game.physics.arcade.enable(player);
@@ -234,16 +202,16 @@ GAImmersered.Game.prototype = {
 
   npc1Collision: function(player, npc1) {
     // if(this.controls.enter.isDown){
-    text = this.game.add.text(50, 60, "Alumni Ghost: \nThe scripts are located...",{font: '13px Arial', fill:'#FFFFFF', backgroundColor: 'rgba(black, 0.1)'});
-    text.outOfCameraBoundsKill = true;
-    text.autoCull = true;
+      text = this.game.add.text(50, 60, 'The scripts are located...',{font: '15px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
+      text.outOfCameraBoundsKill = true;
+      text.autoCull = true;
     // }
   },
 
   npc2Collision: function(player, npc2){
-    text = this.game.add.text(485, 555, "Alumni Ghost: \nScriptsss...",{font: '13px Arial', fill:'#FFFFFF', backgroundColor: 'rgba(black, 0.1)'});
-    text.outOfCameraBoundsKill = true;
-    text.autoCull = true;
+      text = this.game.add.text(480, 570, 'Scriptsss.... ',{font: '15px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
+      text.outOfCameraBoundsKill = true;
+      text.autoCull = true;
   },
 
   // amirCollision: function(player, amir){
@@ -258,7 +226,7 @@ GAImmersered.Game.prototype = {
     this.game.physics.arcade.enable(npc1);
     npc1.game.inputEnabled = true;
     npc1.body.immovable = true;
-    npc1.frame = 55;
+    npc1.frame = 10;
     npc1.scale.setTo(2);
     return npc1;
   },
@@ -268,7 +236,7 @@ GAImmersered.Game.prototype = {
     this.game.physics.arcade.enable(npc2);
     npc2.game.inputEnabled = true;
     npc2.body.immovable = true;
-    npc2.frame = 55;
+    npc2.frame = 10;
     npc2.scale.setTo(2);
     return npc2;
   },
