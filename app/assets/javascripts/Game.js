@@ -95,6 +95,25 @@ GAImmersered.Game.prototype = {
   generateCharacter1: function() {
 
     var player = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'characters');
+    player.animations.add('down', [ 0, 1, 2 ], 10, true);
+    player.animations.add('left', [ 12, 13, 14 ], 10, true);
+    player.animations.add('right', [ 24, 25, 26 ], 10, true);
+    player.animations.add('up', [ 36, 37, 38 ], 10, true);
+    player.animations.play('down');
+    player.scale.setTo(2);
+    this.game.physics.arcade.enable(player);
+    player.body.collideWorldBounds = true
+    player.alive = true;
+    player.name = 'Grant';
+    player.speed = 125;
+    player.invincibilityFrames = 500;
+    player.invincibilityTime = 0;
+    return player;
+  },
+
+  generateCharacter2: function() {
+
+    var player = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'characters');
     player.animations.add('down', [ 3, 4, 5 ], 10, true);
     player.animations.add('left', [ 15, 16, 17 ], 10, true);
     player.animations.add('right', [ 27, 28, 29 ], 10, true);
@@ -110,26 +129,8 @@ GAImmersered.Game.prototype = {
     player.invincibilityTime = 0;
     return player;
   },
-  generateCharacter2: function() {
-
-    var player = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'characters');
-    player.animations.add('down', [ 6, 7, 8 ], 10, true);
-    player.animations.add('left', [ 18, 19, 20 ], 10, true);
-    player.animations.add('right', [ 30, 31, 32 ], 10, true);
-    player.animations.add('up', [ 42, 43, 44 ], 10, true);
-    player.animations.play('down');
-    player.scale.setTo(2);
-    this.game.physics.arcade.enable(player);
-    player.body.collideWorldBounds = true
-    player.alive = true;
-    player.name = 'Grant';
-    player.speed = 125;
-    player.invincibilityFrames = 500;
-    player.invincibilityTime = 0;
-    return player;
-  },
-
   generateCharacter3: function() {
+
     var player = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'characters');
     player.animations.add('down', [ 6, 7, 8 ], 10, true);
     player.animations.add('left', [ 18, 19, 20 ], 10, true);
@@ -261,7 +262,7 @@ GAImmersered.Game.prototype = {
     this.game.physics.arcade.enable(npc1);
     npc1.game.inputEnabled = true;
     npc1.body.immovable = true;
-    npc1.frame = 10;
+    npc1.frame = 55;
     npc1.scale.setTo(2);
     return npc1;
   },
@@ -271,7 +272,7 @@ GAImmersered.Game.prototype = {
     this.game.physics.arcade.enable(npc2);
     npc2.game.inputEnabled = true;
     npc2.body.immovable = true;
-    npc2.frame = 10;
+    npc2.frame = 55;
     npc2.scale.setTo(2);
     return npc2;
   },
