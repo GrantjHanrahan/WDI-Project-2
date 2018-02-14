@@ -21,7 +21,8 @@
 
 <script>
 var selectedPlayer;
-var playerName = '<%= @current_user %>';
+var playerName = '<%= @current_user.user_name %>'
+
 var GAImmersered = GAImmersered || {};
 GAImmersered.game = new Phaser.Game(512, 384, Phaser.AUTO, 'gameContainer', null, false, false);
 GAImmersered.game.state.add('Boot', GAImmersered.Boot);
