@@ -7,15 +7,21 @@ GAImmersered.Game.prototype = {
 
   preload: function(){
     console.log('PRELOAD HERE');
-    this.game.load.image('mapTiles', 'assets/all_tiles.png');
-    this.game.load.tilemap('mapRoom', 'assets/finalTest.json', null, Phaser.Tilemap.TILED_JSON);
-    this.game.world.setBounds(0, 0, 650, 600);
+    this.game.load.image('mapTiles1', '/assets/Interior_1.png');
+    this.game.load.image('mapTiles2', '/assets/Interior_3.png');
+    this.game.load.image('mapTiles3', '/assets/BlueCarpetTileset.png');
+
+
+    // this.game.load.tilemap('PokemonTestRoom', '/assets/PokemonTestRoom.json', null, Phaser.Tilemap.TILED_JSON);
+    this.game.load.tilemap('Gav2.2', '/assets/Gav2.2.json', null, Phaser.Tilemap.TILED_JSON);
+    this.game.world.setBounds(0, 0, 1600, 1200);
     console.log('PRELOAD DONE');
   },
 
   create: function() {
     this.object = this.game.add.group();
     this.object.enableBody = true;
+<<<<<<< HEAD
 
     console.log('PHASER create()');
 
@@ -41,6 +47,81 @@ GAImmersered.Game.prototype = {
         }
       }
     };
+=======
+    // var worldSize = 550; //Edit Map Size
+    // this.game.world.setBounds(0, 0, worldSize, worldSize);
+    // this.background = this.game.add.tileSprite(0, 0, this.game.world.width / 2, this.game.world.height / 2, 'tiles', 65); //Background Selector
+    // this.background.scale.setTo(2); //Background Scale
+    // console.log('got here');
+
+
+       // this.enemies = this.game.add.group();
+       // this.enemies.enableBody = true;
+
+    // other objects, etc
+       this.level1 = this.game.add.tilemap('Gav2.2'); // step 1
+       this.level1.addTilesetImage('Pokemon Interior',  'mapTiles1');
+       this.level1.addTilesetImage('Interior_3',        'mapTiles2');
+       this.level1.addTilesetImage('BlueCarpetTileset', 'mapTiles3');
+
+       // this.level1.addTilesetImage('Pokemon Interior', 'mapTiles'); // step 2
+       // this.level1.addTilesetImage('blueCarpetInterior', 'mapTiles'); // step 2
+       // this.level1.addTilesetImage('Interior_3', 'mapTiles'); // step 2
+       // this.level1.addTilesetImage('Interior4', 'mapTiles'); // step 2
+       // this.level1.addTilesetImage('Health_Potion', 'mapTiles'); // step 2
+
+
+
+       // step 3
+       this.bgLayer = this.level1.createLayer('Floor');
+       this.bgFurniture = this.level1.createLayer('Lower Background Furniture');
+       // this.bgFurniture.enableBody = true;
+       this.bgFurniture = this.level1.createLayer('Lower Foreground Furniture');
+       this.wallsLayer = this.level1.createLayer('Walls');
+       this.bgFurniture = this.level1.createLayer('Upper Furniture');
+
+
+       // var map = game.make.tilemap('map');
+
+        // Loop over each object layer
+        for (var ol in this.level1.objects) {
+        	// Loop over each object in the object layer
+        	for (var o in this.level1.objects[ol]) {
+        		var object = this.level1.objects[ol][o];
+        		console.log('obj:', object)
+            // Make a Phaser game object from the objects in this Tiled JSON list
+            if( object.type === 'object' ){
+              // Make an enemy object
+              this.objectCollision(object)
+            }
+            }
+
+          };
+          // this.object = this.game.add.group();
+          // this.object.enableBody = true;
+          //
+          // console.log('PHASER create()');
+          //
+          // // Step 1 - Add Tilemap to Game
+          // this.level1 = this.game.add.tilemap('mapRoom');
+          //
+          // // Step 2 - Add Splice Image to Game
+          // this.level1.addTilesetImage('Pokemon Interior', 'mapTiles');
+          //
+          // // Step 3 - Create Layers to Game
+          // this.bgLayer = this.level1.createLayer('Background');
+          // this.bgFurniture = this.level1.createLayer('Furniture');
+          // this.bgFurniture.enableBody = true; // Enable Physics to Game
+          //
+          // // Loop Over Objects Generated
+          // for (var ol in this.level1.objects) {
+          //   for (var o in this.level1.objects[ol]) {
+          //     var object = this.level1.objects[ol][o];
+          //     console.log('obj:', object);
+          //     // Make a Phaser game object from the objects in this Tiled JSON list
+          //     if( object.type === 'object' ){
+          //       this.objectCollision(object)
+>>>>>>> 5b3b2ffa075f58e478eea4771a32244360a0d620
 
     var playerSprites = {
       character1: 'generateCharacter1',
