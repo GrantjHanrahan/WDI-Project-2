@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.2" orientation="orthogonal" renderorder="right-down" width="50" height="30" tilewidth="32" tileheight="32" infinite="0" backgroundcolor="#000000" nextobjectid="48">
+<map version="1.0" tiledversion="1.1.2" orientation="orthogonal" renderorder="right-down" width="50" height="30" tilewidth="32" tileheight="32" infinite="0" backgroundcolor="#000000" nextobjectid="34">
  <tileset firstgid="1" name="Pokemon Interior" tilewidth="32" tileheight="32" tilecount="7984" columns="8">
   <image source="Interior_1.png" width="256" height="31942"/>
   <tile id="79">
@@ -213,14 +213,5 @@
   <object id="31" type="object" x="768" y="416" width="32" height="288"/>
   <object id="32" type="object" x="576" y="416" width="96" height="224"/>
   <object id="33" type="object" x="1248" y="832"/>
-  <object id="34" x="0" y="352" width="352" height="96"/>
-  <object id="36" type="object" x="32" y="152" width="288" height="56"/>
-  <object id="37" type="object" x="40" y="248" width="288" height="56"/>
-  <object id="38" x="256" y="64" width="64" height="64"/>
-  <object id="39" x="1024" y="448" width="64" height="312"/>
-  <object id="41" x="912" y="432" width="64" height="312"/>
-  <object id="42" x="1440" y="432" width="64" height="320"/>
-  <object id="43" x="1280" y="440" width="64" height="312"/>
-  <object id="47" x="0" y="864" width="64" height="96"/>
  </objectgroup>
 </map>
