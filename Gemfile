@@ -55,3 +55,4 @@ gem 'annotate'
 gem 'jquery-rails'
 gem 'whenever'
 gem 'rails_12factor', group: :production
+gem 'babel-transpiler'
