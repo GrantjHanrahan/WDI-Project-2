@@ -1,6 +1,4 @@
 
-// this.generateCharacter1();
-
 GAImmersered.Game = function(game) {};
 
 GAImmersered.Game.prototype = {
@@ -11,8 +9,6 @@ GAImmersered.Game.prototype = {
     this.game.load.image('mapTiles2', '/assets/Interior_3.png');
     this.game.load.image('mapTiles3', '/assets/BlueCarpetTileset.png');
 
-
-    // this.game.load.tilemap('PokemonTestRoom', '/assets/PokemonTestRoom.json', null, Phaser.Tilemap.TILED_JSON);
     this.game.load.tilemap('Gav2.2', '/assets/Gav2.2.json', null, Phaser.Tilemap.TILED_JSON);
     this.game.world.setBounds(0, 0, 1600, 1200);
     console.log('PRELOAD DONE');
@@ -21,40 +17,6 @@ GAImmersered.Game.prototype = {
   create: function() {
     this.object = this.game.add.group();
     this.object.enableBody = true;
-<<<<<<< HEAD
-
-    console.log('PHASER create()');
-
-    // Step 1 - Add Tilemap to Game
-    this.level1 = this.game.add.tilemap('mapRoom');
-
-    // Step 2 - Add Splice Image to Game
-    this.level1.addTilesetImage('Pokemon Interior', 'mapTiles');
-
-    // Step 3 - Create Layers to Game
-    this.bgLayer = this.level1.createLayer('Background');
-    this.bgFurniture = this.level1.createLayer('Furniture');
-    this.bgFurniture.enableBody = true; // Enable Physics to Game
-
-    // Loop Over Objects Generated
-    for (var ol in this.level1.objects) {
-    	for (var o in this.level1.objects[ol]) {
-    		var object = this.level1.objects[ol][o];
-    		// console.log('obj:', object);
-        // Make a Phaser game object from the objects in this Tiled JSON list
-        if( object.type === 'object' ){
-          this.objectCollision(object)
-        }
-      }
-    };
-=======
-    // var worldSize = 550; //Edit Map Size
-    // this.game.world.setBounds(0, 0, worldSize, worldSize);
-    // this.background = this.game.add.tileSprite(0, 0, this.game.world.width / 2, this.game.world.height / 2, 'tiles', 65); //Background Selector
-    // this.background.scale.setTo(2); //Background Scale
-    // console.log('got here');
-
-
        // this.enemies = this.game.add.group();
        // this.enemies.enableBody = true;
 
@@ -64,14 +26,6 @@ GAImmersered.Game.prototype = {
        this.level1.addTilesetImage('Interior_3',        'mapTiles2');
        this.level1.addTilesetImage('BlueCarpetTileset', 'mapTiles3');
 
-       // this.level1.addTilesetImage('Pokemon Interior', 'mapTiles'); // step 2
-       // this.level1.addTilesetImage('blueCarpetInterior', 'mapTiles'); // step 2
-       // this.level1.addTilesetImage('Interior_3', 'mapTiles'); // step 2
-       // this.level1.addTilesetImage('Interior4', 'mapTiles'); // step 2
-       // this.level1.addTilesetImage('Health_Potion', 'mapTiles'); // step 2
-
-
-
        // step 3
        this.bgLayer = this.level1.createLayer('Floor');
        this.bgFurniture = this.level1.createLayer('Lower Background Furniture');
@@ -79,9 +33,6 @@ GAImmersered.Game.prototype = {
        this.bgFurniture = this.level1.createLayer('Lower Foreground Furniture');
        this.wallsLayer = this.level1.createLayer('Walls');
        this.bgFurniture = this.level1.createLayer('Upper Furniture');
-
-
-       // var map = game.make.tilemap('map');
 
         // Loop over each object layer
         for (var ol in this.level1.objects) {
@@ -93,35 +44,9 @@ GAImmersered.Game.prototype = {
             if( object.type === 'object' ){
               // Make an enemy object
               this.objectCollision(object)
+              }
             }
-            }
-
           };
-          // this.object = this.game.add.group();
-          // this.object.enableBody = true;
-          //
-          // console.log('PHASER create()');
-          //
-          // // Step 1 - Add Tilemap to Game
-          // this.level1 = this.game.add.tilemap('mapRoom');
-          //
-          // // Step 2 - Add Splice Image to Game
-          // this.level1.addTilesetImage('Pokemon Interior', 'mapTiles');
-          //
-          // // Step 3 - Create Layers to Game
-          // this.bgLayer = this.level1.createLayer('Background');
-          // this.bgFurniture = this.level1.createLayer('Furniture');
-          // this.bgFurniture.enableBody = true; // Enable Physics to Game
-          //
-          // // Loop Over Objects Generated
-          // for (var ol in this.level1.objects) {
-          //   for (var o in this.level1.objects[ol]) {
-          //     var object = this.level1.objects[ol][o];
-          //     console.log('obj:', object);
-          //     // Make a Phaser game object from the objects in this Tiled JSON list
-          //     if( object.type === 'object' ){
-          //       this.objectCollision(object)
->>>>>>> 5b3b2ffa075f58e478eea4771a32244360a0d620
 
     var playerSprites = {
       character1: 'generateCharacter1',
@@ -311,7 +236,6 @@ GAImmersered.Game.prototype = {
 
   objectCollision: function(obj) {
     let object = this.object.create(obj.x, obj.y, 'tiles');
-    console.log(object)
     this.game.physics.arcade.enable(object);
     object.scale.setTo(obj.width/16,obj.height/16);
     object.body.moves = false;
@@ -333,7 +257,7 @@ GAImmersered.Game.prototype = {
   },
 
   miloCollision: function(player, milo){
-    text = this.game.add.text(230, 200, '.....?',{font: '15px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
+    text = this.game.add.text(490, 570, '.....?',{font: '15px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
     text.outOfCameraBoundsKill = true;
     text.autoCull = true;
   },
@@ -341,7 +265,7 @@ GAImmersered.Game.prototype = {
   // ** GENERATE CHARACTERS **
 
   generateNpc1: function() {
-    npc1 = this.game.add.sprite(15, 60, 'characters');
+    npc1 = this.game.add.sprite(480, 590, 'characters');
     this.game.physics.arcade.enable(npc1);
     npc1.game.inputEnabled = true;
     npc1.body.immovable = true;
@@ -361,12 +285,13 @@ GAImmersered.Game.prototype = {
   },
 
   generateMilo: function() {
-    milo = this.game.add.sprite(300, 500, 'milo');
+    milo = this.game.add.sprite(460, 560, 'characters');
+    console.log('im hurr');
     this.game.physics.arcade.enable(milo);
     milo.game.inputEnabled = true;
     milo.body.immovable = true;
     milo.frame = 8;
-    milo.scale.setTo(1);
+    milo.scale.setTo(2);
     return milo;
   },
 
