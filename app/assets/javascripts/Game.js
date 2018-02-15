@@ -1,4 +1,3 @@
-
 GAImmersered.Game = function(game) {};
 GAImmersered.Game.prototype = {
 
@@ -23,7 +22,7 @@ GAImmersered.Game.prototype = {
     this.game.load.image('mapTiles2', '/assets/Interior_3.png');
     this.game.load.image('mapTiles3', '/assets/BlueCarpetTileset.png');
     this.game.load.tilemap('Gav2.2', '/assets/Gav2.2.json', null, Phaser.Tilemap.TILED_JSON);
-    this.game.world.setBounds(0, 0, 1600, 1200);
+    this.game.world.setBounds(0, 0, 1800, 1400);
     console.log('PRELOAD DONE');
   },
 
@@ -48,7 +47,7 @@ GAImmersered.Game.prototype = {
     // Loop over each object layer
     for (var ol in this.level1.objects) {
     	// Loop over each object in the object layer
-    	for (var o in this.level1.objects[ol]) {
+    for (var o in this.level1.objects[ol]) {
     		var object = this.level1.objects[ol][o];
     		// console.log('obj:', object)
         // Make a Phaser game object from the objects in this Tiled JSON list
@@ -77,7 +76,10 @@ GAImmersered.Game.prototype = {
 
 
     this.generateCollectables();
-    this.generateEnemies(1);
+
+    this.generateEnemies(2);
+    this.playerAttacks = this.generateAttacks('sword', 1);
+
     this.notification = ''; // Generate Notification
     this.gold = 0; // Generate Gold
     this.showLabels();
@@ -111,6 +113,16 @@ GAImmersered.Game.prototype = {
   // ** PLAYER GENERATOR AND HANDLER **
 
   playerHandler: function() {
+    // Attack towards mouse click
+    // if (this.game.input.activePointer.isDown) {
+    //     this.playerAttacks.rate = 1000 - (this.player.speed * 4);
+    //         if (this.playerAttacks.rate < 200) {
+    //             this.playerAttacks.rate = 200;
+    //         }
+    //     this.playerAttacks.range = this.player.strength * 3;
+    //     this.attack(this.player, this.playerAttacks);
+    // }
+
     if (this.player.alive) {
       this.playerMovementHandler();
       if (this.player.health > this.player.vitality) {
@@ -251,13 +263,16 @@ GAImmersered.Game.prototype = {
   // ** COLLISION FUNCTION **
 
   collisionHandler: function() {
-    this.game.physics.arcade.collide(this.obstacles, this.player, null, null, this);
+    // this.game.physics.arcade.collide(this.obstacles, this.player, null, null, this);
     this.game.physics.arcade.collide(this.player, this.object, null, null, this);
     this.game.physics.arcade.overlap(this.collectables, this.player, this.collect, null, this);
     this.game.physics.arcade.collide(this.player, this.npc1, this.npc1Collision, null, this);
     this.game.physics.arcade.collide(this.player, this.npc2, this.npc2Collision, null, this);
     this.game.physics.arcade.collide(this.player, this.milo, this.miloCollision, null, this);
     this.game.physics.arcade.collide(this.player, this.luke, this.lukeCollision, null, this);
+
+    this.game.physics.arcade.collide(this.player, this.enemies, this.hit, null, this);
+    this.game.physics.arcade.collide(this.enemies, this.playerAttacks, this.hit, null, this);
   },
 
   objectCollision: function(obj) {
@@ -424,109 +439,184 @@ GAImmersered.Game.prototype = {
     this.collectables.physicsBodyType = Phaser.Physics.ARCADE;
     this.generateChest1();
     this.generateChest2();
+    this.generateChest3();
+    this.generateChest4();
+    this.generateChest5();
+    this.generateChest6();
   },
 
   generateChest1: function () {
-    const collectable = this.collectables.create(150, 500, 'things');
+    const collectable = this.collectables.create(10, 768, 'things');
     collectable.scale.setTo(2);
     collectable.animations.add('idle', [6], 0, true);
     collectable.animations.add('open', [18, 30, 42], 10, false);
     collectable.animations.play('idle');
     collectable.name = 'chest'
-    collectable.value = 'Oh no! Amir has sabotaged your code!!! VIRUS!!';
+    collectable.value = 'SHIT?! IS THAT AMIRS GITHUB ACCOUNT! OH WAIT ITS A REDIRECT URL TO A WEBSITE FULL OF VIRUS';
     return collectable;
   },
 
   generateChest2: function () {
-    const collectable = this.collectables.create(100, 500, 'things');
+    const collectable = this.collectables.create(512, 107, 'things');
     collectable.scale.setTo(2);
     collectable.animations.add('idle', [6], 0, true);
     collectable.animations.add('open', [18, 30, 42], 10, false);
     collectable.animations.play('idle');
     collectable.name = 'chest'
-    collectable.value = 'SOME GREAT CODE!';
-    return collectable;
+    collectable.value = 'OH FUCK! AMIR SABOTAGED YOUR WORK!';
+    return collectable
+  },
+
+  generateChest3: function () {
+    const collectable = this.collectables.create(1568, 192, 'things');
+    collectable.scale.setTo(2);
+    collectable.animations.add('idle', [6], 0, true);
+    collectable.animations.add('open', [18, 30, 42], 10, false);
+    collectable.animations.play('idle');
+    collectable.name = 'chest'
+    collectable.value = 'YES ! SAHANA HAS LEFT SOME GOOD CODE BEHIND!';
+    return collectable
+  },
+
+  generateChest4: function () {
+    const collectable = this.collectables.create(320, 73, 'things');
+    collectable.scale.setTo(2);
+    collectable.animations.add('idle', [6], 0, true);
+    collectable.animations.add('open', [18, 30, 42], 10, false);
+    collectable.animations.play('idle');
+    collectable.name = 'chest'
+    collectable.value = 'FUCK AMIR JUST INFECTED MY WORK AGAIN!';
+    return collectable
+  },
+
+  generateChest5: function () {
+    const collectable = this.collectables.create(768, 408, 'things');
+    collectable.scale.setTo(2);
+    collectable.animations.add('idle', [6], 0, true);
+    collectable.animations.add('open', [18, 30, 42], 10, false);
+    collectable.animations.play('idle');
+    collectable.name = 'chest'
+    collectable.value = 'LOL Priyaka left her Github password behind. Time to steal her code';
+    return collectable
+  },
+  generateChest6: function () {
+    const collectable = this.collectables.create(609, 640, 'things');
+    collectable.scale.setTo(2);
+    collectable.animations.add('idle', [6], 0, true);
+    collectable.animations.add('open', [18, 30, 42], 10, false);
+    collectable.animations.play('idle');
+    collectable.name = 'chest'
+    collectable.value = 'WOW - is that Lindas code?! Let me steal that.';
+    return collectable
   },
 
   // ** GENERATE MOVING CHARACTER **
 
   enemyHandler: function() {
-        this.enemies.forEachAlive(function(enemy) {
-            if (enemy.visible && enemy.inCamera) {
-                this.game.physics.arcade.moveToObject(enemy, this.player, enemy.speed)
-                this.enemyMovementHandler(enemy);
-            }
-        }, this);
-        this.enemies.forEachDead(function(enemy) {
-            if (this.rng(0, 5)) {
-                this.generateGold(enemy);
-            } else if (this.rng(0, 2)) {
-                this.generatePotion(enemy);
-                this.notification = 'The ' + enemy.name + ' dropped a potion!';
-            }
-            this.xp += enemy.reward;
-            this.generateEnemy(this.enemies);
-            this.deathHandler(enemy);
-        }, this);
-    },
-
-    deathHandler: function (target) {
-        var corpse = this.corpses.create(target.x, target.y, 'dead')
-        corpse.scale.setTo(2);
-        corpse.animations.add('idle', [target.corpseSprite], 0, true);
-        corpse.animations.play('idle');
-        corpse.lifespan = 3000;
-        target.destroy();
-    },
-
-    generateEnemies: function (amount) {
-        this.enemies = this.game.add.group();
-        this.enemies.enableBody = true;
-        this.enemies.physicsBodyType = Phaser.Physics.ARCADE;
-        for (var i = 0; i < amount; i++) {
-            this.generateEnemy();
+    this.enemies.forEachAlive(function(enemy) {
+        if (enemy.visible && enemy.inCamera) {
+            this.game.physics.arcade.moveToObject(enemy, this.player, enemy.speed)
+            this.enemyMovementHandler(enemy);
         }
-    },
+    }, this);
+  },
 
-    generateEnemy: function () {
-        enemy = this.enemies.create(this.game.world.randomX, this.game.world.randomY, 'characters');
-        do {
-            enemy.reset(this.game.world.randomX, this.game.world.randomY);
-        } while (Phaser.Math.distance(this.player.x, this.player.y, enemy.x, enemy.y) <= 400)
-        var rnd = Math.random();
-        if (rnd >= 0 && rnd < .3) enemy = this.generateSkeleton(enemy);
-        else if (rnd >= .3 && rnd < .4) enemy = this.generateSpider(enemy);
-        return enemy;
-    },
+  deathHandler: function (target) {
+    var corpse = this.corpses.create(target.x, target.y, 'dead')
+    corpse.scale.setTo(2);
+    corpse.animations.add('idle', [target.corpseSprite], 0, true);
+    corpse.animations.play('idle');
+    corpse.lifespan = 3000;
+    target.destroy();
+  },
 
-    generateSkeleton: function (enemy) {
-        enemy.animations.add('down', [9, 10, 11], 10, true);
-        enemy.animations.add('left', [21, 22, 23], 10, true);
-        enemy.animations.add('right', [33, 34, 35], 10, true);
-        enemy.animations.add('up', [45, 46, 47], 10, true);
-    },
+  generateEnemies: function (amount) {
+    this.enemies = this.game.add.group();
+    this.enemies.enableBody = true;
+    this.enemies.physicsBodyType = Phaser.Physics.ARCADE;
+    for (var i = 0; i < amount; i++) {
+        this.generateEnemy();
+    }
+  },
 
-    generateSpider: function (enemy) {
-        enemy.animations.add('down', [57, 58, 59], 10, true);
-        enemy.animations.add('left', [69, 70, 71], 10, true);
-        enemy.animations.add('right', [81, 82, 83], 10, true);
-        enemy.animations.add('up', [93, 94, 95], 10, true);
-    },
+  generateEnemy: function () {
+    enemy = this.enemies.create(this.game.world.randomX, this.game.world.randomY, 'characters');
+    enemy.scale.setTo(2);
+    enemy.speed = 2;
 
-    enemyMovementHandler: function (enemy) {
+    this.generateSkeleton(enemy);
+    this.generateSpider(enemy);
+    return enemy;
+  },
+
+  generateSkeleton: function (enemy) {
+    enemy.animations.add('down', [9, 10, 11], 10, true);
+    enemy.animations.add('left', [21, 22, 23], 10, true);
+    enemy.animations.add('right', [33, 34, 35], 10, true);
+    enemy.animations.add('up', [45, 46, 47], 10, true);
+  },
+
+  generateSpider: function (enemy) {
+    enemy.animations.add('down', [57, 58, 59], 10, true);
+    enemy.animations.add('left', [69, 70, 71], 10, true);
+    enemy.animations.add('right', [81, 82, 83], 10, true);
+    enemy.animations.add('up', [93, 94, 95], 10, true);
+  },
+
+  enemyMovementHandler: function (enemy) {
         // Left
-        if (enemy.body.velocity.x < 0 && enemy.body.velocity.x <= -Math.abs(enemy.body.velocity.y)) {
-             enemy.animations.play('left');
-        // Right
-        } else if (enemy.body.velocity.x > 0 && enemy.body.velocity.x >= Math.abs(enemy.body.velocity.y)) {
-             enemy.animations.play('right');
-        // Up
-        } else if (enemy.body.velocity.y < 0 && enemy.body.velocity.y <= -Math.abs(enemy.body.velocity.x)) {
-            enemy.animations.play('up');
-        // Down
-        } else {
-            enemy.animations.play('down');
+    if (enemy.body.velocity.x < 0 && enemy.body.velocity.x <= -Math.abs(enemy.body.velocity.y)) {
+         enemy.animations.play('left');
+    // Right
+    } else if (enemy.body.velocity.x > 0 && enemy.body.velocity.x >= Math.abs(enemy.body.velocity.y)) {
+         enemy.animations.play('right');
+    // Up
+    } else if (enemy.body.velocity.y < 0 && enemy.body.velocity.y <= -Math.abs(enemy.body.velocity.x)) {
+        enemy.animations.play('up');
+    // Down
+    } else {
+        enemy.animations.play('down');
+    }
+  },
+
+  generateAttacks: function (name, amount, rate, range) {
+    // Generate the group of attack objects
+    var attacks = this.game.add.group();
+    attacks.enableBody = true;
+    attacks.physicsBodyType = Phaser.Physics.ARCADE;
+    attacks.createMultiple(amount, name);
+
+    if (name === 'spell') {
+        attacks.callAll('animations.add', 'animations', 'particle', [0, 1, 2, 3,4 ,5], 10, true);
+        attacks.callAll('animations.play', 'animations', 'particle');
+    } else if (name === 'fireball') {
+        attacks.callAll('animations.add', 'animations', 'particle', [0, 1, 2, 3], 10, true);
+        attacks.callAll('animations.play', 'animations', 'particle');
+    }
+
+    attacks.setAll('anchor.x', 0.5);
+    attacks.setAll('anchor.y', 0.5);
+    attacks.setAll('outOfBoundsKill', true);
+    attacks.setAll('checkWorldBounds', true);
+
+    attacks.rate = rate;
+    attacks.range = range;
+    attacks.next = 0;
+    attacks.name = name;
+
+    return attacks;
+  },
+
+  hit: function (target, attacker) {
+
+    if (this.game.time.now > target.invincibilityTime) {
+        target.invincibilityTime = this.game.time.now + target.invincibilityFrames;
+        target.damage(attacker.strength)
+        if (target.health < 0) {
+            target.health = 0;
         }
-    },
+        this.notification = 'AMIR IS SENDING YOU BAD CODE! RUN!';
+    }
+  },
 
 };
