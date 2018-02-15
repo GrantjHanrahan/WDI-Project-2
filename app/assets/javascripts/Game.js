@@ -1,4 +1,3 @@
-
 GAImmersered.Game = function(game) {};
 
 GAImmersered.Game.prototype = {
@@ -22,7 +21,7 @@ GAImmersered.Game.prototype = {
     this.game.load.image('mapTiles2', '/assets/Interior_3.png');
     this.game.load.image('mapTiles3', '/assets/BlueCarpetTileset.png');
     this.game.load.tilemap('Gav2.2', '/assets/Gav2.2.json', null, Phaser.Tilemap.TILED_JSON);
-    this.game.world.setBounds(0, 0, 1600, 1200);
+    this.game.world.setBounds(0, 0, 1800, 1400);
     console.log('PRELOAD DONE');
   },
 
@@ -46,7 +45,7 @@ GAImmersered.Game.prototype = {
     // Loop over each object layer
     for (var ol in this.level1.objects) {
     	// Loop over each object in the object layer
-    	for (var o in this.level1.objects[ol]) {
+    for (var o in this.level1.objects[ol]) {
     		var object = this.level1.objects[ol][o];
     		console.log('obj:', object)
         // Make a Phaser game object from the objects in this Tiled JSON list
@@ -73,7 +72,10 @@ GAImmersered.Game.prototype = {
     this.milo = this.generateMilo(); //Generate Milo
 
     this.generateCollectables();
+
     this.generateEnemies(1);
+    this.playerAttacks = this.generateAttacks('sword', 1);
+
     this.notification = ''; // Generate Notification
     this.gold = 0; // Generate Gold
     this.showLabels();
@@ -101,6 +103,16 @@ GAImmersered.Game.prototype = {
   // ** PLAYER GENERATOR AND HANDLER **
 
   playerHandler: function() {
+    // Attack towards mouse click
+    if (this.game.input.activePointer.isDown) {
+        this.playerAttacks.rate = 1000 - (this.player.speed * 4);
+            if (this.playerAttacks.rate < 200) {
+                this.playerAttacks.rate = 200;
+            }
+        this.playerAttacks.range = this.player.strength * 3;
+        this.attack(this.player, this.playerAttacks);
+    }
+
     if (this.player.alive) {
       this.playerMovementHandler();
       if (this.player.health > this.player.vitality) {
@@ -241,12 +253,17 @@ GAImmersered.Game.prototype = {
   // ** COLLISION FUNCTION **
 
   collisionHandler: function() {
-    this.game.physics.arcade.collide(this.obstacles, this.player, null, null, this);
+    // this.game.physics.arcade.collide(this.obstacles, this.player, null, null, this);
     this.game.physics.arcade.collide(this.player, this.object, null, null, this);
     this.game.physics.arcade.overlap(this.collectables, this.player, this.collect, null, this);
     this.game.physics.arcade.collide(this.player, this.npc1, this.npc1Collision, null, this);
     this.game.physics.arcade.collide(this.player, this.npc2, this.npc2Collision, null, this);
     this.game.physics.arcade.collide(this.player, this.milo, this.miloCollision, null, this);
+    this.game.physics.arcade.collide(this.player, this.enemies, this.hit, null, this);
+    this.game.physics.arcade.collide(this.enemies, this.playerAttacks, this.hit, null, this);
+
+    // this.game.physics.arcade.collide(this.object, this.enemies, null, null, this);
+
   },
 
   objectCollision: function(obj) {
@@ -392,7 +409,7 @@ GAImmersered.Game.prototype = {
         }, this);
     },
 
-    deathHandler: function (target) {
+  deathHandler: function (target) {
         var corpse = this.corpses.create(target.x, target.y, 'dead')
         corpse.scale.setTo(2);
         corpse.animations.add('idle', [target.corpseSprite], 0, true);
@@ -401,7 +418,7 @@ GAImmersered.Game.prototype = {
         target.destroy();
     },
 
-    generateEnemies: function (amount) {
+  generateEnemies: function (amount) {
         this.enemies = this.game.add.group();
         this.enemies.enableBody = true;
         this.enemies.physicsBodyType = Phaser.Physics.ARCADE;
@@ -410,32 +427,31 @@ GAImmersered.Game.prototype = {
         }
     },
 
-    generateEnemy: function () {
+  generateEnemy: function () {
         enemy = this.enemies.create(this.game.world.randomX, this.game.world.randomY, 'characters');
-        do {
-            enemy.reset(this.game.world.randomX, this.game.world.randomY);
-        } while (Phaser.Math.distance(this.player.x, this.player.y, enemy.x, enemy.y) <= 400)
-        var rnd = Math.random();
-        if (rnd >= 0 && rnd < .3) enemy = this.generateSkeleton(enemy);
-        else if (rnd >= .3 && rnd < .4) enemy = this.generateSpider(enemy);
+        enemy.scale.setTo(2);
+        // enemy.speed = 50;
+
+        this.generateSkeleton(enemy);
+        this.generateSpider(enemy);
         return enemy;
     },
 
-    generateSkeleton: function (enemy) {
+  generateSkeleton: function (enemy) {
         enemy.animations.add('down', [9, 10, 11], 10, true);
         enemy.animations.add('left', [21, 22, 23], 10, true);
         enemy.animations.add('right', [33, 34, 35], 10, true);
         enemy.animations.add('up', [45, 46, 47], 10, true);
     },
 
-    generateSpider: function (enemy) {
+  generateSpider: function (enemy) {
         enemy.animations.add('down', [57, 58, 59], 10, true);
         enemy.animations.add('left', [69, 70, 71], 10, true);
         enemy.animations.add('right', [81, 82, 83], 10, true);
         enemy.animations.add('up', [93, 94, 95], 10, true);
     },
 
-    enemyMovementHandler: function (enemy) {
+  enemyMovementHandler: function (enemy) {
         // Left
         if (enemy.body.velocity.x < 0 && enemy.body.velocity.x <= -Math.abs(enemy.body.velocity.y)) {
              enemy.animations.play('left');
@@ -450,5 +466,45 @@ GAImmersered.Game.prototype = {
             enemy.animations.play('down');
         }
     },
+
+  generateAttacks: function (name, amount, rate, range) {
+    // Generate the group of attack objects
+    var attacks = this.game.add.group();
+    attacks.enableBody = true;
+    attacks.physicsBodyType = Phaser.Physics.ARCADE;
+    attacks.createMultiple(amount, name);
+
+    if (name === 'spell') {
+        attacks.callAll('animations.add', 'animations', 'particle', [0, 1, 2, 3,4 ,5], 10, true);
+        attacks.callAll('animations.play', 'animations', 'particle');
+    } else if (name === 'fireball') {
+        attacks.callAll('animations.add', 'animations', 'particle', [0, 1, 2, 3], 10, true);
+        attacks.callAll('animations.play', 'animations', 'particle');
+    }
+
+    attacks.setAll('anchor.x', 0.5);
+    attacks.setAll('anchor.y', 0.5);
+    attacks.setAll('outOfBoundsKill', true);
+    attacks.setAll('checkWorldBounds', true);
+
+    attacks.rate = rate;
+    attacks.range = range;
+    attacks.next = 0;
+    attacks.name = name;
+
+    return attacks;
+  },
+
+  hit: function (target, attacker) {
+
+    if (this.game.time.now > target.invincibilityTime) {
+        target.invincibilityTime = this.game.time.now + target.invincibilityFrames;
+        target.damage(attacker.strength)
+        if (target.health < 0) {
+            target.health = 0;
+        }
+        this.notification = 'AMIR IS SENDING YOU BAD CODE! RUN!';
+    }
+  },
 
 };
