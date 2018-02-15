@@ -12,7 +12,7 @@ class SessionController < ApplicationController
         # successful login
         # create a cookie to store a session, and keep track of the user ID
         session[:user_id] = user.id
-        redirect_to "/games"
+        redirect_to games_path
       else
         # bad credentials/unsuccessful login
         flash[:error] = "Invalid username or password"

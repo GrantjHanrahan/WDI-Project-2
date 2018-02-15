@@ -20,6 +20,7 @@ GAImmersered.Preloader.prototype = {
 		this.load.spritesheet('tiles', 'assets/tiles.png', 16, 16);
 		this.load.spritesheet('things', 'assets/things.png', 16, 16);
 		this.load.spritesheet('characters', 'assets/characters.png', 16, 16);
+		this.load.spritesheet('milo', 'assets/milo.png', 26, 32);
 		this.load.spritesheet('dead', 'assets/dead.png', 16, 16);
 		this.load.spritesheet('potions', 'assets/potions.png', 16, 16);
 		this.load.spritesheet('dragons', 'assets/dragons.png', 32, 32);
