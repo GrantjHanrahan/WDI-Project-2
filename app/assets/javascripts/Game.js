@@ -1,6 +1,5 @@
 
 GAImmersered.Game = function(game) {};
-
 GAImmersered.Game.prototype = {
 
   saveGame: function() {
@@ -9,6 +8,8 @@ GAImmersered.Game.prototype = {
     saveObject.player = {
       position: this.player.position
     };
+    console.log(this.player.position);
+
     let json = JSON.stringify(saveObject);
     $.ajax(saveGame, {
       slot_1: json
@@ -27,6 +28,7 @@ GAImmersered.Game.prototype = {
   },
 
   create: function() {
+
     this.object = this.game.add.group();
     this.object.enableBody = true;
 
@@ -71,6 +73,8 @@ GAImmersered.Game.prototype = {
     this.npc1 = this.generateNpc1(); // Generate NPC
     this.npc2 = this.generateNpc2(); // Generate NPC
     this.milo = this.generateMilo(); //Generate Milo
+    // this.luke = this.generateLuke(); //Generate Milo
+
 
     this.generateCollectables();
     this.generateEnemies(1);
@@ -78,7 +82,8 @@ GAImmersered.Game.prototype = {
     this.gold = 0; // Generate Gold
     this.showLabels();
     // enemy.scale.setTo(2);
-    this.hasSpokenToNpc2 = false;
+    this.miloCounter = 0;
+    this.lukeSpawned = false;
 
     this.game.camera.follow(this.player); // Camera Following Players
     this.controls = {
@@ -89,6 +94,7 @@ GAImmersered.Game.prototype = {
     spell: this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR),
     enter: this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER)
     }; // Set Controller
+
   },
 
   update: function() {
@@ -259,29 +265,31 @@ GAImmersered.Game.prototype = {
 
   npc1Collision: function(player, npc1) {
     // if(this.controls.enter.isDown){
-      text = this.game.add.text(50, 60, 'The scripts are located...',{font: '15px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
+      text = this.game.add.text(136, 73, 'Check Room 1!',{font: '12px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
       text.outOfCameraBoundsKill = true;
       text.autoCull = true;
     // }
   },
 
   npc2Collision: function(player, npc2){
-    hasSpokenToNpc2 = true;
-    console.log(hasSpokenToNpc2)
-      text = this.game.add.text(460, 560, 'Scriptsss.... ',{font: '15px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
+    this.miloCounter += 1;
+    console.log(this.miloCounter)
+      text = this.game.add.text(864, 402, 'Scriptsss.... ',{font: '12px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
       text.outOfCameraBoundsKill = true;
       text.autoCull = true;
-      return hasSpokenToNpc2;
+      return this.hasSpokenToNpc2;
   },
 
-  miloCollision: function(player, milo, hasSpokenToNpc2){
-    if(hasSpokenToNpc2){
-      text = this.game.add.text(425, 505, '.....?',{font: '15px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
+  miloCollision: function(player, milo){
+    console.log(this.miloCounter);
+    if(this.miloCounter > 1){
+      text = this.game.add.text(695, 599, "Luke has spawned \nin Data Science!!",{font: '12px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
       text.outOfCameraBoundsKill = true;
       text.autoCull = true;
+      this.generateLuke();
     }
     else{
-      text = this.game.add.text(425, 505, 'Talk to the ghost!',{font: '15px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
+      text = this.game.add.text(695, 599, 'Ask the UX ghost..',{font: '12px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
       text.outOfCameraBoundsKill = true;
       text.autoCull = true;
     }
@@ -290,7 +298,7 @@ GAImmersered.Game.prototype = {
   // ** GENERATE CHARACTERS **
 
   generateNpc1: function() {
-    npc1 = this.game.add.sprite(480, 590, 'characters');
+    npc1 = this.game.add.sprite(208, 71, 'characters');
     this.game.physics.arcade.enable(npc1);
     npc1.game.inputEnabled = true;
     npc1.body.immovable = true;
@@ -300,7 +308,7 @@ GAImmersered.Game.prototype = {
   },
 
   generateNpc2: function() {
-    npc2 = this.game.add.sprite(450, 540, 'characters');
+    npc2 = this.game.add.sprite(832, 384, 'characters');
     this.game.physics.arcade.enable(npc2);
     // npc2.game.inputEnabled = true;
     npc2.body.immovable = true;
@@ -310,14 +318,23 @@ GAImmersered.Game.prototype = {
   },
 
   generateMilo: function() {
-    milo = this.game.add.sprite(420, 500, 'characters');
-    console.log('im hurr');
+    milo = this.game.add.sprite(736, 619, 'characters');
     this.game.physics.arcade.enable(milo);
     milo.game.inputEnabled = true;
     milo.body.immovable = true;
-    milo.frame = 8;
+    milo.frame = 30;
     milo.scale.setTo(2);
     return milo;
+  },
+
+  generateLuke: function() {
+    luke = this.game.add.sprite(1400, 691, 'dragons');
+    this.game.physics.arcade.enable(luke);
+    luke.game.inputEnabled = true;
+    luke.body.immovable = true;
+    luke.frame = 1;
+    luke.scale.setTo(2);
+    return luke;
   },
 
   // ** GENERATE CHEST/COLLECT CHEST **
