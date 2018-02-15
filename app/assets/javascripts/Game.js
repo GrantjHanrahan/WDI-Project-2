@@ -3,26 +3,17 @@ GAImmersered.Game = function(game) {};
 
 GAImmersered.Game.prototype = {
 
-  saveGame: function () {
+  saveGame: function() {
     console.log('IN saveGame');
-
     let saveObject = {};
-
     saveObject.player = {
       position: this.player.position
     };
-
     let json = JSON.stringify(saveObject);
-
     $.ajax(saveGame, {
       slot_1: json
     })
     .done();
-
-    // saveObject.player = this.player.map(function(player) {
-    //   return JSON.parse(player.serialize());
-    // });
-    debugger;
   },
 
   preload: function(){
@@ -30,7 +21,6 @@ GAImmersered.Game.prototype = {
     this.game.load.image('mapTiles1', '/assets/Interior_1.png');
     this.game.load.image('mapTiles2', '/assets/Interior_3.png');
     this.game.load.image('mapTiles3', '/assets/BlueCarpetTileset.png');
-
     this.game.load.tilemap('Gav2.2', '/assets/Gav2.2.json', null, Phaser.Tilemap.TILED_JSON);
     this.game.world.setBounds(0, 0, 1600, 1200);
     console.log('PRELOAD DONE');
@@ -39,49 +29,44 @@ GAImmersered.Game.prototype = {
   create: function() {
     this.object = this.game.add.group();
     this.object.enableBody = true;
-       // this.enemies = this.game.add.group();
-       // this.enemies.enableBody = true;
 
     // other objects, etc
-       this.level1 = this.game.add.tilemap('Gav2.2'); // step 1
-       this.level1.addTilesetImage('Pokemon Interior',  'mapTiles1');
-       this.level1.addTilesetImage('Interior_3',        'mapTiles2');
-       this.level1.addTilesetImage('BlueCarpetTileset', 'mapTiles3');
+    this.level1 = this.game.add.tilemap('Gav2.2'); // step 1
+    this.level1.addTilesetImage('Pokemon Interior',  'mapTiles1');
+    this.level1.addTilesetImage('Interior_3',        'mapTiles2');
+    this.level1.addTilesetImage('BlueCarpetTileset', 'mapTiles3');
 
-       // step 3
-       this.bgLayer = this.level1.createLayer('Floor');
-       this.bgFurniture = this.level1.createLayer('Lower Background Furniture');
-       // this.bgFurniture.enableBody = true;
-       this.bgFurniture = this.level1.createLayer('Lower Foreground Furniture');
-       this.wallsLayer = this.level1.createLayer('Walls');
-       this.bgFurniture = this.level1.createLayer('Upper Furniture');
+    // step 3
+    this.bgLayer = this.level1.createLayer('Floor');
+    this.bgFurniture = this.level1.createLayer('Lower Background Furniture');
+    this.bgFurniture = this.level1.createLayer('Lower Foreground Furniture');
+    this.wallsLayer = this.level1.createLayer('Walls');
+    this.bgFurniture = this.level1.createLayer('Upper Furniture');
 
-        // Loop over each object layer
-        for (var ol in this.level1.objects) {
-        	// Loop over each object in the object layer
-        	for (var o in this.level1.objects[ol]) {
-        		var object = this.level1.objects[ol][o];
-        		console.log('obj:', object)
-            // Make a Phaser game object from the objects in this Tiled JSON list
-            if( object.type === 'object' ){
-              // Make an enemy object
-              this.objectCollision(object)
-              }
-            }
-          };
+    // Loop over each object layer
+    for (var ol in this.level1.objects) {
+    	// Loop over each object in the object layer
+    	for (var o in this.level1.objects[ol]) {
+    		var object = this.level1.objects[ol][o];
+    		console.log('obj:', object)
+        // Make a Phaser game object from the objects in this Tiled JSON list
+        if( object.type === 'object' ){
+          // Make an enemy object
+          this.objectCollision(object)
+          }
+        }
+      };
 
     var playerSprites = {
-      character1: 'generateCharacter1',
-      character2: 'generateCharacter2',
-      character3: 'generateCharacter3',
-      character4: 'generateCharacter4',
+    character1: 'generateCharacter1',
+    character2: 'generateCharacter2',
+    character3: 'generateCharacter3',
+    character4: 'generateCharacter4',
     };
+
     var playerFunc = playerSprites[ selectedPlayer ];
     this.player = this[playerFunc]();  // this.generateCharacter1();
     console.log('THIS', this);
-    // Step 4 - Generate Remaining Game
-    // this.player = this.generatePlayer(); // Generate Player
-    // this.player = this.generateCharacter2();
 
     this.npc1 = this.generateNpc1(); // Generate NPC
     this.npc2 = this.generateNpc2(); // Generate NPC
@@ -96,12 +81,12 @@ GAImmersered.Game.prototype = {
 
     this.game.camera.follow(this.player); // Camera Following Players
     this.controls = {
-      up: this.game.input.keyboard.addKey(Phaser.Keyboard.W),
-      left: this.game.input.keyboard.addKey(Phaser.Keyboard.A),
-      down: this.game.input.keyboard.addKey(Phaser.Keyboard.S),
-      right: this.game.input.keyboard.addKey(Phaser.Keyboard.D),
-      spell: this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR),
-      enter: this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER)
+    up: this.game.input.keyboard.addKey(Phaser.Keyboard.W),
+    left: this.game.input.keyboard.addKey(Phaser.Keyboard.A),
+    down: this.game.input.keyboard.addKey(Phaser.Keyboard.S),
+    right: this.game.input.keyboard.addKey(Phaser.Keyboard.D),
+    spell: this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR),
+    enter: this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER)
     }; // Set Controller
   },
 
@@ -123,14 +108,14 @@ GAImmersered.Game.prototype = {
     }
 
     if (!this.player.alive) {
-            this.deathHandler(this.player);
-            this.game.time.events.add(1000, this.gameOver, this);
-        }
+        this.deathHandler(this.player);
+        this.game.time.events.add(1000, this.gameOver, this);
+    }
   },
 
   generateCharacter1: function() {
 
-    var player = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'characters');
+    var player = this.game.add.sprite(770, 850, 'characters');
     player.animations.add('down', [ 0, 1, 2 ], 10, true);
     player.animations.add('left', [ 12, 13, 14 ], 10, true);
     player.animations.add('right', [ 24, 25, 26 ], 10, true);
@@ -149,7 +134,7 @@ GAImmersered.Game.prototype = {
 
   generateCharacter2: function() {
 
-    var player = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'characters');
+    var player = this.game.add.sprite(770, 850, 'characters');
     player.animations.add('down', [ 3, 4, 5 ], 10, true);
     player.animations.add('left', [ 15, 16, 17 ], 10, true);
     player.animations.add('right', [ 27, 28, 29 ], 10, true);
@@ -165,9 +150,10 @@ GAImmersered.Game.prototype = {
     player.invincibilityTime = 0;
     return player;
   },
+
   generateCharacter3: function() {
 
-    var player = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'characters');
+    var player = this.game.add.sprite(770, 850, 'characters');
     player.animations.add('down', [ 6, 7, 8 ], 10, true);
     player.animations.add('left', [ 18, 19, 20 ], 10, true);
     player.animations.add('right', [ 30, 31, 32 ], 10, true);
@@ -183,8 +169,9 @@ GAImmersered.Game.prototype = {
     player.invincibilityTime = 0;
     return player;
   },
+
   generateCharacter4: function() {
-    var player = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'characters');
+    var player = this.game.add.sprite(770, 850, 'characters');
     player.animations.add('down', [ 9, 10, 11 ], 10, true);
     player.animations.add('left', [ 21, 22, 23 ], 10, true);
     player.animations.add('right', [ 33, 34, 35 ], 10, true);
@@ -381,7 +368,6 @@ GAImmersered.Game.prototype = {
                 this.enemyMovementHandler(enemy);
             }
         }, this);
-
         this.enemies.forEachDead(function(enemy) {
             if (this.rng(0, 5)) {
                 this.generateGold(enemy);
@@ -396,7 +382,6 @@ GAImmersered.Game.prototype = {
     },
 
     deathHandler: function (target) {
-
         var corpse = this.corpses.create(target.x, target.y, 'dead')
         corpse.scale.setTo(2);
         corpse.animations.add('idle', [target.corpseSprite], 0, true);
@@ -406,68 +391,49 @@ GAImmersered.Game.prototype = {
     },
 
     generateEnemies: function (amount) {
-
         this.enemies = this.game.add.group();
-
-        // Enable physics in them
         this.enemies.enableBody = true;
         this.enemies.physicsBodyType = Phaser.Physics.ARCADE;
-
         for (var i = 0; i < amount; i++) {
             this.generateEnemy();
         }
     },
 
     generateEnemy: function () {
-
-
         enemy = this.enemies.create(this.game.world.randomX, this.game.world.randomY, 'characters');
-
         do {
             enemy.reset(this.game.world.randomX, this.game.world.randomY);
         } while (Phaser.Math.distance(this.player.x, this.player.y, enemy.x, enemy.y) <= 400)
-
         var rnd = Math.random();
         if (rnd >= 0 && rnd < .3) enemy = this.generateSkeleton(enemy);
         else if (rnd >= .3 && rnd < .4) enemy = this.generateSpider(enemy);
-
-
         return enemy;
     },
 
     generateSkeleton: function (enemy) {
-
         enemy.animations.add('down', [9, 10, 11], 10, true);
         enemy.animations.add('left', [21, 22, 23], 10, true);
         enemy.animations.add('right', [33, 34, 35], 10, true);
         enemy.animations.add('up', [45, 46, 47], 10, true);
-
-
     },
 
     generateSpider: function (enemy) {
-
         enemy.animations.add('down', [57, 58, 59], 10, true);
         enemy.animations.add('left', [69, 70, 71], 10, true);
         enemy.animations.add('right', [81, 82, 83], 10, true);
         enemy.animations.add('up', [93, 94, 95], 10, true);
-
     },
 
     enemyMovementHandler: function (enemy) {
-
         // Left
         if (enemy.body.velocity.x < 0 && enemy.body.velocity.x <= -Math.abs(enemy.body.velocity.y)) {
              enemy.animations.play('left');
-
         // Right
         } else if (enemy.body.velocity.x > 0 && enemy.body.velocity.x >= Math.abs(enemy.body.velocity.y)) {
              enemy.animations.play('right');
-
         // Up
         } else if (enemy.body.velocity.y < 0 && enemy.body.velocity.y <= -Math.abs(enemy.body.velocity.x)) {
             enemy.animations.play('up');
-
         // Down
         } else {
             enemy.animations.play('down');
