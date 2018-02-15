@@ -78,6 +78,7 @@ GAImmersered.Game.prototype = {
     this.gold = 0; // Generate Gold
     this.showLabels();
     // enemy.scale.setTo(2);
+    this.hasSpokenToNpc2 = false;
 
     this.game.camera.follow(this.player); // Camera Following Players
     this.controls = {
@@ -265,15 +266,25 @@ GAImmersered.Game.prototype = {
   },
 
   npc2Collision: function(player, npc2){
-      text = this.game.add.text(480, 570, 'Scriptsss.... ',{font: '15px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
+    hasSpokenToNpc2 = true;
+    console.log(hasSpokenToNpc2)
+      text = this.game.add.text(460, 560, 'Scriptsss.... ',{font: '15px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
       text.outOfCameraBoundsKill = true;
       text.autoCull = true;
+      return hasSpokenToNpc2;
   },
 
-  miloCollision: function(player, milo){
-    text = this.game.add.text(490, 570, '.....?',{font: '15px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
-    text.outOfCameraBoundsKill = true;
-    text.autoCull = true;
+  miloCollision: function(player, milo, hasSpokenToNpc2){
+    if(hasSpokenToNpc2){
+      text = this.game.add.text(425, 505, '.....?',{font: '15px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
+      text.outOfCameraBoundsKill = true;
+      text.autoCull = true;
+    }
+    else{
+      text = this.game.add.text(425, 505, 'Talk to the ghost!',{font: '15px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
+      text.outOfCameraBoundsKill = true;
+      text.autoCull = true;
+    }
   },
 
   // ** GENERATE CHARACTERS **
@@ -289,7 +300,7 @@ GAImmersered.Game.prototype = {
   },
 
   generateNpc2: function() {
-    npc2 = this.game.add.sprite(450, 570, 'characters');
+    npc2 = this.game.add.sprite(450, 540, 'characters');
     this.game.physics.arcade.enable(npc2);
     // npc2.game.inputEnabled = true;
     npc2.body.immovable = true;
@@ -299,7 +310,7 @@ GAImmersered.Game.prototype = {
   },
 
   generateMilo: function() {
-    milo = this.game.add.sprite(460, 560, 'characters');
+    milo = this.game.add.sprite(420, 500, 'characters');
     console.log('im hurr');
     this.game.physics.arcade.enable(milo);
     milo.game.inputEnabled = true;
