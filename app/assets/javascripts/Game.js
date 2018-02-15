@@ -303,13 +303,13 @@ GAImmersered.Game.prototype = {
   miloCollision: function(player, milo){
     console.log(this.miloCounter);
     if(this.miloCounter > 1){
-      text = this.game.add.text(695, 599, "Luke has spawned \nin Data Science!!",{font: '12px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
+      text = this.game.add.text(508, 468, "Luke has spawned \nin Data Science!!",{font: '12px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
       text.outOfCameraBoundsKill = true;
       text.autoCull = true;
       // this.generateLuke();
     }
     else{
-      text = this.game.add.text(695, 599, 'Ask the UX ghost..',{font: '12px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
+      text = this.game.add.text(508, 468, 'Ask the UX ghost..',{font: '12px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
       text.outOfCameraBoundsKill = true;
       text.autoCull = true;
     }
@@ -341,7 +341,7 @@ GAImmersered.Game.prototype = {
   },
 
   generateMilo: function() {
-    milo = this.game.add.sprite(736, 619, 'characters');
+    milo = this.game.add.sprite(540, 493, 'characters');
     this.game.physics.arcade.enable(milo);
     milo.game.inputEnabled = true;
     milo.body.immovable = true;
