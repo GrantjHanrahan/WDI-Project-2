@@ -110,14 +110,14 @@ GAImmersered.Game.prototype = {
 
   playerHandler: function() {
     // Attack towards mouse click
-    if (this.game.input.activePointer.isDown) {
-        this.playerAttacks.rate = 1000 - (this.player.speed * 4);
-            if (this.playerAttacks.rate < 200) {
-                this.playerAttacks.rate = 200;
-            }
-        this.playerAttacks.range = this.player.strength * 3;
-        this.attack(this.player, this.playerAttacks);
-    }
+    // if (this.game.input.activePointer.isDown) {
+    //     this.playerAttacks.rate = 1000 - (this.player.speed * 4);
+    //         if (this.playerAttacks.rate < 200) {
+    //             this.playerAttacks.rate = 200;
+    //         }
+    //     this.playerAttacks.range = this.player.strength * 3;
+    //     this.attack(this.player, this.playerAttacks);
+    // }
 
     if (this.player.alive) {
       this.playerMovementHandler();
@@ -380,79 +380,115 @@ GAImmersered.Game.prototype = {
     this.collectables.physicsBodyType = Phaser.Physics.ARCADE;
     this.generateChest1();
     this.generateChest2();
+    this.generateChest3();
+    this.generateChest4();
+    this.generateChest5();
+    this.generateChest6();
   },
 
   generateChest1: function () {
-    const collectable = this.collectables.create(150, 500, 'things');
+    const collectable = this.collectables.create(10, 768, 'things');
     collectable.scale.setTo(2);
     collectable.animations.add('idle', [6], 0, true);
     collectable.animations.add('open', [18, 30, 42], 10, false);
     collectable.animations.play('idle');
     collectable.name = 'chest'
-    collectable.value = 'Oh no! Amir has sabotaged your code!!! VIRUS!!';
+    collectable.value = 'SHIT?! IS THAT AMIRS GITHUB ACCOUNT! OH WAIT ITS A REDIRECT URL TO A WEBSITE FULL OF VIRUS';
     return collectable;
   },
 
   generateChest2: function () {
-    const collectable = this.collectables.create(100, 500, 'things');
+    const collectable = this.collectables.create(512, 107, 'things');
     collectable.scale.setTo(2);
     collectable.animations.add('idle', [6], 0, true);
     collectable.animations.add('open', [18, 30, 42], 10, false);
     collectable.animations.play('idle');
     collectable.name = 'chest'
-    collectable.value = 'SOME GREAT CODE!';
-    return collectable;
+    collectable.value = 'OH FUCK! AMIR SABOTAGED YOUR WORK!';
+    return collectable
+  },
+
+  generateChest3: function () {
+    const collectable = this.collectables.create(1568, 192, 'things');
+    collectable.scale.setTo(2);
+    collectable.animations.add('idle', [6], 0, true);
+    collectable.animations.add('open', [18, 30, 42], 10, false);
+    collectable.animations.play('idle');
+    collectable.name = 'chest'
+    collectable.value = 'YES ! SAHANA HAS LEFT SOME GOOD CODE BEHIND!';
+    return collectable
+  },
+
+  generateChest4: function () {
+    const collectable = this.collectables.create(320, 73, 'things');
+    collectable.scale.setTo(2);
+    collectable.animations.add('idle', [6], 0, true);
+    collectable.animations.add('open', [18, 30, 42], 10, false);
+    collectable.animations.play('idle');
+    collectable.name = 'chest'
+    collectable.value = 'FUCK AMIR JUST INFECTED MY WORK AGAIN!';
+    return collectable
+  },
+
+  generateChest5: function () {
+    const collectable = this.collectables.create(768, 408, 'things');
+    collectable.scale.setTo(2);
+    collectable.animations.add('idle', [6], 0, true);
+    collectable.animations.add('open', [18, 30, 42], 10, false);
+    collectable.animations.play('idle');
+    collectable.name = 'chest'
+    collectable.value = 'LOL Priyaka left her Github password behind. Time to steal her code';
+    return collectable
+  },
+  generateChest6: function () {
+    const collectable = this.collectables.create(609, 640, 'things');
+    collectable.scale.setTo(2);
+    collectable.animations.add('idle', [6], 0, true);
+    collectable.animations.add('open', [18, 30, 42], 10, false);
+    collectable.animations.play('idle');
+    collectable.name = 'chest'
+    collectable.value = 'WOW - is that Lindas code?! Let me steal that.';
+    return collectable
   },
 
   // ** GENERATE MOVING CHARACTER **
 
   enemyHandler: function() {
-        this.enemies.forEachAlive(function(enemy) {
-            if (enemy.visible && enemy.inCamera) {
-                this.game.physics.arcade.moveToObject(enemy, this.player, enemy.speed)
-                this.enemyMovementHandler(enemy);
-            }
-        }, this);
-        this.enemies.forEachDead(function(enemy) {
-            if (this.rng(0, 5)) {
-                this.generateGold(enemy);
-            } else if (this.rng(0, 2)) {
-                this.generatePotion(enemy);
-                this.notification = 'The ' + enemy.name + ' dropped a potion!';
-            }
-            this.xp += enemy.reward;
-            this.generateEnemy(this.enemies);
-            this.deathHandler(enemy);
-        }, this);
-    },
+    this.enemies.forEachAlive(function(enemy) {
+        if (enemy.visible && enemy.inCamera) {
+            this.game.physics.arcade.moveToObject(enemy, this.player, enemy.speed)
+            this.enemyMovementHandler(enemy);
+        }
+    }, this);
+  },
 
   deathHandler: function (target) {
-        var corpse = this.corpses.create(target.x, target.y, 'dead')
-        corpse.scale.setTo(2);
-        corpse.animations.add('idle', [target.corpseSprite], 0, true);
-        corpse.animations.play('idle');
-        corpse.lifespan = 3000;
-        target.destroy();
-    },
+    var corpse = this.corpses.create(target.x, target.y, 'dead')
+    corpse.scale.setTo(2);
+    corpse.animations.add('idle', [target.corpseSprite], 0, true);
+    corpse.animations.play('idle');
+    corpse.lifespan = 3000;
+    target.destroy();
+  },
 
   generateEnemies: function (amount) {
-        this.enemies = this.game.add.group();
-        this.enemies.enableBody = true;
-        this.enemies.physicsBodyType = Phaser.Physics.ARCADE;
-        for (var i = 0; i < amount; i++) {
-            this.generateEnemy();
-        }
-    },
+    this.enemies = this.game.add.group();
+    this.enemies.enableBody = true;
+    this.enemies.physicsBodyType = Phaser.Physics.ARCADE;
+    for (var i = 0; i < amount; i++) {
+        this.generateEnemy();
+    }
+  },
 
   generateEnemy: function () {
-        enemy = this.enemies.create(this.game.world.randomX, this.game.world.randomY, 'characters');
-        enemy.scale.setTo(2);
-        // enemy.speed = 50;
+    enemy = this.enemies.create(this.game.world.randomX, this.game.world.randomY, 'characters');
+    enemy.scale.setTo(2);
+    enemy.speed = 2;
 
-        this.generateSkeleton(enemy);
-        this.generateSpider(enemy);
-        return enemy;
-    },
+    this.generateSkeleton(enemy);
+    this.generateSpider(enemy);
+    return enemy;
+  },
 
   generateSkeleton: function (enemy) {
         enemy.animations.add('down', [9, 10, 11], 10, true);
