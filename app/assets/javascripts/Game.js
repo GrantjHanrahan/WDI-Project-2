@@ -43,33 +43,33 @@ GAImmersered.Game.prototype = {
   create: function() {
     this.object = this.game.add.group();
     this.object.enableBody = true;
-<<<<<<< HEAD
-
-    console.log('PHASER create()');
-
-    // Step 1 - Add Tilemap to Game
-    this.level1 = this.game.add.tilemap('mapRoom');
-
-    // Step 2 - Add Splice Image to Game
-    this.level1.addTilesetImage('Pokemon Interior', 'mapTiles');
-
-    // Step 3 - Create Layers to Game
-    this.bgLayer = this.level1.createLayer('Background');
-    this.bgFurniture = this.level1.createLayer('Furniture');
-    this.bgFurniture.enableBody = true; // Enable Physics to Game
-
-    // Loop Over Objects Generated
-    for (var ol in this.level1.objects) {
-    	for (var o in this.level1.objects[ol]) {
-    		var object = this.level1.objects[ol][o];
-    		// console.log('obj:', object);
-        // Make a Phaser game object from the objects in this Tiled JSON list
-        if( object.type === 'object' ){
-          this.objectCollision(object)
-        }
-      }
-    };
-=======
+// <<<<<<< HEAD
+//
+//     console.log('PHASER create()');
+//
+//     // Step 1 - Add Tilemap to Game
+//     this.level1 = this.game.add.tilemap('mapRoom');
+//
+//     // Step 2 - Add Splice Image to Game
+//     this.level1.addTilesetImage('Pokemon Interior', 'mapTiles');
+//
+//     // Step 3 - Create Layers to Game
+//     this.bgLayer = this.level1.createLayer('Background');
+//     this.bgFurniture = this.level1.createLayer('Furniture');
+//     this.bgFurniture.enableBody = true; // Enable Physics to Game
+//
+//     // Loop Over Objects Generated
+//     for (var ol in this.level1.objects) {
+//     	for (var o in this.level1.objects[ol]) {
+//     		var object = this.level1.objects[ol][o];
+//     		// console.log('obj:', object);
+//         // Make a Phaser game object from the objects in this Tiled JSON list
+//         if( object.type === 'object' ){
+//           this.objectCollision(object)
+//         }
+//       }
+//     };
+// =======
     // var worldSize = 550; //Edit Map Size
     // this.game.world.setBounds(0, 0, worldSize, worldSize);
     // this.background = this.game.add.tileSprite(0, 0, this.game.world.width / 2, this.game.world.height / 2, 'tiles', 65); //Background Selector
@@ -143,7 +143,7 @@ GAImmersered.Game.prototype = {
           //     // Make a Phaser game object from the objects in this Tiled JSON list
           //     if( object.type === 'object' ){
           //       this.objectCollision(object)
->>>>>>> 5b3b2ffa075f58e478eea4771a32244360a0d620
+// >>>>>>> 5b3b2ffa075f58e478eea4771a32244360a0d620
 
     var playerSprites = {
       character1: 'generateCharacter1',
