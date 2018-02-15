@@ -50,7 +50,7 @@ GAImmersered.Game.prototype = {
     	// Loop over each object in the object layer
     	for (var o in this.level1.objects[ol]) {
     		var object = this.level1.objects[ol][o];
-    		console.log('obj:', object)
+    		// console.log('obj:', object)
         // Make a Phaser game object from the objects in this Tiled JSON list
         if( object.type === 'object' ){
           // Make an enemy object
@@ -68,12 +68,12 @@ GAImmersered.Game.prototype = {
 
     var playerFunc = playerSprites[ selectedPlayer ];
     this.player = this[playerFunc]();  // this.generateCharacter1();
-    console.log('THIS', this);
+    // console.log('THIS', this);
 
     this.npc1 = this.generateNpc1(); // Generate NPC
     this.npc2 = this.generateNpc2(); // Generate NPC
     this.milo = this.generateMilo(); //Generate Milo
-    // this.luke = this.generateLuke(); //Generate Milo
+    this.luke = this.generateLuke(); //Generate Milo
 
 
     this.generateCollectables();
@@ -83,7 +83,10 @@ GAImmersered.Game.prototype = {
     this.showLabels();
     // enemy.scale.setTo(2);
     this.miloCounter = 0;
-    this.lukeSpawned = false;
+    this.lukeSpawned = true;
+    // this.lukeAttacks = this.generateAttacks('fireball', 1, 2000, 300);
+    // this.luke.enableBody = true;
+    // this.luke.physicsBodyType = Phaser.Physics.ARCADE;
 
     this.game.camera.follow(this.player); // Camera Following Players
     this.controls = {
@@ -101,6 +104,7 @@ GAImmersered.Game.prototype = {
     this.playerHandler();
     this.collisionHandler();
     this.enemyHandler();
+    this.lukeHandler();
     this.notificationLabel.text = this.notification;
   },
 
@@ -253,6 +257,7 @@ GAImmersered.Game.prototype = {
     this.game.physics.arcade.collide(this.player, this.npc1, this.npc1Collision, null, this);
     this.game.physics.arcade.collide(this.player, this.npc2, this.npc2Collision, null, this);
     this.game.physics.arcade.collide(this.player, this.milo, this.miloCollision, null, this);
+    this.game.physics.arcade.collide(this.player, this.luke, this.lukeCollision, null, this);
   },
 
   objectCollision: function(obj) {
@@ -277,7 +282,7 @@ GAImmersered.Game.prototype = {
       text = this.game.add.text(864, 402, 'Scriptsss.... ',{font: '12px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
       text.outOfCameraBoundsKill = true;
       text.autoCull = true;
-      return this.hasSpokenToNpc2;
+      // return this.hasSpokenToNpc2;
   },
 
   miloCollision: function(player, milo){
@@ -286,7 +291,7 @@ GAImmersered.Game.prototype = {
       text = this.game.add.text(695, 599, "Luke has spawned \nin Data Science!!",{font: '12px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
       text.outOfCameraBoundsKill = true;
       text.autoCull = true;
-      this.generateLuke();
+      // this.generateLuke();
     }
     else{
       text = this.game.add.text(695, 599, 'Ask the UX ghost..',{font: '12px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
@@ -295,6 +300,9 @@ GAImmersered.Game.prototype = {
     }
   },
 
+  lukeCollision: function(player, luke){
+    console.log('luke collision');
+  },
   // ** GENERATE CHARACTERS **
 
   generateNpc1: function() {
@@ -328,13 +336,66 @@ GAImmersered.Game.prototype = {
   },
 
   generateLuke: function() {
+    lukeSpawned = true;
     luke = this.game.add.sprite(1400, 691, 'dragons');
     this.game.physics.arcade.enable(luke);
     luke.game.inputEnabled = true;
+    luke.enableBody = true;
     luke.body.immovable = true;
     luke.frame = 1;
     luke.scale.setTo(2);
     return luke;
+  },
+
+  lukeHandler: function(){
+
+    if (luke.visible && luke.inCamera) {
+        this.enemyMovementHandler(luke);
+        this.lukeAttacks = this.generateAttacks('fireball', 1, 2000, 300);
+        this.attack(luke, this.lukeAttacks);
+        }
+
+  },
+
+  attack: function(attacker, attacks){
+
+    if(attacker.alive && this.game.time.now > attacks.next) {
+      attacks.next = this.game.time.now + attacks.rate;
+
+      let a = attacks.getFirstDead();
+       a.scale.setTo(1.5);
+       a.strength = attacker.strength;
+       a.reset(attacker.x + 8, attacker.y + 8);
+       a.lifespan = 1200;
+       this.game.physics.arcade.moveToObject(a, this.player, attacks.range);
+      }
+  },
+
+  generateAttacks: function(name, amount, rate, range){
+
+    var attacks = this.game.add.group();
+    attacks.enableBody = true;
+    attacks.physicsBodyType = Phaser.Physics.ARCADE;
+    attacks.createMultiple(amount, name);
+
+    if (name =='fireball') {
+        attacks.callAll('animations.add', 'animations', 'particle', [0, 1, 2, 3], 10, true);
+        attacks.callAll('animations.play', 'animations', 'particle');
+      } else {
+        console.log('not working');
+      }
+
+    attacks.setAll('anchor.x', 0.5);
+    attacks.setAll('anchor.y', 0.5);
+    attacks.setAll('outOfBoundsKill', true);
+    attacks.setAll('checkWorldBounds', true);
+
+    attacks.rate = rate;
+    attacks.range = range;
+    attacks.next = 0;
+    attacks.name = name;
+
+    return attacks;
   },
 
   // ** GENERATE CHEST/COLLECT CHEST **
