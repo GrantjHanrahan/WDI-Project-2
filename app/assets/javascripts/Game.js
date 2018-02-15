@@ -49,7 +49,6 @@ GAImmersered.Game.prototype = {
     	// Loop over each object in the object layer
     for (var o in this.level1.objects[ol]) {
     		var object = this.level1.objects[ol][o];
-    		console.log('obj:', object)
         // Make a Phaser game object from the objects in this Tiled JSON list
         if( object.type === 'object' ){
           // Make an enemy object
@@ -77,7 +76,7 @@ GAImmersered.Game.prototype = {
 
     this.generateCollectables();
 
-    this.generateEnemies(1);
+    this.generateEnemies(2);
     this.playerAttacks = this.generateAttacks('sword', 1);
 
     this.notification = ''; // Generate Notification
@@ -491,34 +490,34 @@ GAImmersered.Game.prototype = {
   },
 
   generateSkeleton: function (enemy) {
-        enemy.animations.add('down', [9, 10, 11], 10, true);
-        enemy.animations.add('left', [21, 22, 23], 10, true);
-        enemy.animations.add('right', [33, 34, 35], 10, true);
-        enemy.animations.add('up', [45, 46, 47], 10, true);
-    },
+    enemy.animations.add('down', [9, 10, 11], 10, true);
+    enemy.animations.add('left', [21, 22, 23], 10, true);
+    enemy.animations.add('right', [33, 34, 35], 10, true);
+    enemy.animations.add('up', [45, 46, 47], 10, true);
+  },
 
   generateSpider: function (enemy) {
-        enemy.animations.add('down', [57, 58, 59], 10, true);
-        enemy.animations.add('left', [69, 70, 71], 10, true);
-        enemy.animations.add('right', [81, 82, 83], 10, true);
-        enemy.animations.add('up', [93, 94, 95], 10, true);
-    },
+    enemy.animations.add('down', [57, 58, 59], 10, true);
+    enemy.animations.add('left', [69, 70, 71], 10, true);
+    enemy.animations.add('right', [81, 82, 83], 10, true);
+    enemy.animations.add('up', [93, 94, 95], 10, true);
+  },
 
   enemyMovementHandler: function (enemy) {
         // Left
-        if (enemy.body.velocity.x < 0 && enemy.body.velocity.x <= -Math.abs(enemy.body.velocity.y)) {
-             enemy.animations.play('left');
-        // Right
-        } else if (enemy.body.velocity.x > 0 && enemy.body.velocity.x >= Math.abs(enemy.body.velocity.y)) {
-             enemy.animations.play('right');
-        // Up
-        } else if (enemy.body.velocity.y < 0 && enemy.body.velocity.y <= -Math.abs(enemy.body.velocity.x)) {
-            enemy.animations.play('up');
-        // Down
-        } else {
-            enemy.animations.play('down');
-        }
-    },
+    if (enemy.body.velocity.x < 0 && enemy.body.velocity.x <= -Math.abs(enemy.body.velocity.y)) {
+         enemy.animations.play('left');
+    // Right
+    } else if (enemy.body.velocity.x > 0 && enemy.body.velocity.x >= Math.abs(enemy.body.velocity.y)) {
+         enemy.animations.play('right');
+    // Up
+    } else if (enemy.body.velocity.y < 0 && enemy.body.velocity.y <= -Math.abs(enemy.body.velocity.x)) {
+        enemy.animations.play('up');
+    // Down
+    } else {
+        enemy.animations.play('down');
+    }
+  },
 
   generateAttacks: function (name, amount, rate, range) {
     // Generate the group of attack objects
