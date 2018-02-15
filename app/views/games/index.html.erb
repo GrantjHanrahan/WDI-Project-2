@@ -16,7 +16,15 @@
   <option value="character4">Character4</option>
 </select>
 
-<div id="gameContainer"></div>
+<div id="gameContainer">
+  <form id="gitbookURL" >
+    <input type="submit">
+  </form>
+</div>
+
+ <div id="displayGitBook">
+
+ </div>
 
 
 <script>
@@ -42,6 +50,63 @@ $('#playerSelected').on('change', function(){
   // debugger;
 
   GAImmersered.game.state.start('Boot');
+});
+
+$(document).ready(function(){
+
+  const gitbookPages = [
+    "https://api.gitbook.com/book/michelleerica/wdi-25/contents/week01/wk01-day01.json",
+    "https://api.gitbook.com/book/michelleerica/wdi-25/contents/week01/wk01-day02.json",
+    "https://api.gitbook.com/book/michelleerica/wdi-25/contents/week01/wk01-day03.json",
+    "https://api.gitbook.com/book/michelleerica/wdi-25/contents/week01/wk01-day04.json",
+    "https://api.gitbook.com/book/michelleerica/wdi-25/contents/week01/wk01-day05.json",
+    "https://api.gitbook.com/book/michelleerica/wdi-25/contents/week_02/wk02_day01.json",
+    "https://api.gitbook.com/book/michelleerica/wdi-25/contents/week_02/wk02_day02.json",
+    "https://api.gitbook.com/book/michelleerica/wdi-25/contents/week_02/wk02_day03.json",
+    "https://api.gitbook.com/book/michelleerica/wdi-25/contents/week_02/wk02_day04.json",
+    "https://api.gitbook.com/book/michelleerica/wdi-25/contents/week_02/wk02_day05.json",
+    "https://api.gitbook.com/book/michelleerica/wdi-25/contents/week_04/wk04_day01.json",
+    "https://api.gitbook.com/book/michelleerica/wdi-25/contents/week_04/wk04_day02.json",
+    "https://api.gitbook.com/book/michelleerica/wdi-25/contents/week_04/wk04_day03.json",
+    "https://api.gitbook.com/book/michelleerica/wdi-25/contents/week_04/wk04_day04.json",
+    "https://api.gitbook.com/book/michelleerica/wdi-25/contents/week_04/wk04_day05.json",
+    "https://api.gitbook.com/book/michelleerica/wdi-25/contents/week_05/wk05_day01.json",
+    "https://api.gitbook.com/book/michelleerica/wdi-25/contents/week_05/wk05_day02.json",
+    "https://api.gitbook.com/book/michelleerica/wdi-25/contents/week_05/wk05_day03.json",
+    "https://api.gitbook.com/book/michelleerica/wdi-25/contents/week_05/wk05_day04.json",
+    "https://api.gitbook.com/book/michelleerica/wdi-25/contents/week_07/wk07_day01.json",
+    "https://api.gitbook.com/book/michelleerica/wdi-25/contents/week_07/wk07_day02.json",
+    "https://api.gitbook.com/book/michelleerica/wdi-25/contents/week_07/wk07_day03.json",
+    "https://api.gitbook.com/book/michelleerica/wdi-25/contents/week_07/wk07_day04.json",
+    "https://api.gitbook.com/book/michelleerica/wdi-25/contents/week_07/wk07_day05.json",
+    "https://api.gitbook.com/book/michelleerica/wdi-25/contents/week_08/wk08_day01.json",
+    "https://api.gitbook.com/book/michelleerica/wdi-25/contents/week_08/wk08_day02.json"
+  ];
+
+  $("#gitbookURL").submit(function(e){
+    e.preventDefault()
+    getGitBook();
+  })
+
+
+  const getGitBook = function(){
+
+  var gitbookPage = gitbookPages[Math.floor(Math.random()*gitbookPages.length)];
+
+  $.ajax(gitbookPage)
+  .done(function(data){
+
+    let content = data.sections[0].content
+    let gitbookLinks = $(content).find('a').map(function(){ return $(this).attr('href'); });
+    console.log(gitbookLinks)
+    let randomLink = gitbookLinks[Math.floor(Math.random()*gitbookLinks.length)]
+    $('#displayGitBook').append(`<a href="${randomLink}">${randomLink}</a>`);
+    // $('#displayGitBook').html(randomLink)
+
+// .append('<p><a href="http://www.google.com">Google</a></p>');
+
+    })
+  }
 });
 
 </script>
