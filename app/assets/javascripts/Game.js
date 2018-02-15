@@ -94,7 +94,7 @@ GAImmersered.Game.prototype = {
     right: this.game.input.keyboard.addKey(Phaser.Keyboard.D),
     spell: this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR),
     enter: this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER)
-    }; // Set Controller
+  }; // Set Contrwoller
 
   },
 
