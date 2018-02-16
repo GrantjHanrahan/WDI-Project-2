@@ -89,8 +89,7 @@ GAImmersered.Game.prototype = {
     this.showLabels();
     // enemy.scale.setTo(2);
     this.miloCounter = 0;
-    this.lukeSpawned = true;
-    // this.lukeAttacks = this.generateAttacks('fireball', 1, 2000, 300);
+    this.lukeAttacks = true;
     // this.luke.enableBody = true;
     // this.luke.physicsBodyType = Phaser.Physics.ARCADE;
 
@@ -304,7 +303,7 @@ GAImmersered.Game.prototype = {
   npc2Collision: function(player, npc2){
     this.miloCounter += 1;
     console.log(this.miloCounter)
-      text = this.game.add.text(864, 402, 'Scriptsss.... ',{font: '12px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
+      text = this.game.add.text(864, 402, 'Collect 3 or more scripts',{font: '12px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
       text.outOfCameraBoundsKill = true;
       text.autoCull = true;
       // return this.hasSpokenToNpc2;
@@ -313,7 +312,7 @@ GAImmersered.Game.prototype = {
   miloCollision: function(player, milo){
     console.log(this.miloCounter);
     if(this.miloCounter > 1){
-      text = this.game.add.text(508, 468, "Luke has spawned \nin Data Science!!",{font: '12px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
+      text = this.game.add.text(508, 468, "Luke has spawned \nin Room 1!!",{font: '12px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
       text.outOfCameraBoundsKill = true;
       text.autoCull = true;
       // this.generateLuke();
@@ -382,7 +381,7 @@ GAImmersered.Game.prototype = {
 
   generateLuke: function() {
     lukeSpawned = true;
-    luke = this.game.add.sprite(1400, 691, 'dragons');
+    luke = this.game.add.sprite(1, 452, 'dragons');
     this.game.physics.arcade.enable(luke);
     luke.game.inputEnabled = true;
     luke.enableBody = true;
@@ -393,14 +392,12 @@ GAImmersered.Game.prototype = {
   },
 
   lukeHandler: function(){
-
     if (luke.visible && luke.inCamera) {
         this.enemyMovementHandler(luke);
         this.lukeAttacks = this.generateAttacks('fireball', 1, 2000, 300);
         this.attack(luke, this.lukeAttacks);
         }
-
-    if(this.miloCounter > 1 && this.gold > 3){
+    else if(this.miloCounter > 1 && this.gold > 3){
       this.lukeCollision();
       }
   },
@@ -472,6 +469,8 @@ GAImmersered.Game.prototype = {
           collectable.animations.play('open');
           this.notification = collectable.value;
           collectable.lifespan = 5000;
+          this.gold += 1;
+          console.log(this.gold);
       }
     }
   },
