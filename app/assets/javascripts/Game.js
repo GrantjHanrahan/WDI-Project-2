@@ -327,7 +327,7 @@ GAImmersered.Game.prototype = {
   oliviaCollision: function(player, olivia){
     this.oliviaCounter += 1;
     console.log(this.oliviaCounter)
-      text = this.game.add.text(720, 829, "HIIII GUYSSSS I'M LUCY, WELCOME TO GA!\nWE HAVE SOME BAD NEWSw!\nPLEASE SEE MILO IN THE KITCHEN!!!",{font: '12px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
+      text = this.game.add.text(720, 829, "HIIII GUYSSSS I'M Olivia!, WELCOME TO GA!\nWE HAVE SOME BAD NEWSw!\nPLEASE SEE MILO IN THE KITCHEN!!!",{font: '12px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
       text.outOfCameraBoundsKill = true;
       text.autoCull = true;
   },
