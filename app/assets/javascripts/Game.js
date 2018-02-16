@@ -28,6 +28,7 @@ GAImmersered.Game.prototype = {
 
   create: function() {
 
+
     this.object = this.game.add.group();
     this.object.enableBody = true;
 
@@ -82,6 +83,8 @@ GAImmersered.Game.prototype = {
 
     this.generateEnemies(2);
     // this.playerAttacks = this.generateAttacks('sword', 1, 100, 100);
+
+    this.generateGitLink(); //Git Links called here
 
     this.notification = ''; // Generate Notification
     this.gold = 0; // Generate Gold
@@ -288,11 +291,21 @@ GAImmersered.Game.prototype = {
 
   npc1Collision: function(player, npc1) {
     // if(this.controls.enter.isDown){
+<<<<<<< HEAD
+      const link = this.generateGitLink()
+      text = this.game.add.button(136, 73, 'button', function(){
+        window.open(link, "_blank")
+      });
+=======
       text = this.game.add.text(136, 73, 'Ask Milo for advice',{font: '12px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
+>>>>>>> 0ddf55ca67e594980867f7bb728006e4cc9ecf60
       text.outOfCameraBoundsKill = true;
       text.autoCull = true;
     // }
   },
+  //
+  
+
 
   npc2Collision: function(player, npc2){
     this.miloCounter += 1;
@@ -649,4 +662,19 @@ GAImmersered.Game.prototype = {
       this.notification = 'AMIR IS SENDING YOU BAD CODE! RUN!';
     }
   },
+<<<<<<< HEAD
+
+  generateGitLink: function () {
+    if(typeof gitbookLinks === "undefined" ) {
+      return;
+    }
+    const index = Math.floor( Math.random() * gitbookLinks.length );
+    console.log(gitbookLinks[index]);
+    return gitbookLinks[index];
+  }
+
+
+
+=======
+>>>>>>> 0ddf55ca67e594980867f7bb728006e4cc9ecf60
 };
