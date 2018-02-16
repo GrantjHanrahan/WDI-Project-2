@@ -18,18 +18,19 @@
 
 <div id="gameContainer">
   <button id="save">Save</button>
-  <form id="gitbookURL" >
+  <form id="gitbookURL">
     <input type="submit">
   </form>
 </div>
 
- <div id="displayGitBook">
+ <span id="displayGitBook">
 
- </div>
+ </span>
 
 
 <script>
 var selectedPlayer;
+// var selectedLink;
 var playerName = '<%= @current_user.user_name %>'
 
 var GAImmersered = GAImmersered || {};
@@ -106,8 +107,8 @@ $(document).ready(function(){
     let content = data.sections[0].content
     let gitbookLinks = $(content).find('a').map(function(){ return $(this).attr('href'); });
     console.log(gitbookLinks)
-    let randomLink = gitbookLinks[Math.floor(Math.random()*gitbookLinks.length)]
-    $('#displayGitBook').append(`<a href="${randomLink}">${randomLink}</a>`);
+    // let randomLink = gitbookLinks[Math.floor(Math.random()*gitbookLinks.length)]
+    // $('#displayGitBook').append(`<a href="${randomLink}">${randomLink}</a>`);
     // $('#displayGitBook').html(randomLink)
 
 // .append('<p><a href="http://www.google.com">Google</a></p>');
