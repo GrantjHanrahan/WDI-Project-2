@@ -81,7 +81,7 @@ GAImmersered.Game.prototype = {
     this.generateCollectables();
 
     this.generateEnemies(2);
-    this.playerAttacks = this.generateAttacks('sword', 1);
+    // this.playerAttacks = this.generateAttacks('sword', 1, 100, 100);
 
     this.notification = ''; // Generate Notification
     this.gold = 0; // Generate Gold
@@ -107,6 +107,8 @@ GAImmersered.Game.prototype = {
     this.enemyHandler();
     this.lukeHandler();
     this.notificationLabel.text = this.notification;
+    this.playerAttacks = this.generateAttacks('sword', 1, 1000, 1000);
+
   },
 
   // ** PLAYER GENERATOR AND HANDLER **
@@ -319,11 +321,13 @@ GAImmersered.Game.prototype = {
       text = this.game.add.text(720, 829, "HIIII GUYSSSS I'M LUCY, WELCOME TO GA!\nWE HAVE SOME BAD NEWS!\nPLEASE SEE MILO IN THE KITCHEN!!!",{font: '12px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
       text.outOfCameraBoundsKill = true;
       text.autoCull = true;
-      // return this.hasSpokenToNpc2;
   },
 
   lukeCollision: function(player, luke){
-    // console.log('luke collision');
+    console.log('luke collision');
+    text = this.game.add.text(82, 457, 'Refactor your code!!!',{font: '12px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
+    text.outOfCameraBoundsKill = true;
+    text.autoCull = true;
   },
   // ** GENERATE CHARACTERS **
 
@@ -387,7 +391,7 @@ GAImmersered.Game.prototype = {
         this.attack(luke, this.lukeAttacks);
       }
 
-    if(this.miloCounter > 1){
+    if(this.miloCounter > 1 && this.gold > 3){
       this.lukeCollision();
       }
   },
@@ -402,11 +406,14 @@ GAImmersered.Game.prototype = {
        a.strength = attacker.strength;
        a.reset(attacker.x + 40, attacker.y + 30);
        a.lifespan = 1000;
-       this.game.physics.arcade.moveToObject(a, this.player, attacks.range);
-      }
-      // if (attacks.name == 'sword') {
-      //   a.rotation = this.game.physics.arcade.moveToPointer(a, attacks.range);
+      //  this.game.physics.arcade.moveToObject(a, this.player, attacks.range);
       // }
+      if (attacks.name == 'sword') {
+        a.rotation = this.game.physics.arcade.moveToPointer(a,this.enemy, attacks.range);
+      } else {
+        this.game.physics.arcade.moveToObject(a, this.player, attacks.range);
+      }
+    }
   },
 
   generateAttacks: function(name, amount, rate, range){
@@ -419,7 +426,11 @@ GAImmersered.Game.prototype = {
     if (name =='fireball') {
         attacks.callAll('animations.add', 'animations', 'particle', [0, 1, 2, 3], 10, true);
         attacks.callAll('animations.play', 'animations', 'particle');
-      } else {
+      }
+    else if (name == 'sword'){
+       a.rotation = this.game.physics.arcade.moveToPointer(a, attacks.range);
+    }
+       else {
         console.log('not working');
       }
 
