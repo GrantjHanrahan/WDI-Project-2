@@ -73,7 +73,7 @@ GAImmersered.Game.prototype = {
     this.npc2 = this.generateNpc2(); // Generate NPC
     this.milo = this.generateMilo(); //Generate Milo
     this.milo = this.generatePriyanka(); //Generate Milo
-    this.lucy = this.generateLucy(); //Generate Milo
+    this.olivia = this.generateOlivia(); //Generate Milo
     this.priyanka = this.generateLuke(); //Generate Milo
 
 
@@ -273,7 +273,7 @@ GAImmersered.Game.prototype = {
     this.game.physics.arcade.collide(this.player, this.milo, this.miloCollision, null, this);
     this.game.physics.arcade.collide(this.player, this.luke, this.lukeCollision, null, this);
     this.game.physics.arcade.collide(this.player, this.priyanka, this.priyankaCollision, null, this);
-    this.game.physics.arcade.collide(this.player, this.lucy, this.lucyCollision, null, this);
+    this.game.physics.arcade.collide(this.player, this.olivia, this.oliviaCollision, null, this);
 
     this.game.physics.arcade.collide(this.player, this.enemies, this.hit, null, this);
     this.game.physics.arcade.collide(this.enemies, this.playerAttacks, this.hit, null, this);
@@ -318,9 +318,9 @@ GAImmersered.Game.prototype = {
       text.autoCull = true;
     }
   },
-  lucyCollision: function(player, lucy){
-    this.lucyCounter += 1;
-    console.log(this.lucyCounter)
+  oliviaCollision: function(player, olivia){
+    this.oliviaCounter += 1;
+    console.log(this.oliviaCounter)
       text = this.game.add.text(720, 829, "HIIII GUYSSSS I'M LUCY, WELCOME TO GA!\nWE HAVE SOME BAD NEWSw!\nPLEASE SEE MILO IN THE KITCHEN!!!",{font: '12px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
       text.outOfCameraBoundsKill = true;
       text.autoCull = true;
@@ -352,14 +352,14 @@ GAImmersered.Game.prototype = {
     return npc2;
   },
 
-  generateLucy: function() {
-    lucy = this.game.add.sprite(688, 856, 'characters');
-    this.game.physics.arcade.enable(lucy);
-    lucy.game.inputEnabled = true;
-    lucy.body.immovable = true;
-    lucy.frame = 30;
-    lucy.scale.setTo(2);
-    return lucy;
+  generateOlivia: function() {
+    olivia = this.game.add.sprite(688, 856, 'characters');
+    this.game.physics.arcade.enable(olivia);
+    olivia.game.inputEnabled = true;
+    olivia.body.immovable = true;
+    olivia.frame = 30;
+    olivia.scale.setTo(2);
+    return olivia;
   },
 
   generateMilo: function() {
