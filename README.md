@@ -1,24 +1,32 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A RPG game made with Phaser.JS. A game mapped by Tiled and built with Rails and Phaser.JS.
 
-Things you may want to cover:
+Foundation Theoderic
+Pokemon Tile Set
 
-* Ruby version
+http://wdi25game.herokuapp.com/
 
-* System dependencies
+* Models
 
-* Configuration
+- 3 Models - Users, Characters, Save
+- Validation Signup with Rails
+- Use of AJAX with Save Game and API
+- Heroku
 
-* Database creation
+- 
 
-* Database initialization
 
-* How to run the test suite
+* Login Demo
 
-* Services (job queues, cache servers, search engines, etc.)
+Username: grant
+Password: chicken
 
-* Deployment instructions
+* JS/Gems Used
 
-* ...
+- Phaser.JS
+- babel-transpiler
+
+* Known Bugs
+
+- Save is moving to Active Record but not
