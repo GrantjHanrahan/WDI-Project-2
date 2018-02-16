@@ -20,10 +20,8 @@ nav{
 }
 
 #displayGitBook{
-  float: left;
+  display: inline-block;
   background-color: lightgreen;
+  text-align: left;
+
 }
-//
-// h1,h2,h3{
-//   font-family: 'Press Start 2P', cursive !important;
-// }

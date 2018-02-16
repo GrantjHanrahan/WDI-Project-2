@@ -24,9 +24,9 @@
   </form>
 </div>
 
- <span id="displayGitBook">
-
- </span>
+ <div id="displayGitBook">
+  <p>Homework for tonight!</p>
+ </div>
 
 
 <script>
@@ -37,7 +37,7 @@ var selectedPlayer;
 var playerName = '<%= @current_user.user_name %>'
 
 var GAImmersered = GAImmersered || {};
-GAImmersered.game = new Phaser.Game(800, 600, Phaser.AUTO, 'gameContainer', null, false, false);
+GAImmersered.game = new Phaser.Game(640, 480, Phaser.AUTO, 'gameContainer', null, false, false);
 GAImmersered.game.state.add('Boot', GAImmersered.Boot);
 GAImmersered.game.state.add('Preloader', GAImmersered.Preloader);
 GAImmersered.game.state.add('MainMenu', GAImmersered.MainMenu);
@@ -106,8 +106,8 @@ const gitbookPages = [
     let content = data.sections[0].content
     gitbookLinks = $(content).find('a').map(function(){ return $(this).attr('href'); });
     console.log('links', gitbookLinks)
-    // $('#displayGitBook').append(`<a href="${randomLink}">${randomLink}</a>`);
-    // // $('#displayGitBook').html(randomLink)
+    // console.log($('#displayGitBook'))
+    // $('#displayGitBook').html(gitbookLinks)
 
   });
 
