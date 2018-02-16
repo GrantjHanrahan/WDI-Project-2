@@ -73,9 +73,8 @@ GAImmersered.Game.prototype = {
     this.npc1 = this.generateNpc1(); // Generate NPC
     this.npc2 = this.generateNpc2(); // Generate NPC
     this.milo = this.generateMilo(); //Generate Milo
-    this.milo = this.generatePriyanka(); //Generate Milo
     this.olivia = this.generateOlivia(); //Generate Milo
-    this.priyanka = this.generateLuke(); //Generate Milo
+    this.luke = this.generateLuke();
 
 
     this.generateCollectables();
@@ -277,7 +276,6 @@ GAImmersered.Game.prototype = {
     this.game.physics.arcade.collide(this.player, this.npc2, this.npc2Collision, null, this);
     this.game.physics.arcade.collide(this.player, this.milo, this.miloCollision, null, this);
     this.game.physics.arcade.collide(this.player, this.luke, this.lukeCollision, null, this);
-    this.game.physics.arcade.collide(this.player, this.priyanka, this.priyankaCollision, null, this);
     this.game.physics.arcade.collide(this.player, this.olivia, this.oliviaCollision, null, this);
 
     this.game.physics.arcade.collide(this.player, this.enemies, this.hit, null, this);
@@ -294,24 +292,13 @@ GAImmersered.Game.prototype = {
 
   npc1Collision: function(player, npc1) {
     // if(this.controls.enter.isDown){
-<<<<<<< HEAD
-      text = this.game.add.text(136, 73, 'Check Room 1!',{font: '12px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
-=======
-<<<<<<< HEAD
       const link = this.generateGitLink()
       text = this.game.add.button(136, 73, 'button', function(){
         window.open(link, "_blank")
       });
-=======
-      text = this.game.add.text(136, 73, 'Ask Milo for advice',{font: '12px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
->>>>>>> 0ddf55ca67e594980867f7bb728006e4cc9ecf60
->>>>>>> 74eea06cd5e4ad77876a3d32ad2e1b453392fff6
       text.outOfCameraBoundsKill = true;
       text.autoCull = true;
-    // }
   },
-  //
-  
 
 
   npc2Collision: function(player, npc2){
@@ -347,12 +334,9 @@ GAImmersered.Game.prototype = {
 
   lukeCollision: function(player, luke){
     console.log('luke collision');
-<<<<<<< HEAD
-=======
     text = this.game.add.text(82, 457, 'Refactor your code!!!',{font: '12px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
     text.outOfCameraBoundsKill = true;
     text.autoCull = true;
->>>>>>> 74eea06cd5e4ad77876a3d32ad2e1b453392fff6
   },
   // ** GENERATE CHARACTERS **
 
@@ -416,12 +400,9 @@ GAImmersered.Game.prototype = {
         this.attack(luke, this.lukeAttacks);
         }
 
-<<<<<<< HEAD
-=======
     if(this.miloCounter > 1 && this.gold > 3){
       this.lukeCollision();
       }
->>>>>>> 74eea06cd5e4ad77876a3d32ad2e1b453392fff6
   },
 
   attack: function(attacker, attacks){
@@ -432,15 +413,6 @@ GAImmersered.Game.prototype = {
       const a = attacks.getFirstDead();
        a.scale.setTo(1.5);
        a.strength = attacker.strength;
-<<<<<<< HEAD
-       a.reset(attacker.x + 8, attacker.y + 8);
-       a.lifespan = 1200;
-       this.game.physics.arcade.moveToObject(a, this.player, attacks.range);
-      }
-      if (attacks.name == 'sword') {
-        a.rotation = this.game.physics.arcade.moveToPointer(a, attacks.range);
-      }
-=======
        a.reset(attacker.x + 40, attacker.y + 30);
        a.lifespan = 1000;
       //  this.game.physics.arcade.moveToObject(a, this.player, attacks.range);
@@ -451,7 +423,6 @@ GAImmersered.Game.prototype = {
         this.game.physics.arcade.moveToObject(a, this.player, attacks.range);
       }
     }
->>>>>>> 74eea06cd5e4ad77876a3d32ad2e1b453392fff6
   },
 
   generateAttacks: function(name, amount, rate, range){
@@ -684,7 +655,6 @@ GAImmersered.Game.prototype = {
       this.notification = 'AMIR IS SENDING YOU BAD CODE! RUN!';
     }
   },
-<<<<<<< HEAD
 
   generateGitLink: function () {
     if(typeof gitbookLinks === "undefined" ) {
@@ -694,9 +664,4 @@ GAImmersered.Game.prototype = {
     console.log(gitbookLinks[index]);
     return gitbookLinks[index];
   }
-
-
-
-=======
->>>>>>> 0ddf55ca67e594980867f7bb728006e4cc9ecf60
 };
