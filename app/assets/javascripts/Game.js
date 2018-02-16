@@ -28,6 +28,7 @@ GAImmersered.Game.prototype = {
 
   create: function() {
 
+
     this.object = this.game.add.group();
     this.object.enableBody = true;
 
@@ -79,6 +80,8 @@ GAImmersered.Game.prototype = {
 
     this.generateEnemies(2);
     this.playerAttacks = this.generateAttacks('sword', 1);
+
+    this.generateGitLink(); //Git Links called here
 
     this.notification = ''; // Generate Notification
     this.gold = 0; // Generate Gold
@@ -285,11 +288,17 @@ GAImmersered.Game.prototype = {
 
   npc1Collision: function(player, npc1) {
     // if(this.controls.enter.isDown){
-      text = this.game.add.text(136, 73, 'Check Room 1!',{font: '12px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
+      const link = this.generateGitLink()
+      text = this.game.add.button(136, 73, 'button', function(){
+        window.open(link, "_blank")
+      });
       text.outOfCameraBoundsKill = true;
       text.autoCull = true;
     // }
   },
+  //
+  
+
 
   npc2Collision: function(player, npc2){
     this.miloCounter += 1;
@@ -618,5 +627,16 @@ GAImmersered.Game.prototype = {
         this.notification = 'AMIR IS SENDING YOU BAD CODE! RUN!';
     }
   },
+
+  generateGitLink: function () {
+    if(typeof gitbookLinks === "undefined" ) {
+      return;
+    }
+    const index = Math.floor( Math.random() * gitbookLinks.length );
+    console.log(gitbookLinks[index]);
+    return gitbookLinks[index];
+  }
+
+
 
 };
