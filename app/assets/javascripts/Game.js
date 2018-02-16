@@ -65,7 +65,6 @@ GAImmersered.Game.prototype = {
     character4: 'generateCharacter4',
     };
 
-
     var playerFunc = playerSprites[ selectedPlayer ];
     this.player = this[playerFunc]();  // this.generateCharacter1();
     // console.log('THIS', this);
@@ -73,10 +72,10 @@ GAImmersered.Game.prototype = {
     this.npc1 = this.generateNpc1(); // Generate NPC
     this.npc2 = this.generateNpc2(); // Generate NPC
     this.milo = this.generateMilo(); //Generate Milo
+    this.milo = this.generatePriyanka(); //Generate Milo
     this.lucy = this.generateLucy(); //Generate Milo
-    this.luke = this.generateLuke(); //Generate Milo
+    this.priyanka = this.generateLuke(); //Generate Milo
 
-    // this.generateGitLink();
 
     this.generateCollectables();
 
@@ -86,8 +85,12 @@ GAImmersered.Game.prototype = {
     this.notification = ''; // Generate Notification
     this.gold = 0; // Generate Gold
     this.showLabels();
-
+    // enemy.scale.setTo(2);
     this.miloCounter = 0;
+    this.lukeSpawned = true;
+    // this.lukeAttacks = this.generateAttacks('fireball', 1, 2000, 300);
+    // this.luke.enableBody = true;
+    // this.luke.physicsBodyType = Phaser.Physics.ARCADE;
 
     this.game.camera.follow(this.player); // Camera Following Players
     this.controls = {
@@ -266,10 +269,10 @@ GAImmersered.Game.prototype = {
     this.game.physics.arcade.collide(this.player, this.object, null, null, this);
     this.game.physics.arcade.overlap(this.collectables, this.player, this.collect, null, this);
     this.game.physics.arcade.collide(this.player, this.npc1, this.npc1Collision, null, this);
-
     this.game.physics.arcade.collide(this.player, this.npc2, this.npc2Collision, null, this);
     this.game.physics.arcade.collide(this.player, this.milo, this.miloCollision, null, this);
     this.game.physics.arcade.collide(this.player, this.luke, this.lukeCollision, null, this);
+    this.game.physics.arcade.collide(this.player, this.priyanka, this.priyankaCollision, null, this);
     this.game.physics.arcade.collide(this.player, this.lucy, this.lucyCollision, null, this);
 
     this.game.physics.arcade.collide(this.player, this.enemies, this.hit, null, this);
@@ -286,7 +289,7 @@ GAImmersered.Game.prototype = {
 
   npc1Collision: function(player, npc1) {
     // if(this.controls.enter.isDown){
-      text = this.game.add.text(136, 73, 'Ask Milo for advice',{font: '12px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
+      text = this.game.add.text(136, 73, 'Check Room 1!',{font: '12px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
       text.outOfCameraBoundsKill = true;
       text.autoCull = true;
     // }
@@ -295,20 +298,22 @@ GAImmersered.Game.prototype = {
   npc2Collision: function(player, npc2){
     this.miloCounter += 1;
     console.log(this.miloCounter)
-      text = this.game.add.text(864, 402, 'Collect scripts!',{font: '12px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
+      text = this.game.add.text(864, 402, 'Scriptsss.... ',{font: '12px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
       text.outOfCameraBoundsKill = true;
       text.autoCull = true;
       // return this.hasSpokenToNpc2;
   },
 
   miloCollision: function(player, milo){
+    console.log(this.miloCounter);
     if(this.miloCounter > 1){
       text = this.game.add.text(508, 468, "Luke has spawned \nin Data Science!!",{font: '12px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
       text.outOfCameraBoundsKill = true;
       text.autoCull = true;
-
-    } else {
-      text = this.game.add.text(508, 468, 'Read your error messages..',{font: '12px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
+      // this.generateLuke();
+    }
+    else{
+      text = this.game.add.text(508, 468, 'Ask the UX ghost..',{font: '12px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
       text.outOfCameraBoundsKill = true;
       text.autoCull = true;
     }
@@ -316,14 +321,14 @@ GAImmersered.Game.prototype = {
   lucyCollision: function(player, lucy){
     this.lucyCounter += 1;
     console.log(this.lucyCounter)
-      text = this.game.add.text(720, 829, "HIIII GUYSSSS I'M LUCY, WELCOME TO GA!\nWE HAVE SOME BAD NEWS!\nPLEASE SEE MILO IN THE KITCHEN!!!",{font: '12px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
+      text = this.game.add.text(720, 829, "HIIII GUYSSSS I'M LUCY, WELCOME TO GA!\nWE HAVE SOME BAD NEWSw!\nPLEASE SEE MILO IN THE KITCHEN!!!",{font: '12px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
       text.outOfCameraBoundsKill = true;
       text.autoCull = true;
       // return this.hasSpokenToNpc2;
   },
 
   lukeCollision: function(player, luke){
-    // console.log('luke collision');
+    console.log('luke collision');
   },
   // ** GENERATE CHARACTERS **
 
@@ -369,7 +374,7 @@ GAImmersered.Game.prototype = {
 
   generateLuke: function() {
     lukeSpawned = true;
-    luke = this.game.add.sprite(2, 450, 'dragons');
+    luke = this.game.add.sprite(1400, 691, 'dragons');
     this.game.physics.arcade.enable(luke);
     luke.game.inputEnabled = true;
     luke.enableBody = true;
@@ -381,15 +386,12 @@ GAImmersered.Game.prototype = {
 
   lukeHandler: function(){
 
-    if(luke.visible && luke.inCamera && this.miloCounter == 0) {
+    if (luke.visible && luke.inCamera) {
         this.enemyMovementHandler(luke);
-        this.lukeAttacks = this.generateAttacks('fireball', 1, 1200, 300);
+        this.lukeAttacks = this.generateAttacks('fireball', 1, 2000, 300);
         this.attack(luke, this.lukeAttacks);
-      }
+        }
 
-    if(this.miloCounter > 1){
-      this.lukeCollision();
-      }
   },
 
   attack: function(attacker, attacks){
@@ -400,13 +402,13 @@ GAImmersered.Game.prototype = {
       const a = attacks.getFirstDead();
        a.scale.setTo(1.5);
        a.strength = attacker.strength;
-       a.reset(attacker.x + 40, attacker.y + 30);
-       a.lifespan = 1000;
+       a.reset(attacker.x + 8, attacker.y + 8);
+       a.lifespan = 1200;
        this.game.physics.arcade.moveToObject(a, this.player, attacks.range);
       }
-      // if (attacks.name == 'sword') {
-      //   a.rotation = this.game.physics.arcade.moveToPointer(a, attacks.range);
-      // }
+      if (attacks.name == 'sword') {
+        a.rotation = this.game.physics.arcade.moveToPointer(a, attacks.range);
+      }
   },
 
   generateAttacks: function(name, amount, rate, range){
@@ -452,9 +454,6 @@ GAImmersered.Game.prototype = {
           collectable.animations.play('open');
           this.notification = collectable.value;
           collectable.lifespan = 5000;
-          this.gold += 1;
-          console.log(this.gold);
-          console.log(collectable);
       }
     }
   },
@@ -607,7 +606,7 @@ GAImmersered.Game.prototype = {
     attacks.physicsBodyType = Phaser.Physics.ARCADE;
     attacks.createMultiple(amount, name);
 
-    if (name === 'sword') {
+    if (name === 'spell') {
         attacks.callAll('animations.add', 'animations', 'particle', [0, 1, 2, 3,4 ,5], 10, true);
         attacks.callAll('animations.play', 'animations', 'particle');
     } else if (name === 'fireball') {
