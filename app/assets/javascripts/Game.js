@@ -28,6 +28,7 @@ GAImmersered.Game.prototype = {
 
   create: function() {
 
+
     this.object = this.game.add.group();
     this.object.enableBody = true;
 
@@ -80,7 +81,9 @@ GAImmersered.Game.prototype = {
     this.generateCollectables();
 
     this.generateEnemies(2);
-    this.playerAttacks = this.generateAttacks('sword', 1);
+    // this.playerAttacks = this.generateAttacks('sword', 1, 100, 100);
+
+    this.generateGitLink(); //Git Links called here
 
     this.notification = ''; // Generate Notification
     this.gold = 0; // Generate Gold
@@ -110,6 +113,8 @@ GAImmersered.Game.prototype = {
     this.enemyHandler();
     this.lukeHandler();
     this.notificationLabel.text = this.notification;
+    this.playerAttacks = this.generateAttacks('sword', 1, 1000, 1000);
+
   },
 
   // ** PLAYER GENERATOR AND HANDLER **
@@ -289,11 +294,25 @@ GAImmersered.Game.prototype = {
 
   npc1Collision: function(player, npc1) {
     // if(this.controls.enter.isDown){
+<<<<<<< HEAD
       text = this.game.add.text(136, 73, 'Check Room 1!',{font: '12px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
+=======
+<<<<<<< HEAD
+      const link = this.generateGitLink()
+      text = this.game.add.button(136, 73, 'button', function(){
+        window.open(link, "_blank")
+      });
+=======
+      text = this.game.add.text(136, 73, 'Ask Milo for advice',{font: '12px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
+>>>>>>> 0ddf55ca67e594980867f7bb728006e4cc9ecf60
+>>>>>>> 74eea06cd5e4ad77876a3d32ad2e1b453392fff6
       text.outOfCameraBoundsKill = true;
       text.autoCull = true;
     // }
   },
+  //
+  
+
 
   npc2Collision: function(player, npc2){
     this.miloCounter += 1;
@@ -324,11 +343,16 @@ GAImmersered.Game.prototype = {
       text = this.game.add.text(720, 829, "HIIII GUYSSSS I'M LUCY, WELCOME TO GA!\nWE HAVE SOME BAD NEWSw!\nPLEASE SEE MILO IN THE KITCHEN!!!",{font: '12px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
       text.outOfCameraBoundsKill = true;
       text.autoCull = true;
-      // return this.hasSpokenToNpc2;
   },
 
   lukeCollision: function(player, luke){
     console.log('luke collision');
+<<<<<<< HEAD
+=======
+    text = this.game.add.text(82, 457, 'Refactor your code!!!',{font: '12px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
+    text.outOfCameraBoundsKill = true;
+    text.autoCull = true;
+>>>>>>> 74eea06cd5e4ad77876a3d32ad2e1b453392fff6
   },
   // ** GENERATE CHARACTERS **
 
@@ -392,6 +416,12 @@ GAImmersered.Game.prototype = {
         this.attack(luke, this.lukeAttacks);
         }
 
+<<<<<<< HEAD
+=======
+    if(this.miloCounter > 1 && this.gold > 3){
+      this.lukeCollision();
+      }
+>>>>>>> 74eea06cd5e4ad77876a3d32ad2e1b453392fff6
   },
 
   attack: function(attacker, attacks){
@@ -402,6 +432,7 @@ GAImmersered.Game.prototype = {
       const a = attacks.getFirstDead();
        a.scale.setTo(1.5);
        a.strength = attacker.strength;
+<<<<<<< HEAD
        a.reset(attacker.x + 8, attacker.y + 8);
        a.lifespan = 1200;
        this.game.physics.arcade.moveToObject(a, this.player, attacks.range);
@@ -409,6 +440,18 @@ GAImmersered.Game.prototype = {
       if (attacks.name == 'sword') {
         a.rotation = this.game.physics.arcade.moveToPointer(a, attacks.range);
       }
+=======
+       a.reset(attacker.x + 40, attacker.y + 30);
+       a.lifespan = 1000;
+      //  this.game.physics.arcade.moveToObject(a, this.player, attacks.range);
+      // }
+      if (attacks.name == 'sword') {
+        a.rotation = this.game.physics.arcade.moveToPointer(a,this.enemy, attacks.range);
+      } else {
+        this.game.physics.arcade.moveToObject(a, this.player, attacks.range);
+      }
+    }
+>>>>>>> 74eea06cd5e4ad77876a3d32ad2e1b453392fff6
   },
 
   generateAttacks: function(name, amount, rate, range){
@@ -421,7 +464,11 @@ GAImmersered.Game.prototype = {
     if (name =='fireball') {
         attacks.callAll('animations.add', 'animations', 'particle', [0, 1, 2, 3], 10, true);
         attacks.callAll('animations.play', 'animations', 'particle');
-      } else {
+      }
+    else if (name == 'sword'){
+       a.rotation = this.game.physics.arcade.moveToPointer(a, attacks.range);
+    }
+       else {
         console.log('not working');
       }
 
@@ -637,4 +684,19 @@ GAImmersered.Game.prototype = {
       this.notification = 'AMIR IS SENDING YOU BAD CODE! RUN!';
     }
   },
+<<<<<<< HEAD
+
+  generateGitLink: function () {
+    if(typeof gitbookLinks === "undefined" ) {
+      return;
+    }
+    const index = Math.floor( Math.random() * gitbookLinks.length );
+    console.log(gitbookLinks[index]);
+    return gitbookLinks[index];
+  }
+
+
+
+=======
+>>>>>>> 0ddf55ca67e594980867f7bb728006e4cc9ecf60
 };
