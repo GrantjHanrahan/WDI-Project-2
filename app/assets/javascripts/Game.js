@@ -110,7 +110,7 @@ GAImmersered.Game.prototype = {
     this.enemyHandler();
     this.lukeHandler();
     this.notificationLabel.text = this.notification;
-    this.playerAttacks = this.generateAttacks('sword', 1, 1000, 1000);
+    this.playerAttacks = this.generateAttacks('sword', 1, 500, 300);
 
   },
 
@@ -291,20 +291,17 @@ GAImmersered.Game.prototype = {
 
   npc1Collision: function(player, npc1) {
     // if(this.controls.enter.isDown){
-<<<<<<< HEAD
       const link = this.generateGitLink()
       text = this.game.add.button(136, 73, 'button', function(){
         window.open(link, "_blank")
       });
-=======
       text = this.game.add.text(136, 73, 'Ask Milo for advice',{font: '12px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
->>>>>>> 0ddf55ca67e594980867f7bb728006e4cc9ecf60
       text.outOfCameraBoundsKill = true;
       text.autoCull = true;
     // }
   },
   //
-  
+
 
 
   npc2Collision: function(player, npc2){
@@ -662,7 +659,6 @@ GAImmersered.Game.prototype = {
       this.notification = 'AMIR IS SENDING YOU BAD CODE! RUN!';
     }
   },
-<<<<<<< HEAD
 
   generateGitLink: function () {
     if(typeof gitbookLinks === "undefined" ) {
@@ -674,7 +670,4 @@ GAImmersered.Game.prototype = {
   }
 
 
-
-=======
->>>>>>> 0ddf55ca67e594980867f7bb728006e4cc9ecf60
 };
