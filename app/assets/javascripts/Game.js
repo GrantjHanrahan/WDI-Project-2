@@ -77,14 +77,13 @@ GAImmersered.Game.prototype = {
     this.lucy = this.generateLucy(); //Generate Milo
     this.luke = this.generateLuke(); //Generate Milo
 
-    // this.generateGitLink();
 
     this.generateCollectables();
 
     this.generateEnemies(2);
     this.playerAttacks = this.generateAttacks('sword', 1);
 
-    this.generateGitLink(); //Git Links called here
+    // this.generateGitLink(); //Git Links called here
 
     this.notification = ''; // Generate Notification
     this.gold = 0; // Generate Gold
@@ -289,20 +288,16 @@ GAImmersered.Game.prototype = {
 
   npc1Collision: function(player, npc1) {
     // if(this.controls.enter.isDown){
-<<<<<<< HEAD
       const link = this.generateGitLink()
-      text = this.game.add.button(136, 73, 'button', function(){
-        window.open(link, "_blank")
-      });
-=======
-      text = this.game.add.text(136, 73, 'Ask Milo for advice',{font: '12px Arial', fill:'#FFFFFF', backgroundColor: '#000000'});
->>>>>>> 0ddf55ca67e594980867f7bb728006e4cc9ecf60
+
       text.outOfCameraBoundsKill = true;
       text.autoCull = true;
+      $('#displayGitBook').append(`<a href="${link}">${link}</a>`);
+
     // }
   },
   //
-  
+
 
 
   npc2Collision: function(player, npc2){
@@ -347,6 +342,7 @@ GAImmersered.Game.prototype = {
     npc1.body.immovable = true;
     npc1.frame = 55;
     npc1.scale.setTo(2);
+
     return npc1;
   },
 
@@ -651,7 +647,6 @@ GAImmersered.Game.prototype = {
       this.notification = 'AMIR IS SENDING YOU BAD CODE! RUN!';
     }
   },
-<<<<<<< HEAD
 
   generateGitLink: function () {
     if(typeof gitbookLinks === "undefined" ) {
@@ -660,10 +655,9 @@ GAImmersered.Game.prototype = {
     const index = Math.floor( Math.random() * gitbookLinks.length );
     console.log(gitbookLinks[index]);
     return gitbookLinks[index];
+
   }
 
 
 
-=======
->>>>>>> 0ddf55ca67e594980867f7bb728006e4cc9ecf60
 };
